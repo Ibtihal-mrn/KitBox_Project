@@ -19,11 +19,5 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ReactiveUI" Version="20.1.63" />
-    <AvaloniaXaml Include="View\MainWindow.axaml" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <AvaloniaXaml Include="View\MainWindow.axaml" />
   </ItemGroup>
 </Project>
