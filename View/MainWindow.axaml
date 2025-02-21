@@ -1,14 +1,21 @@
+
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModels="clr-namespace:KitBox_Project.ViewModel;assembly=KitBox_Project"
+        xmlns:view="clr-namespace:KitBox_Project.View;assembly=KitBox_Project"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="KitBox_Project.View.MainWindow"
         Title="{Binding Title}"
         x:DataType="viewModels:MainViewModel">
 
-    <Grid>
+    <Design.DataContext><viewModels:MainViewModel/></Design.DataContext>
+
+    <Grid Background="{DynamicResource ResourceKey=PrimaryBackground}" ColumnDefinitions="Auto, *">
+        <ContentControl Grid.Column="0" Grid.ColumnSpan="2"><view:HomePageView /></ContentControl>
+        
+    
         <!-- Affichage du titre -->
         <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
 
