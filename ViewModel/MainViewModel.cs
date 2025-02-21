@@ -8,7 +8,7 @@ using MsBox.Avalonia.Enums;
 
 namespace KitBox_Project.ViewModel
 {
-    public class MainViewModel : ReactiveObject // offert par ReactiveUI -> utilisé par Avalonia pour la réactivité)
+    public class MainViewModel : ViewModelBase // offert par ReactiveUI -> utilisé par Avalonia pour la réactivité)
     {
         private string _title = "Bienvenue sur KitBox !";
 
