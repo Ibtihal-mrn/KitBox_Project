@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:KitBox_Project.ViewModel"
+        x:Class="KitBox_Project.View.MainView">
+
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <Grid>
+        <ContentControl Content="{Binding CurrentView}" />
+    </Grid>
+
+</Window>
