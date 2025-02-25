@@ -1,11 +1,10 @@
 using Avalonia.Controls;
 
-namespace KitBox_Project;
-
-public partial class MainWindow : Window
+namespace KitBox_Project
 {
-    public MainWindow()
+    public partial class MainWindow : Window
     {
+<<<<<<< HEAD
         InitializeComponent();
         var textBlock = new TextBlock
         {
@@ -23,5 +22,17 @@ public partial class MainWindow : Window
         grid.RowDefinitions.Add(new RowDefinition(100));
         grid.RowDefinitions.Add(new RowDefinition(100));
         return grid; 
+=======
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void GoToSize(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            var sizeWindow = new Size();  // Crée la fenêtre Size
+            Fonctions.NavigateToPage(this, sizeWindow);  // Utilise la méthode dans NavigationHelper
+        }
+>>>>>>> origin/Configuration_armoire
     }
 }
