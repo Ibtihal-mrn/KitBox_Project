@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace KitBox_Project.Views;
 
-public partial class SettingsPage : UserControl
+public partial class OrderTracking : UserControl
 {
-    public SettingsPage()
+    public OrderTracking()
     {
         InitializeComponent();
     }

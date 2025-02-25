@@ -10,11 +10,11 @@
 
     <Grid>
         <!-- Bouton ☰ pour ouvrir/fermer le menu -->
-        <Button Content="☰"
+        <Button x:Name="MenuButton"
+        Content="☰"
         HorizontalAlignment="Left"
         VerticalAlignment="Top"
-        Margin="10"
-        Click="ToggleMenu"/>
+        Margin="10"/>
 
         <!-- SplitView pour le menu -->
         <SplitView x:Name="MenuPanel"
@@ -27,7 +27,11 @@
             <!-- Contenu du menu -->
             <StackPanel Background="LightGray" Width="200">
                 <Button Content="Home" Click="GoToHome"/>
-                <Button Content="Settings" Click="GoToSettings"/>
+                <Button Content="Order" Click="GoToOrder"/>
+                <Button Content="Order Tracking" Click="GoToOrderTracking"/>
+                <Button Content="Locker Configuration" Click="GoToLockerConfiguration"/>
+                <Button Content="Help and Support" Click="GoToHelpSupport"/>
+
             </StackPanel>
         </SplitView>
 

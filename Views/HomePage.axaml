@@ -12,10 +12,10 @@
       HorizontalAlignment="Center"
       VerticalAlignment="Top"/>
 
-      <DockPanel LastChildFill="True">
+      <!-- <DockPanel LastChildFill="True">
           <Button Content="Configurer une armoire"
           HorizontalAlignment="Center"
           VerticalAlignment="Center"/>
-      </DockPanel>
+      </DockPanel> -->
   </Grid>
 </UserControl>
