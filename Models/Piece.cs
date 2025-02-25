@@ -1,0 +1,1 @@
+// Représente une pièce du stock

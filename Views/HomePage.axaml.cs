@@ -3,7 +3,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace KitBox_Project.View;
+namespace KitBox_Project.Views;
 
 public partial class HomePage : UserControl
 {

@@ -2,8 +2,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using KitBox_Project.View;
-using KitBox_Project.ViewModel;
+using KitBox_Project.Views;
+using KitBox_Project.ViewModels;
 
 namespace KitBox_Project;
 

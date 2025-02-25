@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 
-namespace KitBox_Project.ViewModel
+namespace KitBox_Project.ViewModels
 {
     public class MainViewModel : ReactiveObject // offert par ReactiveUI -> utilisé par Avalonia pour la réactivité)
     {

@@ -1,0 +1,53 @@
+Pour gérer efficacement, on va suivre une architecture MVVM qui va permettre d'organiser convenablement le fichier. 
+Même si ça paraît compliqué au début et qu'on sera tentés de regrouper plein de choses dans la même classe, il va falloir éviter pour rendre le code plus maintenable. Il faut séparer les responsabilités au maximum. N'ayons pas peur d'avoir plein de fichier pour plein de classes même si y'a peu de code dedans. 
+
+Utilité de chacun des dossiers 
+
+- Models : classes métier
+==> Contient les classes représentant les données et la logique métier. 
+
+- ViewModels : logique de l'interface
+==> Contient la logique d'affichage et la liaison entre Model et View. 
+    Ça permet de séparer l'interface (Views) et les données (Models)
+    C'est là qu'on va trouver l'intelligence, la logique de chaque vue
+
+- Views : Fichiers XAML pour l'UI 
+==> Contient les fichiers XAML, définissant l'interface utilisateur
+    Ça permet de séparer le code et l'UI, ce qui facilite la modification du design sans toucher au C#
+    Il faut avoir le code le plus simple possible ici, on évite d'intégrer de la logique dans ces fichiers
+
+- Services : Gestion des données métier
+==> Gérer la logique métier avancée et les opérations sur les données 
+    Ça permet de garder les ViewModels simples et propres en déléguant les traitements complexes
+
+- Repositories : Accès à la BDD
+==> Gérer l'accès à la base de données via des requêtes SQL
+    Ça permet de séparer les opérations SQL du reste du code 
+
+- Utils : Fonctions et helpers généraux
+==> Stocke les fonctions utilitaires utilisées dans plusieurs parties du projet.
+
+- Tests : Tests unitaires et d’intégration
+==>  Contient les tests unitaires et d’intégration pour vérifier que le code fonctionne comme prévu.
+    Ça permet d'assurer la qualité du code et éviter les régressions.
+
+- Ressources : Images, icônes, styles XAML
+==> Contient les fichiers statiques comme images, icônes et styles XAML
+    Centraliser les ressources pour gérer facilement le design.
+
+- App.xaml : Configuration globale Avalonia
+==> Définit les styles globaux et les ressources de l’application.
+    Permet de gérer l’apparence globale de l’application.
+
+- MainWindow.xaml : Fenêtre principale
+==> Définit la fenêtre principale de l’application
+    C’est le point d’entrée visuel de l’application
+
+- Program.cs : Point d’entrée du projet
+==> Démarre l’application et initialise MVVM + DAO + Services.
+    Point d’entrée principal, configure la DI (Dependency Injection).
+
+
+
+Bonnes pratiques : 
+    - Séparer en classe simple : il vaut mieux avoir plein de classes simples que des grosses classes qui gèrent bcp de choses 
