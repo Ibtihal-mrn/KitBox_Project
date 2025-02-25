@@ -9,13 +9,29 @@
         x:DataType="viewModels:MainViewModel">
 
     <Grid>
-        <!-- Affichage du titre -->
-        <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+        <!-- Bouton ☰ pour ouvrir/fermer le menu -->
+        <Button Content="☰"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="10"
+        Click="ToggleMenu"/>
 
-        <Button Margin="10" Command="{Binding ShowMessageCommand}">
-    <StackPanel>
-        <TextBlock Text="Press"/>
-    </StackPanel>
-</Button>
+        <!-- SplitView pour le menu -->
+        <SplitView x:Name="MenuPanel"
+        DisplayMode="Overlay"
+        IsPaneOpen="False"
+        OpenPaneLength="200"
+        CompactPaneLength="0"
+        HorizontalAlignment="Left">
+
+            <!-- Contenu du menu -->
+            <StackPanel Background="LightGray" Width="200">
+                <Button Content="Home" Click="GoToHome"/>
+                <Button Content="Settings" Click="GoToSettings"/>
+            </StackPanel>
+        </SplitView>
+
+        <!-- Contenu de l'application -->
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
     </Grid>
 </Window>
