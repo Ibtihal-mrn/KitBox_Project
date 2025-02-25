@@ -1,3 +1,4 @@
+
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,31 +12,38 @@
     <Grid>
         <!-- Bouton ☰ pour ouvrir/fermer le menu -->
         <Button x:Name="MenuButton"
-        Content="☰"
-        HorizontalAlignment="Left"
-        VerticalAlignment="Top"
-        Margin="10"/>
+                Content="☰"
+                FontSize="14"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="10"
+                Click="ToggleMenu"
+                ZIndex="2"/>
 
-        <!-- SplitView pour le menu -->
+        <!-- ✅ Le SplitView gère le menu coulissant -->
         <SplitView x:Name="MenuPanel"
-        DisplayMode="Overlay"
-        IsPaneOpen="False"
-        OpenPaneLength="200"
-        CompactPaneLength="0"
-        HorizontalAlignment="Left">
+                   DisplayMode="Overlay"
+                   IsPaneOpen="False"
+                   OpenPaneLength="200"
+                   CompactPaneLength="0"
+                   PanePlacement="Left"
+                   Background="White"
+                   ZIndex="1">
 
-            <!-- Contenu du menu -->
-            <StackPanel Background="LightGray" Width="200">
-                <Button Content="Home" Click="GoToHome"/>
-                <Button Content="Order" Click="GoToOrder"/>
-                <Button Content="Order Tracking" Click="GoToOrderTracking"/>
-                <Button Content="Locker Configuration" Click="GoToLockerConfiguration"/>
-                <Button Content="Help and Support" Click="GoToHelpSupport"/>
+            <!-- ✅ Le contenu du menu DOIT être mis dans Pane -->
+            <SplitView.Pane>
+                <StackPanel Background="LightGray" Width="200">
+                    <Button Content="Home" Click="GoToHome"/>
+                    <Button Content="Order" Click="GoToOrder"/>
+                    <Button Content="Order Tracking" Click="GoToOrderTracking"/>
+                    <Button Content="Locker Configuration" Click="GoToLockerConfiguration"/>
+                    <Button Content="Help and Support" Click="GoToHelpSupport"/>
+                </StackPanel>
+            </SplitView.Pane>
 
-            </StackPanel>
         </SplitView>
 
-        <!-- Contenu de l'application -->
+        <!-- Contenu principal de l'application -->
         <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
     </Grid>
 </Window>
