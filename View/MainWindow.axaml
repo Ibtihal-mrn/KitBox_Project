@@ -13,7 +13,7 @@
     <Design.DataContext><viewModels:MainViewModel/></Design.DataContext>
 
     <Grid Background="{DynamicResource ResourceKey=PrimaryBackground}" ColumnDefinitions="Auto, *">
-        <ContentControl Grid.Column="0" Grid.ColumnSpan="2"><view:HomePageView /></ContentControl>
+        <ContentControl Grid.Column="2" Grid.ColumnSpan="5"><view:HomePageView /></ContentControl>
         
     
         <!-- Affichage du titre -->
