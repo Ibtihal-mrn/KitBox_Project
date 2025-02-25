@@ -1,0 +1,1 @@
+//Accède à la base de données et gère le stock
