@@ -51,3 +51,15 @@ Utilité de chacun des dossiers
 
 Bonnes pratiques : 
     - Séparer en classe simple : il vaut mieux avoir plein de classes simples que des grosses classes qui gèrent bcp de choses 
+
+
+
+
+Application côté client :
+
+    1. Page Principale 
+    2. Choix des dimensions de la base (largeur, profondeur) ==> Size
+    3. Choix de la hauteur ==> Heigth
+    4. Choix des couleurs ==> Color
+    5. Choix des portes si voulu ==> Door (Bouton Next)
+    6. Ajouter un nouveau casier, configurer un autre casier, terminer (choix possibles donc) ==> Choice

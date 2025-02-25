@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace KitBox_Project
 {
-    public partial class Size : Window
+    public partial class Order : Window
     {
-        public Size()
+        public Order()
         {
             InitializeComponent();
         }
@@ -15,10 +15,14 @@ namespace KitBox_Project
             Fonctions.NavigateToPage(this, mainWindow);  // Utilise la méthode dans NavigationHelper
         }
 
-        private void GoToHeightWindow(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        //Back = Choice
+        private void GoToChoice(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            var heightWindow = new Height();  // Crée une nouvelle instance de MainWindow
-            Fonctions.NavigateToPage(this, heightWindow);  // Utilise la méthode dans NavigationHelper
+            var choiceWindow = new Choice();  // Crée une nouvelle instance de MainWindow
+            Fonctions.NavigateToPage(this, choiceWindow);  // Utilise la méthode dans NavigationHelper
         }
+
+        
+        
     }
 }

@@ -4,32 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="KitBox_Project.Size"
+        x:Class="KitBox_Project.Color"
         Title="KitBox_Project">
     <StackPanel>
 
         <Button Content="Home" Click="GoToMainWindow" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        <TextBlock Text="3. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
         
-        
-        <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
         <ComboBox  Name="Longueur" Width="200" HorizontalAlignment="Center">
             <ComboBoxItem Content="Option 1" />
             <ComboBoxItem Content="Option 2" />
             <ComboBoxItem Content="Option 3" />
         </ComboBox>
 
-        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-        <ComboBox Width="200" HorizontalAlignment="Center">
-            <ComboBoxItem Content="Option 1" />
-            <ComboBoxItem Content="Option 2" />
-            <ComboBoxItem Content="Option 3" />
-        </ComboBox>
+        
 
         <!-- Mettre un résumé des dimensions -->
 
-        <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,50,0,0"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+            <Button Content="Back" Click="GoToHeight" Margin="5,0"/>
+            <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
+        </StackPanel>
 
     </StackPanel>
 </Window>
