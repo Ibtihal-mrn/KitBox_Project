@@ -4,18 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HomePage">
-  
-  <Grid>
-      <!-- Affichage du titre -->
-      <TextBlock Text="Bienvenue sur la page Home"
-      FontSize="24"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Top"/>
 
-      <!-- <DockPanel LastChildFill="True">
-          <Button Content="Configurer une armoire"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center"/>
-      </DockPanel> -->
+  <Grid>
+    <!-- Affichage du titre avec la police Anton et un nom pour l'élément -->
+    <TextBlock x:Name="MovingText"
+               Text="Kit Box"
+               FontSize="30"
+               FontFamily="avares://KitBox_Project/Fonts#Anton"
+               HorizontalAlignment="Left"
+               Foreground="Black"/>
+    
+    <!-- Autres éléments de l'interface -->
+    <TextBlock Text="Welcome to KitBox! Ready to create your custom wardrobe with ease? Start by exploring different designs or customize your own!"
+               FontSize="14"
+               HorizontalAlignment="Left"
+               Margin="0,100,0,0"/>
   </Grid>
 </UserControl>
