@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System;
 using System.Timers; // Utilisation de System.Timers.Timer
+using Avalonia.Interactivity;
 
 namespace KitBox_Project.Views
 {
@@ -41,6 +42,13 @@ namespace KitBox_Project.Views
                 };
                 _timer.Start(); // Démarre l'animation
             }
+        }
+        
+        public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
+
+        private void GoToDesign(object? sender, RoutedEventArgs e)
+        {
+            StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
         }
     }
 }

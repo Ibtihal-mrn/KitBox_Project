@@ -5,19 +5,29 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HomePage">
 
-  <Grid>
-    <!-- Affichage du titre avec la police Anton et un nom pour l'élément -->
-    <TextBlock x:Name="MovingText"
-               Text="Kit Box"
-               FontSize="30"
-               FontFamily="avares://KitBox_Project/Fonts#Anton"
-               HorizontalAlignment="Left"
-               Foreground="Black"/>
-    
-    <!-- Autres éléments de l'interface -->
-    <TextBlock Text="Welcome to KitBox! Ready to create your custom wardrobe with ease? Start by exploring different designs or customize your own!"
-               FontSize="14"
-               HorizontalAlignment="Left"
-               Margin="0,100,0,0"/>
-  </Grid>
+    <Grid>
+        <!-- StackPanel pour empiler les éléments de manière verticale -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+            <!-- Titre -->
+            <TextBlock Text="Kit Box"
+                       FontSize="60"
+                       FontFamily="avares://KitBox_Project/Fonts#Anton"
+                       HorizontalAlignment="Center"/>
+            
+            <!-- Bouton Start -->
+            <Button Content="Start" HorizontalAlignment="Center" Click="GoToDesign"/>
+        </StackPanel>
+
+        <!-- Slogan -->
+        <TextBlock x:Name="MovingText"
+                   Text="From Store to Home, a Smarter Way to Build Your Ideal Storage!"
+                   FontSize="17"
+                   FontFamily="avares://KitBox_Project/Fonts#Anton"
+                   HorizontalAlignment="Left"
+                   Foreground="Black"
+                   Margin="20,20,0,0"/>
+
+        <!-- Contenu principal de l'application -->
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+    </Grid>
 </UserControl>
