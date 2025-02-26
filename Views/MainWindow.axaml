@@ -9,6 +9,13 @@
         Title="{Binding Title}"
         x:DataType="viewModels:MainViewModel">
 
+   <!-- Style global appliqué aux boutons du menu : Tous les boutons s'adaptent automatiquement à la largeur du menu, garantissant une apparence uniforme sans avoir à les modifier individuellement. Idéal pour maintenir un design cohérent, surtout en cas de nombreux boutons. Si je dois faire individuellement, je dois ajouter HorizontalAlignment="Stretch" à chaque bouton. -->
+    <Window.Styles>
+        <Style Selector="SplitView > StackPanel > Button">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </Window.Styles>
+
     <Grid>
         <!-- Bouton ☰ pour ouvrir/fermer le menu -->
         <Button x:Name="MenuButton"
@@ -20,27 +27,24 @@
                 Click="ToggleMenu"
                 ZIndex="2"/>
 
-        <!-- ✅ Le SplitView gère le menu coulissant -->
+        <!-- Le SplitView gère le menu coulissant -->
         <SplitView x:Name="MenuPanel"
                    DisplayMode="Overlay"
                    IsPaneOpen="False"
-                   OpenPaneLength="200"
+                   OpenPaneLength="170"
                    CompactPaneLength="0"
                    PanePlacement="Left"
-                   Background="White"
                    ZIndex="1">
 
-            <!-- ✅ Le contenu du menu DOIT être mis dans Pane -->
+            <!-- Le contenu du menu DOIT être mis dans Pane -->
             <SplitView.Pane>
-                <StackPanel Background="LightGray" Width="200">
-                    <Button Content="Home" Click="GoToHome"/>
-                    <Button Content="Order" Click="GoToOrder"/>
-                    <Button Content="Order Tracking" Click="GoToOrderTracking"/>
-                    <Button Content="Locker Configuration" Click="GoToLockerConfiguration"/>
-                    <Button Content="Help and Support" Click="GoToHelpSupport"/>
+                <StackPanel Background="LightGray">
+                    <Button Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome"/>
+                    <Button Content="Inspirations" Background="Transparent" Click="GoToInspirations"/>
+                    <Button Content="Design Your Wardrobe" Background="Transparent" Click="GoToDesignYourWardrobe"/>
+                    <Button Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport"/>
                 </StackPanel>
             </SplitView.Pane>
-
         </SplitView>
 
         <!-- Contenu principal de l'application -->

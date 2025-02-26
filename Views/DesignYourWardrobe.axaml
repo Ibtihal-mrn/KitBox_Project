@@ -3,10 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KitBox_Project.Views.OrderTracking">
+             x:Class="KitBox_Project.Views.DesignYourWardrobe">
   
   <Grid>
-        <TextBlock Text="Bienvenue sur la page Order Tracking"
+        <TextBlock Text="Bienvenue sur la page Locker Configuration"
                    FontSize="24"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"/>

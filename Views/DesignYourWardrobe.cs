@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace KitBox_Project.Views;
 
-public partial class LockerConfiguration : UserControl
+public partial class DesignYourWardrobe : UserControl
 {
-    public LockerConfiguration()
+    public DesignYourWardrobe()
     {
         InitializeComponent();
     }
