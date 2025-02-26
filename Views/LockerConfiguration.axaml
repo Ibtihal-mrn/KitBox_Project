@@ -6,9 +6,29 @@
              x:Class="KitBox_Project.Views.LockerConfiguration">
   
   <Grid>
-        <TextBlock Text="Bienvenue sur la page Locker Configuration"
-                   FontSize="24"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
+        <StackPanel>
+
+        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        
+        <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox  Name="Longueur" Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="Option 1" />
+            <ComboBoxItem Content="Option 2" />
+            <ComboBoxItem Content="Option 3" />
+        </ComboBox>
+
+        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="Option 1" />
+            <ComboBoxItem Content="Option 2" />
+            <ComboBoxItem Content="Option 3" />
+        </ComboBox>
+
+        <!-- Mettre un résumé des dimensions -->
+
+        <!-- <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Margin="0,50,0,0"/> -->
+
+    </StackPanel>
     </Grid>
 </UserControl>
