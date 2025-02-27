@@ -9,13 +9,16 @@
         <StackPanel>
             <TextBlock Text="3. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
-            <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-            <ComboBox Name="Couleur" Width="200" HorizontalAlignment="Center">
-                <ComboBoxItem Content="Option 1" />
-                <ComboBoxItem Content="Option 2" />
-                <ComboBoxItem Content="Option 3" />
-            </ComboBox>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">           
+                <Button Background="SaddleBrown" Width="50" Height="50" Click="SelectColor" Tag="Marron"/>
+                <Button Background="White" Width="50" Height="50" Click="SelectColor" Tag="White"/>
+                <TextBlock x:Name="SelectedColorText" Text="Couleur sélectionnée : White" 
+                HorizontalAlignment="Center" FontSize="16" Margin="10"/>
+            </StackPanel>
+
         </StackPanel>
+
+        
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
             <Button Content="Back" Click="GoToHeight" Margin="5,0"/>

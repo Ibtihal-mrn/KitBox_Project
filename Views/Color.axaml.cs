@@ -31,5 +31,21 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
             }
         }
+
+        private string selectedColor = "White";
+        private void SelectColor(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is not null)
+            {
+                selectedColor = button.Tag?.ToString() ?? "Color not selected";  // Stocke la couleur du bouton
+
+        // Vérifie que SelectedColorText n'est pas null
+                if (this.FindControl<TextBlock>("SelectedColorText") is TextBlock textBlock)
+                    {
+                        textBlock.Text = $"Couleur sélectionnée : {selectedColor}";
+                    }
+            }
+        }
+
     }
 }
