@@ -5,9 +5,9 @@ using Avalonia.Interactivity;
 
 namespace KitBox_Project.Views
 {
-    public partial class DesignYourWardrobe : UserControl
+    public partial class Color : UserControl
     {
-        public DesignYourWardrobe()
+        public Color()
         {
             InitializeComponent();
         }
@@ -15,10 +15,16 @@ namespace KitBox_Project.Views
         // Gestionnaire d'événement pour le bouton "Next"
         
 
-        private void GoToHeightWindow(object sender, RoutedEventArgs e)
+        private void GoToHeight(object sender, RoutedEventArgs e)
         {
             var mainWindow = (MainWindow)VisualRoot; // Récupère la fenêtre principale
             mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
+        }
+
+        private void GoToDoor(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (MainWindow)VisualRoot; // Récupère la fenêtre principale
+            mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
         }
 
     }
