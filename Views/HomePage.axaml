@@ -15,7 +15,22 @@
                        HorizontalAlignment="Center"/>
             
             <!-- Bouton Start -->
-            <Button Content="Start" HorizontalAlignment="Center" Click="GoToDesign"/>
+            <Button Content="Start configuring your cabinet" HorizontalAlignment="Center" Click="GoToDesign"/>
+            
+            <!-- Texte et bouton alignés -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="5">
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="For more informations click" />
+                </TextBlock>
+                <Button Content="here"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Blue"
+                        Cursor="Hand"
+                        VerticalAlignment="Center" 
+                        Click="GoToHelpSupport"
+                        Padding="2, 0"/>
+            </StackPanel>
         </StackPanel>
 
         <!-- Slogan -->

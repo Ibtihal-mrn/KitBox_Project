@@ -50,5 +50,14 @@ namespace KitBox_Project.Views
         {
             StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
         }
+
+        private void GoToHelpSupport(object? sender, RoutedEventArgs e)
+        {
+            if (this.VisualRoot is MainWindow mainWindow)
+                {
+                    mainWindow.MainContent.Content = new HelpSupport();
+                }
+        }
+
     }
 }
