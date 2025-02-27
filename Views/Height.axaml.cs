@@ -17,15 +17,20 @@ namespace KitBox_Project.Views
 
         private void GoToColor(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)VisualRoot; // Récupère la fenêtre principale
-            mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter le cast direct
+            if (mainWindow != null)
+            {
+                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+            }
         }
 
         private void GoToSize(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)VisualRoot; // Récupère la fenêtre principale
-            mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter le cast direct
+            if (mainWindow != null)
+            {
+                mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
+            }
         }
-
     }
 }

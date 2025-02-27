@@ -16,11 +16,11 @@ namespace KitBox_Project.Views
         
         private void GoToChoice(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (MainWindow)VisualRoot; // Récupère la fenêtre principale
-            mainWindow.MainContent.Content = new Choice(); // ✅ Modifie le bon ContentControl
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter un cast direct
+            if (mainWindow != null)
+            {
+                mainWindow.MainContent.Content = new Choice(); // ✅ Modifie le bon ContentControl
+            }
         }
-
-       
-
     }
 }
