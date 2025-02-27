@@ -21,7 +21,7 @@ namespace KitBox_Project
         // Vérifie que SelectedColorText n'est pas null
         if (this.FindControl<TextBlock>("SelectedColorText") is TextBlock textBlock)
         {
-            textBlock.Text = $"Couleur sélectionnée : {selectedColor}";
+            textBlock.Text = $"Selected Color : {selectedColor}";
         }
     }
 }
@@ -35,6 +35,7 @@ namespace KitBox_Project
 
         private void GoToMainWindow(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            
             var mainWindow = new MainWindow();  // Crée une nouvelle instance de MainWindow
             Fonctions.NavigateToPage(this, mainWindow);  // Utilise la méthode dans NavigationHelper
         }

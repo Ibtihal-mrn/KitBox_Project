@@ -8,7 +8,11 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
     <AvaloniaUseCompiledBindings>true</AvaloniaUseCompiledBindings>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <AvaloniaResource Include="Ressources\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.2.1" />
     <PackageReference Include="SkiaSharp" Version="2.88.8" />

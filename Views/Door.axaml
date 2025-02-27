@@ -10,14 +10,8 @@
 
         <Button Content="Home" Click="GoToMainWindow" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-        <TextBlock Text="4. Choix de la porte" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        <TextBlock Text="4. DoorChoice" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
         
-        <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-        <ComboBox  Name="Longueur" Width="200" HorizontalAlignment="Center">
-            <ComboBoxItem Content="Option 1" />
-            <ComboBoxItem Content="Option 2" />
-            <ComboBoxItem Content="Option 3" />
-        </ComboBox>
 
         <!-- Mettre un résumé des dimensions -->
 
