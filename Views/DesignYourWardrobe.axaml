@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.DesignYourWardrobe">
+  
+  <Grid>
+        <StackPanel>
+
+        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        
+        <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox  Name="Longueur" Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="Option 1" />
+            <ComboBoxItem Content="Option 2" />
+            <ComboBoxItem Content="Option 3" />
+        </ComboBox>
+
+        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="Option 1" />
+            <ComboBoxItem Content="Option 2" />
+            <ComboBoxItem Content="Option 3" />
+        </ComboBox>
+
+        <!-- Mettre un résumé des dimensions -->
+
+        <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
+
+
+    </StackPanel>
+
+    <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+    </Grid>
+</UserControl>

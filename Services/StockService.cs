@@ -1,0 +1,1 @@
+//Interface entre ViewModel et StockRepository
