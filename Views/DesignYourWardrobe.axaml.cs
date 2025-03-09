@@ -22,5 +22,11 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
             }
         }
+        public void OnOpenConsoleClick(object sender, RoutedEventArgs e)
+        {
+            var consoleWindow = new ConsoleWindow();
+            consoleWindow.Show();
+        }
+
     }
 }

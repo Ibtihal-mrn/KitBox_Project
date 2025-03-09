@@ -1,4 +1,4 @@
-namespace AvaloniaApplication1.Config
+namespace KitBox_Project.Config
 {
     public static class DatabaseConfig
     {

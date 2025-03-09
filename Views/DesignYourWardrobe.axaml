@@ -28,6 +28,7 @@
         <!-- Mettre un résumé des dimensions -->
 
         <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
+        <Button Content="Ouvrir la console" Click="OnOpenConsoleClick"/>
 
 
     </StackPanel>

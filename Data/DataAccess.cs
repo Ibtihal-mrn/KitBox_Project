@@ -1,47 +1,36 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using AvaloniaApplication1.Models;
-using AvaloniaApplication1.Config;
+using KitBox_Project.Data;
+using KitBox_Project.Config;
+using KitBox_Project.Models;
 
-namespace AvaloniaApplication1.Data
+namespace KitBox_Project.Data
 {
     public class DataAccess
     {
         private string _connectionString = DatabaseConfig.ConnectionString;
 
-        public List<Kitbox_components> GetArticles()
+        public List<Article> GetArticles()
         {
-            List<Kitbox_components> articles = new List<Kitbox_components>();
+            List<Article> articles = new List<Article>();
 
             using (MySqlConnection conn = new MySqlConnection(_connectionString))
             {
                 try
                 {
                     conn.Open();
-                    string query = "SELECT id, reference, selling_price FROM kitbox_components";
+                    string query = "SELECT PK_num_article, description_Article, FK_num_categorie FROM articles";
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            articles.Add(new Kitbox_components
+                            articles.Add(new Article
                             {
-                                Id = reader.GetInt32("id"),
-                                Reference = reader.GetString("reference"),
-                                Code = reader.GetString("code"),
-                                Dimensions = reader.GetString("dimensions"),
-                                LengthCm = reader.GetFloat("length_cm"),
-                                WidthCm = reader.GetFloat("width_cm"),
-                                DepthCm = reader.GetFloat("depth_cm"),
-                                PriceSupplier1 = reader.GetFloat("price_supplier1"),
-                                DelaySupplier1 = reader.GetInt32("delay_supplier1"),
-                                PriceSupplier2 = reader.GetFloat("price_supplier2"),
-                                DelaySupplier2 = reader.GetInt32("delay_supplier2"),
-                                SellingPrice = reader.GetFloat("selling_price"),
-                                NumberOfPiecesAvailable = reader.GetInt32("number_of_pieces_available"),
-                                Color = reader.GetString("color")
-
+                                PK_num_article = reader.GetInt32("PK_num_article"),
+                                DescriptionArticle = reader.GetString("description_Article"),
+                                FK_num_categorie = reader.GetInt32("FK_num_categorie")
                             });
                         }
                     }

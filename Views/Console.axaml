@@ -1,0 +1,20 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="KitBox_Project.Views.ConsoleWindow"
+        Width="500" Height="300"
+        Title="Console">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Content="Charger les articles" Click="OnLoadArticlesClick" Margin="10" Grid.Row="0"/>
+        
+        <ScrollViewer Grid.Row="1" Margin="10" VerticalScrollBarVisibility="Auto">
+            <TextBox x:Name="ConsoleOutput" Text="Console prête..."
+                     AcceptsReturn="True" IsReadOnly="True"
+                     TextWrapping="Wrap"/>
+        </ScrollViewer>
+    </Grid>
+</Window>
