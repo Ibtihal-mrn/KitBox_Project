@@ -20,7 +20,9 @@ namespace KitBox_Project.ViewModels
 
                 foreach (var article in articles)
                 {
-                    sb.AppendLine($"ID: {article.PK_num_article}, Description: {article.DescriptionArticle}, Catégorie: {article.FK_num_categorie}");
+                    sb.AppendLine($"Code: {article.Code}, Référence: {article.Reference}, Couleur: {article.Color}, " +
+                                  $"Dimensions: {article.Length}x{article.Width}x{article.Depth} cm, " +
+                                  $"Prix Vente: {article.SellingPrice}€, Stock: {article.NumberOfPiecesAvailable}");
                 }
 
                 if (articles.Count == 0)
