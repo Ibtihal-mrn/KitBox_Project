@@ -19,7 +19,7 @@
         </ComboBox>
 
         <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-        <ComboBox Width="200" HorizontalAlignment="Center">
+        <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
             <ComboBoxItem Content="Option 1" />
             <ComboBoxItem Content="Option 2" />
             <ComboBoxItem Content="Option 3" />

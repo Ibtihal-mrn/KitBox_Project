@@ -10,7 +10,7 @@ namespace KitBox_Project.Data
     {
         private string _connectionString = DatabaseConfig.ConnectionString;
 
-        public List<Article> GetArticles()
+        public List<Article> GetLengthOfPanelHorizontal()
         {
             List<Article> articles = new List<Article>();
 
@@ -19,31 +19,26 @@ namespace KitBox_Project.Data
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Reference, Code, Color, Dimensions, Length, Width, Depth, `Price-SupplierUno`, `Delay-SupplierUno`, `Price-SupplierDos`, `Delay-SupplierDos`, `selling price`, `number of pieces available` FROM test.new_table";
+                    string query = "SELECT Length FROM new_table WHERE reference LIKE '%panel_horizontal%'";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
+                        // Vérifiez si le reader contient des données
                         while (reader.Read())
                         {
-                            articles.Add(new Article
+                            // Vérifier si la colonne "Length" n'est pas nulle
+                            if (!reader.IsDBNull(reader.GetOrdinal("Length")))
                             {
-                                Code = reader.GetString("Code"),
-                                Reference = reader.GetString("Reference"),
-                                Color = reader.GetString("Color"),
-                                Dimensions = reader.GetString("Dimensions"),
-                                Length = reader.IsDBNull(reader.GetOrdinal("Length")) ? 0 : reader.GetInt32("Length"),
-                                Width = reader.IsDBNull(reader.GetOrdinal("Width")) ? 0 : reader.GetInt32("Width"),
-                                Depth = reader.IsDBNull(reader.GetOrdinal("Depth")) ? 0 : reader.GetInt32("Depth"),
-                                PriceSupplierUno = reader.IsDBNull(reader.GetOrdinal("Price-SupplierUno")) ? 0m : reader.GetDecimal("Price-SupplierUno"),
-                                DelaySupplierUno = reader.IsDBNull(reader.GetOrdinal("Delay-SupplierUno")) ? 0 : reader.GetInt32("Delay-SupplierUno"),
-                                PriceSupplierDos = reader.IsDBNull(reader.GetOrdinal("Price-SupplierDos")) ? 0m : reader.GetDecimal("Price-SupplierDos"),
-                                DelaySupplierDos = reader.IsDBNull(reader.GetOrdinal("Delay-SupplierDos")) ? 0 : reader.GetInt32("Delay-SupplierDos"),
-                                SellingPrice = reader.IsDBNull(reader.GetOrdinal("selling price")) ? 0m : reader.GetDecimal("selling price"),
-                                NumberOfPiecesAvailable = reader.IsDBNull(reader.GetOrdinal("number of pieces available")) ? 0 : reader.GetInt32("number of pieces available")
-                            });
-
-                            Console.WriteLine($"Colonnes disponibles : {reader.GetName(0)}, {reader.GetName(1)}, ...");
+                                articles.Add(new Article
+                                {
+                                    Length = reader.GetInt32("Length")
+                                });
+                            }
+                            else
+                            {
+                                Console.WriteLine("La colonne 'Length' est nulle pour cette ligne.");
+                            }
                         }
                     }
                 }
@@ -54,5 +49,43 @@ namespace KitBox_Project.Data
             }
             return articles;
         }
+        public List<Article> GetDepthOfPanelHorizontal(int length)
+        {
+            List<Article> articles = new List<Article>();
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    // Utilisation d'un paramètre pour éviter les injections SQL
+                    string query = "SELECT Depth FROM new_table WHERE reference LIKE '%panel_horizontal%' AND Length = @Length";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        // Ajout du paramètre pour la longueur
+                        cmd.Parameters.AddWithValue("@Length", length);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                articles.Add(new Article
+                                {
+                                    Depth = reader.IsDBNull(reader.GetOrdinal("Depth")) ? 0 : reader.GetInt32("Depth")
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur : {ex.Message}");
+                }
+            }
+            return articles;
+        }
+
+    
     }
 }
