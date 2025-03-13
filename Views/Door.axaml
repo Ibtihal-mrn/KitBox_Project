@@ -9,13 +9,13 @@
         <StackPanel>
             <TextBlock Text="4. Choix de la porte" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
-            <TextBlock Text="Ajouter une porte ? :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+            <TextBlock Text="Ajouter une porte ? " Margin="0,50,0,5" HorizontalAlignment="Center"/>
             <ComboBox Name="Porte" Width="200" HorizontalAlignment="Center">
-                <ComboBoxItem Content="Option 1" />
-                <ComboBoxItem Content="Option 2" />
-                <ComboBoxItem Content="Option 3" />
+                <ComboBoxItem Content="Oui" />
+                <ComboBoxItem Content="Non" />
             </ComboBox>
         </StackPanel>
+        
 
         <!-- Demander si le client veut une porte, et si oui afficher les choix possibles -->
 

@@ -11,9 +11,9 @@
             
             <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
             <ComboBox Name="Longueur" Width="200" HorizontalAlignment="Center">
-                <ComboBoxItem Content="Option 1" />
-                <ComboBoxItem Content="Option 2" />
-                <ComboBoxItem Content="Option 3" />
+                <ComboBoxItem Content="27cm" />
+                <ComboBoxItem Content="37cm" />
+                <ComboBoxItem Content="47cm" />
             </ComboBox>
         </StackPanel>
 
