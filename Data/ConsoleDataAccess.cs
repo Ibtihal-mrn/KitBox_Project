@@ -20,7 +20,7 @@ namespace KitBox_Project.Data
                 {
                     conn.Open();
                     string query = @"
-                        SELECT Reference, Code, Color, Dimensions, Length, Width, Depth, 
+                        SELECT Reference, Code, Color, Dimensions, Length, Height, Depth, 
                                `Price-SupplierUno`, `Delay-SupplierUno`, 
                                `Price-SupplierDos`, `Delay-SupplierDos`, 
                                `selling price`, `number of pieces available` 
@@ -38,7 +38,7 @@ namespace KitBox_Project.Data
                                 Color = reader.IsDBNull(reader.GetOrdinal("Color")) ? "N/A" : reader.GetString("Color"),
                                 Dimensions = reader.IsDBNull(reader.GetOrdinal("Dimensions")) ? "N/A" : reader.GetString("Dimensions"),
                                 Length = reader.IsDBNull(reader.GetOrdinal("Length")) ? 0 : reader.GetInt32("Length"),
-                                Width = reader.IsDBNull(reader.GetOrdinal("Width")) ? 0 : reader.GetInt32("Width"),
+                                Height = reader.IsDBNull(reader.GetOrdinal("Height")) ? 0 : reader.GetInt32("Height"),
                                 Depth = reader.IsDBNull(reader.GetOrdinal("Depth")) ? 0 : reader.GetInt32("Depth"),
                                 PriceSupplierUno = reader.IsDBNull(reader.GetOrdinal("Price-SupplierUno")) ? 0m : reader.GetDecimal("Price-SupplierUno"),
                                 DelaySupplierUno = reader.IsDBNull(reader.GetOrdinal("Delay-SupplierUno")) ? 0 : reader.GetInt32("Delay-SupplierUno"),

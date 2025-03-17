@@ -28,7 +28,7 @@ namespace KitBox_Project.ViewModels
                     foreach (var article in articles)
                     {
                         sb.AppendLine($"Code: {article.Code}, Référence: {article.Reference}, Couleur: {article.Color}, " +
-                                      $"Dimensions: {article.Length}x{article.Width}x{article.Depth} cm, " +
+                                      $"Dimensions: {article.Length}x{article.Height}x{article.Depth} cm, " +
                                       $"Prix Vente: {article.SellingPrice}€, Stock: {article.NumberOfPiecesAvailable}");
                     }
                 }

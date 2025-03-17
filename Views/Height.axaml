@@ -10,11 +10,16 @@
             <TextBlock Text="2. Hauteur du casier" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
             <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-            <ComboBox Name="Longueur" Width="200" HorizontalAlignment="Center">
-                <ComboBoxItem Content="Option 1" />
-                <ComboBoxItem Content="Option 2" />
-                <ComboBoxItem Content="Option 3" />
+            
+            <!-- ComboBox pour la Hauteur -->
+            <ComboBox Name="Hauteur" Width="200" HorizontalAlignment="Center">
+                <!-- Les items seront ajoutés dynamiquement via le code-behind -->
             </ComboBox>
+
+            <!-- Alerte de stock faible -->
+            <TextBlock Name="StockWarning" Foreground="Red" FontSize="16"
+                IsVisible="False" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">

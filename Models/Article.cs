@@ -7,7 +7,7 @@ namespace KitBox_Project.Models
         public string? Color{ get; set; }
         public string? Dimensions { get; set; } // Stocke les dimensions sous forme de chaîne (ex: "100x50x30")
         public int Length { get; set; }
-        public int Width { get; set; }
+        public int Height { get; set; }
         public int Depth { get; set; }
         public decimal PriceSupplierUno { get; set; }
         public int DelaySupplierUno { get; set; }

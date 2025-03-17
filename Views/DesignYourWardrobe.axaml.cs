@@ -10,59 +10,53 @@ namespace KitBox_Project.Views
 {
     public partial class DesignYourWardrobe : UserControl
     {
+        // Propriétés pour stocker la longueur et la profondeur sélectionnées
+        public int SelectedLength { get; private set; }
+        public int SelectedDepth { get; private set; }
+
         public DesignYourWardrobe()
         {
             InitializeComponent();
-            
-            // Cette méthode s'exécute après le chargement du XAML
             Loaded += OnControlLoaded;
         }
-        
+
         private void OnControlLoaded(object? sender, RoutedEventArgs e)
         {
-            // À ce stade, tous les contrôles sont chargés
             LoadLengthData();
         }
-        
+
         private void LoadLengthData()
         {
-            // Récupérer le ComboBox directement quand on en a besoin
             var longueurComboBox = this.Find<ComboBox>("Longueur");
             if (longueurComboBox == null)
             {
                 Console.WriteLine("Impossible de trouver le ComboBox 'Longueur'");
                 return;
             }
-            
-            // Créer une instance de DataAccess
-            var dataAccess = new DataAccess();
-            
-            // Récupérer les articles horizontaux
-            var horizontalPanels = dataAccess.GetLengthOfPanelHorizontal();
-            
-            // Vider le ComboBox des éléments par défaut
-            longueurComboBox.Items.Clear();
-            
-            // Ajouter les longueurs au ComboBox
-            foreach (var panel in horizontalPanels)
-            {
-                longueurComboBox.Items.Add(new ComboBoxItem { Content = panel.Length.ToString() });
-            }
-            
-            // Afficher un message pour vérifier
-            Console.WriteLine($"Chargé {horizontalPanels.Count} longueurs dans le ComboBox");
 
-            // Ajouter un événement de sélection pour le ComboBox de longueur
+            var dataAccess = new DataAccess();
+            var uniqueLengths = dataAccess.GetLengthOfPanelHorizontal()
+                .Select(panel => panel.Length)
+                .Distinct()
+                .OrderBy(length => length)
+                .ToList();
+
+            longueurComboBox.Items.Clear();
+            foreach (var length in uniqueLengths)
+            {
+                longueurComboBox.Items.Add(new ComboBoxItem { Content = length.ToString() });
+            }
+
+            Console.WriteLine($"Chargé {uniqueLengths.Count} longueurs uniques dans le ComboBox");
             longueurComboBox.SelectionChanged += OnLengthSelectionChanged;
         }
-        
+
         private void OnLengthSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             var longueurComboBox = sender as ComboBox;
             if (longueurComboBox == null || longueurComboBox.SelectedItem == null)
                 return;
 
-            // Récupérer la longueur sélectionnée
             var selectedItem = longueurComboBox.SelectedItem as ComboBoxItem;
             if (selectedItem?.Content == null)
             {
@@ -72,7 +66,7 @@ namespace KitBox_Project.Views
             string selectedLengthStr = selectedItem.Content?.ToString() ?? string.Empty;
             if (int.TryParse(selectedLengthStr, out int selectedLength))
             {
-                // Charger les profondeurs correspondantes
+                SelectedLength = selectedLength;
                 LoadDepthData(selectedLength);
             }
             else
@@ -83,31 +77,27 @@ namespace KitBox_Project.Views
 
         private void LoadDepthData(int selectedLength)
         {
-            // Récupérer le ComboBox de profondeur
             var profondeurComboBox = this.Find<ComboBox>("Profondeur");
             if (profondeurComboBox == null)
             {
                 Console.WriteLine("Impossible de trouver le ComboBox 'Profondeur'");
                 return;
             }
-            
-            // Créer une instance de DataAccess
+
             var dataAccess = new DataAccess();
-            
-            // Récupérer les profondeurs correspondantes à la longueur sélectionnée
-            var depthPanels = dataAccess.GetDepthOfPanelHorizontal(selectedLength);
-            
-            // Vider le ComboBox des éléments par défaut
+            var uniqueDepths = dataAccess.GetDepthOfPanelHorizontal(selectedLength)
+                .Select(panel => panel.Depth)
+                .Distinct()
+                .OrderBy(depth => depth)
+                .ToList();
+
             profondeurComboBox.Items.Clear();
-            
-            // Ajouter les profondeurs au ComboBox
-            foreach (var panel in depthPanels)
+            foreach (var depth in uniqueDepths)
             {
-                profondeurComboBox.Items.Add(new ComboBoxItem { Content = panel.Depth.ToString() });
+                profondeurComboBox.Items.Add(depth.ToString());
             }
-            
-            // Afficher un message pour vérifier
-            Console.WriteLine($"Chargé {depthPanels.Count} profondeurs dans le ComboBox");
+
+            Console.WriteLine($"Chargé {uniqueDepths.Count} profondeurs uniques dans le ComboBox");
         }
 
         // Gestionnaire d'événement pour le bouton "Next"
@@ -116,10 +106,13 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new Height();
+                var heightView = new Height();
+                heightView.SelectedLength = SelectedLength;
+                heightView.SelectedDepth = SelectedDepth;
+                mainWindow.MainContent.Content = heightView;
             }
         }
-        
+
         public void OnOpenConsoleClick(object sender, RoutedEventArgs e)
         {
             var consoleWindow = new ConsoleWindow();
