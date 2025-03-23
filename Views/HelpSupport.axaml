@@ -5,10 +5,14 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HelpSupport">
   
-  <Grid>
-        <TextBlock Text="Bienvenue sur la page Help and Support"
-                   FontSize="24"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30,0,0" Spacing="20">
+            <TextBlock Text="Bienvenue sur la page Help and Support"
+                       FontSize="24"
+                       HorizontalAlignment="Center"/>
+
+            <!-- 👇 Le bouton vers la page Test -->
+            <Button Content="Aller vers la page Test" Click="GoToTestPage"/>
+        </StackPanel>
     </Grid>
 </UserControl>

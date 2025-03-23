@@ -10,7 +10,6 @@ namespace KitBox_Project.Views
 {
     public partial class DesignYourWardrobe : UserControl
     {
-        // Propriétés pour stocker la longueur et la profondeur sélectionnées
         public int SelectedLength { get; private set; }
         public int SelectedDepth { get; private set; }
 
@@ -28,11 +27,7 @@ namespace KitBox_Project.Views
         private void LoadLengthData()
         {
             var longueurComboBox = this.Find<ComboBox>("Longueur");
-            if (longueurComboBox == null)
-            {
-                Console.WriteLine("Impossible de trouver le ComboBox 'Longueur'");
-                return;
-            }
+            if (longueurComboBox == null) return;
 
             var dataAccess = new DataAccess();
             var uniqueLengths = dataAccess.GetLengthOfPanelHorizontal()
@@ -47,42 +42,24 @@ namespace KitBox_Project.Views
                 longueurComboBox.Items.Add(new ComboBoxItem { Content = length.ToString() });
             }
 
-            Console.WriteLine($"Chargé {uniqueLengths.Count} longueurs uniques dans le ComboBox");
             longueurComboBox.SelectionChanged += OnLengthSelectionChanged;
         }
 
         private void OnLengthSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             var longueurComboBox = sender as ComboBox;
-            if (longueurComboBox == null || longueurComboBox.SelectedItem == null)
-                return;
-
-            var selectedItem = longueurComboBox.SelectedItem as ComboBoxItem;
-            if (selectedItem?.Content == null)
-            {
-                Console.WriteLine("La longueur sélectionnée n'est pas valide.");
-                return;
-            }
-            string selectedLengthStr = selectedItem.Content?.ToString() ?? string.Empty;
-            if (int.TryParse(selectedLengthStr, out int selectedLength))
+            if (longueurComboBox?.SelectedItem is ComboBoxItem selectedItem &&
+                int.TryParse(selectedItem.Content?.ToString(), out int selectedLength))
             {
                 SelectedLength = selectedLength;
                 LoadDepthData(selectedLength);
-            }
-            else
-            {
-                Console.WriteLine("La longueur sélectionnée n'est pas valide.");
             }
         }
 
         private void LoadDepthData(int selectedLength)
         {
             var profondeurComboBox = this.Find<ComboBox>("Profondeur");
-            if (profondeurComboBox == null)
-            {
-                Console.WriteLine("Impossible de trouver le ComboBox 'Profondeur'");
-                return;
-            }
+            if (profondeurComboBox == null) return;
 
             var dataAccess = new DataAccess();
             var uniqueDepths = dataAccess.GetDepthOfPanelHorizontal(selectedLength)
@@ -94,21 +71,48 @@ namespace KitBox_Project.Views
             profondeurComboBox.Items.Clear();
             foreach (var depth in uniqueDepths)
             {
-                profondeurComboBox.Items.Add(depth.ToString());
+                profondeurComboBox.Items.Add(new ComboBoxItem { Content = depth.ToString() });
             }
 
-            Console.WriteLine($"Chargé {uniqueDepths.Count} profondeurs uniques dans le ComboBox");
+            profondeurComboBox.SelectionChanged += OnDepthSelectionChanged;
         }
 
-        // Gestionnaire d'événement pour le bouton "Next"
+        private void OnDepthSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var profondeurComboBox = sender as ComboBox;
+            if (profondeurComboBox?.SelectedItem is ComboBoxItem selectedItem &&
+                int.TryParse(selectedItem.Content?.ToString(), out int selectedDepth))
+            {
+                SelectedDepth = selectedDepth;
+            }
+        }
+
         private void GoToHeightWindow(object sender, RoutedEventArgs e)
         {
+            var errorMessageTextBlock = this.Find<TextBlock>("ErrorMessage");
+
+            if (SelectedLength == 0 || SelectedDepth == 0)
+            {
+                if (errorMessageTextBlock != null)
+                {
+                    errorMessageTextBlock.IsVisible = true;
+                }
+                return;
+            }
+
+            if (errorMessageTextBlock != null)
+            {
+                errorMessageTextBlock.IsVisible = false;
+            }
+
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
-                var heightView = new Height();
-                heightView.SelectedLength = SelectedLength;
-                heightView.SelectedDepth = SelectedDepth;
+                var heightView = new Height
+                {
+                    SelectedLength = SelectedLength,
+                    SelectedDepth = SelectedDepth
+                };
                 mainWindow.MainContent.Content = heightView;
             }
         }

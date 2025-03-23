@@ -4,35 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.DesignYourWardrobe">
-  
+
   <Grid>
-        <StackPanel>
+    <StackPanel>
 
-        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
-        
-        
-        <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-        <ComboBox  Name="Longueur" Width="200" HorizontalAlignment="Center">
-            <ComboBoxItem Content="Option 1" />
-            <ComboBoxItem Content="Option 2" />
-            <ComboBoxItem Content="Option 3" />
-        </ComboBox>
+      <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
 
-        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-        <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
-            <ComboBoxItem Content="Option 1" />
-            <ComboBoxItem Content="Option 2" />
-            <ComboBoxItem Content="Option 3" />
-        </ComboBox>
+      <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+      <ComboBox Name="Longueur" Width="200" HorizontalAlignment="Center">
+        <ComboBoxItem Content="Option 1" />
+        <ComboBoxItem Content="Option 2" />
+        <ComboBoxItem Content="Option 3" />
+      </ComboBox>
 
-        <!-- Mettre un résumé des dimensions -->
+      <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+      <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
+        <ComboBoxItem Content="Option 1" />
+        <ComboBoxItem Content="Option 2" />
+        <ComboBoxItem Content="Option 3" />
+      </ComboBox>
 
-        <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
-        <Button Content="Ouvrir la console" Click="OnOpenConsoleClick"/>
+      <!-- Message d'erreur affiché si les sélections ne sont pas valides -->
+      <TextBlock x:Name="ErrorMessage"
+                 Text="Veuillez sélectionner à la fois la longueur et la profondeur avant de continuer."
+                 Foreground="Red"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 IsVisible="False"/>
 
+      <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
+      <Button Content="Ouvrir la console" Click="OnOpenConsoleClick"/>
 
     </StackPanel>
 
     <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
-    </Grid>
+  </Grid>
 </UserControl>

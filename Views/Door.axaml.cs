@@ -7,26 +7,64 @@ namespace KitBox_Project.Views
 {
     public partial class Door : UserControl
     {
+        public string SelectedDoorOption { get; private set; } = string.Empty;
+
         public Door()
         {
             InitializeComponent();
+            Loaded += OnControlLoaded;
         }
 
-        // Gestionnaire d'événement pour le bouton "Next"
+        private void OnControlLoaded(object? sender, RoutedEventArgs e)
+        {
+            var porteComboBox = this.FindControl<ComboBox>("Porte");
+            if (porteComboBox != null)
+            {
+                porteComboBox.SelectionChanged += OnPorteSelectionChanged;
+            }
+        }
+
+        private void OnPorteSelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            var porteComboBox = sender as ComboBox;
+            if (porteComboBox?.SelectedItem is ComboBoxItem selectedItem)
+            {
+                SelectedDoorOption = selectedItem.Content?.ToString() ?? string.Empty;
+            }
+            else
+            {
+                SelectedDoorOption = string.Empty;
+            }
+        }
+
         private void GoToColor(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
+            if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Color();
             }
         }
 
         private void GoToChoice(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
+            var errorMessageTextBlock = this.FindControl<TextBlock>("ErrorMessage");
+
+            // Vérification de la sélection
+            if (string.IsNullOrWhiteSpace(SelectedDoorOption))
             {
-                mainWindow.MainContent.Content = new Choice(); // ✅ Modifie le bon ContentControl
+                if (errorMessageTextBlock != null)
+                    errorMessageTextBlock.IsVisible = true;
+                return;
+            }
+
+            if (errorMessageTextBlock != null)
+                errorMessageTextBlock.IsVisible = false;
+
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.MainContent.Content = new Choice();
             }
         }
     }
 }
+

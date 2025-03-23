@@ -85,7 +85,7 @@ namespace KitBox_Project.Data
             return articles;
         }
 
-       public bool IsStockLow(int length, int depth)
+        public bool IsStockLow(int length, int depth)
         {
             bool isLowStock = false;
 
@@ -113,8 +113,8 @@ namespace KitBox_Project.Data
                                 int stockAvailable = reader.IsDBNull(reader.GetOrdinal("number of pieces available")) ? 0 : reader.GetInt32("number of pieces available");
                                 if (stockAvailable <= 5)
                                 {
-                                    isLowStock = true; // Si stock inférieur ou égal à 5, on met l'indicateur à true
-                                    break; // Une fois qu'on trouve un article en stock faible, on arrête la recherche
+                                    isLowStock = true; 
+                                    break; 
                                 }
                             }
                         }
@@ -128,6 +128,7 @@ namespace KitBox_Project.Data
 
             return isLowStock;
         }
+
         public List<Article> GetHeightOfPanel(int length, int depth)
         {
             List<Article> articles = new List<Article>();
@@ -169,4 +170,66 @@ namespace KitBox_Project.Data
             return articles;
         }
 
-    }}
+        // Classe LowStockItem mise à jour
+        public class LowStockItem
+        {
+            public string? Reference { get; set; }
+            public int AvailableQuantity { get; set; }
+            public int Length { get; set; } // Ajout de Length
+            public int Depth { get; set; }  // Ajout de Depth
+
+            public int Height { get; set; }
+        }
+
+        public List<LowStockItem> GetLowStockItems(int length, int depth)
+        {
+            List<LowStockItem> lowStockItems = new List<LowStockItem>();
+
+            using (MySqlConnection conn = new MySqlConnection(_connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string query = @"
+                        SELECT Reference, `number of pieces available`, Length, Depth, Height 
+                        FROM new_table 
+                        WHERE (Reference LIKE '%panel back%' 
+                            OR Reference LIKE '%panel left%')
+                        AND (`number of pieces available` IS NULL 
+                            OR `number of pieces available` <= 5)";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@Length", length);
+                        cmd.Parameters.AddWithValue("@Depth", depth);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var lowStockItem = new LowStockItem
+                                {
+                                    Reference = reader.GetString("Reference"),
+                                    AvailableQuantity = reader.IsDBNull(reader.GetOrdinal("number of pieces available")) 
+                                                        ? 0  // Si la valeur est nulle, on l'assume à 0
+                                                        : reader.GetInt32("number of pieces available"),
+                                    Length = reader.IsDBNull(reader.GetOrdinal("Length")) ? 0 : reader.GetInt32("Length"),
+                                    Depth = reader.IsDBNull(reader.GetOrdinal("Depth")) ? 0 : reader.GetInt32("Depth"),
+                                    Height = reader.IsDBNull(reader.GetOrdinal("Height")) ? 0 : reader.GetInt32("Height")
+                                };
+
+                                lowStockItems.Add(lowStockItem);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Erreur : {ex.Message}");
+                }
+            }
+
+            return lowStockItems;
+        }
+    }
+}
