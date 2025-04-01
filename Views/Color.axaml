@@ -7,7 +7,7 @@
     
     <Grid>
         <StackPanel>
-            <TextBlock Text="3. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+            <TextBlock Text="1. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">           
                 <Button Background="SaddleBrown" Width="50" Height="50" Click="SelectColor" Tag="Marron"/>
@@ -22,7 +22,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
             <Button Content="Back" Click="GoToHeight" Margin="5,0"/>
-            <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
+            <Button Content="Next" Click="GoToDesignYourWardrobe" Margin="5,0"/>
         </StackPanel>
 
         <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>

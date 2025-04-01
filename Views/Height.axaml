@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <!-- Titre -->
-        <TextBlock Text="2. Hauteur du casier" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Grid.Row="0" />
+        <TextBlock Text="3. Hauteur du casier" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" Grid.Row="0" />
 
         <!-- Label Hauteur -->
         <TextBlock Text="Hauteur :" Margin="0,50,0,5" HorizontalAlignment="Center" Grid.Row="1" />
@@ -42,7 +42,7 @@
         <!-- Boutons Back et Next (en bas) -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0" Grid.Row="4">
             <Button Content="Back" Click="GoToSize" Margin="5,0"/>
-            <Button Content="Next" Click="GoToColor" Margin="5,0"/>
+            <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
         </StackPanel>
 
             

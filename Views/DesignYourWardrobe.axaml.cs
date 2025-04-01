@@ -116,6 +116,13 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = heightView;
             }
         }
+        private void GoToColor(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.MainContent.Content = new Color();
+            }
+        }
 
         public void OnOpenConsoleClick(object sender, RoutedEventArgs e)
         {

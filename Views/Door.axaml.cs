@@ -37,11 +37,11 @@ namespace KitBox_Project.Views
             }
         }
 
-        private void GoToColor(object sender, RoutedEventArgs e)
+        private void GoToHeight(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.MainContent.Content = new Color();
+                mainWindow.MainContent.Content = new Height();
             }
         }
 

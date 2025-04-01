@@ -29,7 +29,7 @@ namespace KitBox_Project.Views
             MainContent.Content = HomePage;
         }
         private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
-        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
+        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new Color();
         private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
     }
 }

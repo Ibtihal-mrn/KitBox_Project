@@ -8,7 +8,7 @@
   <Grid>
     <StackPanel>
 
-      <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+      <TextBlock Text="2. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
 
       <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
       <ComboBox Name="Longueur" Width="200" HorizontalAlignment="Center">
@@ -33,6 +33,7 @@
                  IsVisible="False"/>
 
       <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
+      <Button Content="Back" Click="GoToColor" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
       <Button Content="Ouvrir la console" Click="OnOpenConsoleClick"/>
 
     </StackPanel>

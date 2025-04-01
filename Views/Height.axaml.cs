@@ -167,7 +167,7 @@ namespace KitBox_Project.Views
             });
         }
 
-        private void GoToColor(object sender, RoutedEventArgs e)
+        private void GoToDoor(object sender, RoutedEventArgs e)
         {
             // Vérifie si la hauteur est sélectionnée avant de continuer
             if (SelectedHeight == 0)
@@ -181,7 +181,7 @@ namespace KitBox_Project.Views
             // Naviguer vers la page couleur
             if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.MainContent.Content = new Color();
+                mainWindow.MainContent.Content = new Door();
             }
         }
 

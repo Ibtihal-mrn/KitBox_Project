@@ -32,12 +32,12 @@ namespace KitBox_Project.Views
             }
         }
 
-        private void GoToSize(object sender, RoutedEventArgs e)
+        private void GoToColor(object sender, RoutedEventArgs e)
         {
             var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
             if (mainWindow != null) // Vérifie que mainWindow n'est pas null
             {
-                mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
             }
         }
 
