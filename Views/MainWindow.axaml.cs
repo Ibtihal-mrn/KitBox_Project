@@ -9,10 +9,8 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
-                var userTypePage = new ChooseUserTypePage();
-                userTypePage.ClientChosen += (_, _) => ShowHomePage();
-                userTypePage.VendorChosen += (_, _) => ShowVendorPage();
-                MainContent.Content = userTypePage;
+                ShowChooseUserTypePage(); // ✅ un seul point d’entrée
+
 
         }
 
@@ -42,14 +40,18 @@ namespace KitBox_Project.Views
 
         private void ShowVendorPage()
         {
-            MainContent.Content = new TextBlock
-            {
-                Text = "Interface vendeur à venir...",
-                FontSize = 24,
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
-            };
+            var identification = new Identification();
+            MainContent.Content = identification;
         }
+
+        public void ShowChooseUserTypePage()
+        {
+            var userTypePage = new ChooseUserTypePage();
+            userTypePage.ClientChosen += (_, _) => ShowHomePage();
+            userTypePage.VendorChosen += (_, _) => ShowVendorPage();
+            MainContent.Content = userTypePage;
+        }
+
 
     }
 }

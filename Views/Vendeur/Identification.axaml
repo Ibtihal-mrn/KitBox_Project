@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.Identification">
+    
+    <Grid>
+        <StackPanel>
+
+            <TextBlock Text="Veuillez entrer votre numéro de matricule et votre mot de passe" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+
+            <!-- Mettre un résumé des dimensions -->
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+                <TextBox Width="200" Watermark="Matricule"/>
+                <TextBox Width="200" Margin="10" Watermark="Mot de passe"/>
+                <Button Content="Se connecter" Width="200" Click="GoToHomeVendeur"/>
+                <Button Content="Retour" Width="200" Click="GoToFirstPage"/>
+            </StackPanel>
+
+            
+
+
+        </StackPanel>
+
+        
+    </Grid>
+
+</UserControl>
