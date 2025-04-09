@@ -32,5 +32,13 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
             }
         }
+
+        private void GoToFirstPage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+            }
+        }
     }
 }

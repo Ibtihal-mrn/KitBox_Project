@@ -12,21 +12,21 @@ namespace KitBox_Project.Views
             InitializeComponent();
         }
 
-        // Gestionnaire d'événement pour le bouton "Next"
-        private void GoToColor(object sender, RoutedEventArgs e)
+        private void GoToAddUser(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
             {
-                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new AddUser(); // ✅ Modifie le bon ContentControl
             }
         }
 
-        private void GoToChoice(object sender, RoutedEventArgs e)
+        private void GoToFirstPage(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
+            if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.MainContent.Content = new Choice(); // ✅ Modifie le bon ContentControl
+                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
             }
         }
+        
     }
 }

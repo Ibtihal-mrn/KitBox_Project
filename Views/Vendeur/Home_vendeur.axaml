@@ -6,9 +6,15 @@
              x:Class="KitBox_Project.Views.Home_vendeur">
 
     <Grid>
-       <TextBlock Text="Kit Box"
+       <TextBlock Text="KitBox app côté vendeur"
                        FontSize="60"
                        FontFamily="avares://KitBox_Project/Fonts#Anton"
                        HorizontalAlignment="Center"/>
+        
+        <!-- Utilisation d'une StackPanel pour espacer les boutons -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
+            <Button Content="Ajouter un nouveau vendeur" Width="200" Click="GoToAddUser"/>
+            <Button Content="Se déconnecter" Width="200" Click="GoToFirstPage"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -14,5 +14,15 @@ namespace KitBox_Project.Views
 
         // Gestionnaire d'événements pour les boutons
 
+
+        private void GoToFirstPage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+            }
+        }
     }
+
+    
 }

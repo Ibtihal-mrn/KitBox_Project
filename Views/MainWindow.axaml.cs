@@ -9,7 +9,7 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
-                ShowChooseUserTypePage(); // ✅ un seul point d’entrée
+            ShowChooseUserTypePage(); // ✅ un seul point d’entrée
 
 
         }

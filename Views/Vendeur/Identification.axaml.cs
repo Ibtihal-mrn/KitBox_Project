@@ -2,6 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
+using KitBox_Project.Data;
+using System;
+
 
 namespace KitBox_Project.Views
 {
@@ -10,6 +13,8 @@ namespace KitBox_Project.Views
         public Identification()
         {
             InitializeComponent();
+            DatabaseManager.InitializeDatabase();
+            DatabaseManager.InsertTestUser(); //uniquement pour le test
         }
 
         // Gestionnaire d'événements pour les boutons
@@ -25,10 +30,29 @@ namespace KitBox_Project.Views
     
         private void GoToHomeVendeur(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
-            {
-                mainWindow.MainContent.Content = new Home_vendeur(); // ✅ Modifie le bon ContentControl
+            string matricule = MatriculeBox.Text?.Trim() ?? "";
+            string motDePasse = PasswordBox.Text?.Trim() ?? "";
+
+            string? role = DatabaseManager.AuthenticateUser(matricule, motDePasse);
+
+            if (role == "vendeur"){
+                if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
+                {
+                    mainWindow.MainContent.Content = new Home_vendeur(); // ✅ Modifie le bon ContentControl
+                }
             }
+
+            else if (role == "superviseur"){
+                if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
+                {
+                    mainWindow.MainContent.Content = new Home_vendeur(); // ✅ Modifie le bon ContentControl
+                }
+            }
+            else {
+                //afficher un message d'erreur simple
+                Console.WriteLine("Identifiants incorrects!");
+            }
+            
         }
         
 

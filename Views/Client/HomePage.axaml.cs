@@ -59,5 +59,13 @@ namespace KitBox_Project.Views
                 }
         }
 
+        private void GoToFirstPage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+            }
+        }
+
     }
 }
