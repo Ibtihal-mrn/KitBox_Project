@@ -24,5 +24,11 @@
     <AvaloniaResource Include="Fonts/Anton-Regular.ttf"/>
 
     <AvaloniaResource Include="Assets\Panier.png" />
+    <AvaloniaResource Include="Assets\Salon.jpg" />
+
+    <AvaloniaResource Include="Assets\facture.png" />
+    <AvaloniaResource Include="Assets\etudiant.png" />
+    <AvaloniaResource Include="Assets\commande.png" />
+    <AvaloniaResource Include="Assets\livraison.png" />
   </ItemGroup>
 </Project>

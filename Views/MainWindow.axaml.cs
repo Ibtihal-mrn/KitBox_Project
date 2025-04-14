@@ -9,10 +9,11 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
-                var homePage = new HomePage();
-                homePage.StartClicked += GoToDesignYourWardrobe; // Écoute l'événement
+            var homePage = new HomePage();
+            homePage.StartClicked += GoToDesignYourWardrobe; // Abonnement à l'événement StartClicked
+            homePage.HelpClicked += GoToHelpSupport; // Abonnement à l'événement HelpClicked
     
-                MainContent.Content = homePage;
+            MainContent.Content = homePage; // Charger la page d'accueil
         }
 
         // Ouvre/ferme le menu proprement
@@ -24,12 +25,25 @@ namespace KitBox_Project.Views
         // Gérer la navigation
         private void GoToHome(object? sender, RoutedEventArgs e)
         {
-            var HomePage=new HomePage();
+            var HomePage = new HomePage();
             HomePage.StartClicked += GoToDesignYourWardrobe;
+            HomePage.HelpClicked += GoToHelpSupport; // Assurer que l'événement HelpClicked est aussi abonné
             MainContent.Content = HomePage;
         }
+
         private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
         private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
-        private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
+
+        private void GoToHelpSupport(object? sender, RoutedEventArgs e)
+        {
+            var helpPage = new HelpSupport();
+            helpPage.PasserCommandeClicked += GoToPlaceMyOrder; // Abonnement à l'événement PasserCommandeClicked
+            MainContent.Content = helpPage; // Charger la page HelpSupport
+        }
+
+        private void GoToPlaceMyOrder(object? sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new PlaceMyOrder(); // Charger la page PlaceMyOrder
+        }
     }
 }
