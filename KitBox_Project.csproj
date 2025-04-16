@@ -25,6 +25,7 @@
 
     <AvaloniaResource Include="Assets\Panier.png" />
     <AvaloniaResource Include="Assets\Salon.jpg" />
+    <AvaloniaResource Include="Assets\Salon1.jpg" />
 
     <AvaloniaResource Include="Assets\facture.png" />
     <AvaloniaResource Include="Assets\etudiant.png" />
