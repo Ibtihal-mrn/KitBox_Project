@@ -5,25 +5,41 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.PlaceMyOrder">
 
-  <Grid>
-    <TextBlock Text="Payer ma commande"
+  <Grid Margin="20">
+    <TextBlock Text="Kit Box"
                FontSize="24"
-               FontWeight="Bold"
-               Margin="50,10,0,0"/>
-
-    <TextBlock Margin="50,45,0,0">
-    Si vous souhaitez passer commande, vous pourrez régler par :
-    <LineBreak />
-    • Carte bancaire
-    <LineBreak />
-    • Virement bancaire
-    <LineBreak />
-    • Espèces
-    <LineBreak />
+               FontFamily="avares://KitBox_Project/Fonts#Anton"
+               HorizontalAlignment="Center"/>
     
-    <LineBreak />
-    En magasin, tous les moyens de paiement sont cumulables !
-    </TextBlock>
-</Grid>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="30,40,0,0">
+      <Button Content="← Back"
+              Background="Transparent"
+              BorderBrush="Transparent"
+              Foreground="Black"
+              FontSize="16"
+              Padding="0"
+              HorizontalAlignment="Left"
+              Click="OnRetourClick"/>
+
+      <TextBlock Text="Pay My Order"
+                 FontSize="22"
+                 FontWeight="Bold"/>
+
+      <TextBlock Margin="0,15,0,0">
+        If you wish to place an order, you can pay using:
+        <LineBreak />
+        • Credit Card
+        <LineBreak />
+        • Bank Transfer
+        <LineBreak />
+        • Cash
+        <LineBreak />
+        
+        <LineBreak />
+        In-store, all payment methods can be combined!
+      </TextBlock>
+
+    </StackPanel>
+  </Grid>
 
 </UserControl>

@@ -6,44 +6,62 @@ namespace KitBox_Project.Views
 {
     public partial class MainWindow : Window
     {
+        private HelpSupport _helpPage; // Instance conservée de HelpSupport
+
         public MainWindow()
         {
             InitializeComponent();
+
             var homePage = new HomePage();
-            homePage.StartClicked += GoToDesignYourWardrobe; // Abonnement à l'événement StartClicked
-            homePage.HelpClicked += GoToHelpSupport; // Abonnement à l'événement HelpClicked
-    
-            MainContent.Content = homePage; // Charger la page d'accueil
+            homePage.StartClicked += GoToDesignYourWardrobe;
+            homePage.HelpClicked += GoToHelpSupport;
+            homePage.OrderClicked += OnRetourClick;
+
+            MainContent.Content = homePage;
         }
 
-        // Ouvre/ferme le menu proprement
         private void ToggleMenu(object? sender, RoutedEventArgs e)
         {
             MenuPanel.IsPaneOpen = !MenuPanel.IsPaneOpen;
         }
 
-        // Gérer la navigation
         private void GoToHome(object? sender, RoutedEventArgs e)
         {
-            var HomePage = new HomePage();
-            HomePage.StartClicked += GoToDesignYourWardrobe;
-            HomePage.HelpClicked += GoToHelpSupport; // Assurer que l'événement HelpClicked est aussi abonné
-            MainContent.Content = HomePage;
+            var homePage = new HomePage();
+            homePage.StartClicked += GoToDesignYourWardrobe;
+            homePage.HelpClicked += GoToHelpSupport;
+            homePage.OrderClicked += OnRetourClick;
+
+            MainContent.Content = homePage;
         }
 
-        private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
-        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
+        private void GoToInspirations(object? sender, RoutedEventArgs e) =>
+            MainContent.Content = new Inspirations();
+
+        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) =>
+            MainContent.Content = new DesignYourWardrobe();
 
         private void GoToHelpSupport(object? sender, RoutedEventArgs e)
         {
-            var helpPage = new HelpSupport();
-            helpPage.PasserCommandeClicked += GoToPlaceMyOrder; // Abonnement à l'événement PasserCommandeClicked
-            MainContent.Content = helpPage; // Charger la page HelpSupport
+            if (_helpPage == null)
+            {
+                _helpPage = new HelpSupport();
+                _helpPage.PasserCommandeClicked += GoToPlaceMyOrder;
+            }
+
+            MainContent.Content = _helpPage;
         }
 
         private void GoToPlaceMyOrder(object? sender, RoutedEventArgs e)
         {
-            MainContent.Content = new PlaceMyOrder(); // Charger la page PlaceMyOrder
+            var placeMyOrder = new PlaceMyOrder();
+            placeMyOrder.RetourClicked += OnRetourClick; // Utilise ton nom
+            MainContent.Content = placeMyOrder;
+        }
+
+        private void OnRetourClick(object? sender, RoutedEventArgs e)
+        {
+            GoToHelpSupport(sender, e);
         }
     }
 }
