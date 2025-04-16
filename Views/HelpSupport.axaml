@@ -5,46 +5,95 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HelpSupport">
 
-    <Grid>
-        <TextBlock Text="Bienvenue sur la page Help and Support"
-                   FontSize="24"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
+    <UserControl.Styles>
+        <Style Selector="#PasserCommandeButton:pointerover" x:SetterTargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid Margin="20">
         
-        <StackPanel Orientation="Vertical" Margin="20">
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="avares://KitBox_Project/Assets/commande.png"
-                           Width="29" Height="29" Stretch="Uniform"/>
-                </Border>
-                <Button Content="Passer ma commande" FontSize="14" Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" Click="OnPasserCommandeClicked"/>
+        <!-- Titre principal -->
+        <TextBlock Text="Kit Box"
+                    FontSize="24"
+                    FontFamily="avares://KitBox_Project/Fonts#Anton"
+                    HorizontalAlignment="Center"/>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="30,40,0,0">
+            <!-- Sous-titre -->
+            <TextBlock Text="Comment pouvons-nous vous aider ?"
+                       FontSize="22"
+                       FontWeight="Bold"/>
+
+            <!-- Barre de recherche -->
+            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,15,0,0">
+                <TextBox x:Name="SearchBox"
+                         Width="400"
+                         Watermark="Trouvez votre réponse en tapant un mot clé..."
+                         VerticalAlignment="Center"/>
+                <Button Content="Rechercher"
+                        Click="OnSearchClicked"
+                        VerticalAlignment="Center"/>
             </StackPanel>
 
-                        <StackPanel Orientation="Horizontal" Margin="10">
-                <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="avares://KitBox_Project/Assets/etudiant.png"
-                        Width="28" Height="28" Stretch="Uniform"/>
-                </Border>
-                <TextBlock Text="Réduction étudiante" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
+            <TextBlock Text="Exemples de recherche : &quot;Livraison&quot;, &quot;Commande&quot;, &quot;Remboursement&quot;"
+            FontSize="13"
+            Margin="0,5,0,0"/>
 
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="avares://KitBox_Project/Assets/facture.png"
-                        Width="28" Height="28" Stretch="Uniform"/>
-                </Border>
-                <TextBlock Text="Retrouver ma facture" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
-            </StackPanel>
+            <!-- Titre rubriques -->
+            <TextBlock Text="Rubriques d'aide"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,25,0,0"/>
 
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="avares://KitBox_Project/Assets/livraison.png"
-                        Width="28" Height="28" Stretch="Uniform"/>
-                </Border>
-                <TextBlock Text="Livraison" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <!-- Liste des rubriques -->
+            <StackPanel Orientation="Vertical">
+                <!-- Rubrique 1 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/commande.png"
+                               Width="29" Height="29" Stretch="Uniform"/>
+                    </Border>
+                    <Button x:Name="PasserCommandeButton"
+                            Content="Passer ma commande"
+                            FontSize="14"
+                            Background="Transparent"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="OnPasserCommandeClicked"/>
+                </StackPanel>
+
+                <!-- Rubrique 2 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/etudiant.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <TextBlock Text="Réduction étudiante" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Rubrique 3 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/facture.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <TextBlock Text="Retrouver ma facture" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Rubrique 4 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/livraison.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <TextBlock Text="Livraison" FontSize="14" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
 
+        <!-- Contenu dynamique (masqué tant qu’on ne clique sur rien) -->
         <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
     </Grid>
 </UserControl>
