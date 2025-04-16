@@ -5,11 +5,11 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.Inspirations">
 
-      <Grid>
-        <TextBlock Text="Bienvenue sur la page Inspirations"
-                   FontSize="24"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
+      <Grid Margin="20">
+        <TextBlock Text="Kit Box"
+            FontSize="24"
+            FontFamily="avares://KitBox_Project/Fonts#Anton"
+            HorizontalAlignment="Center"/>
 
         <Image Source="avares://KitBox_Project/Assets/Salon.jpg"
         Stretch="Uniform"

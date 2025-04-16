@@ -1,12 +1,13 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Views;
 
 namespace KitBox_Project.Views
 {
     public partial class MainWindow : Window
     {
-        private HelpSupport _helpPage; // Instance conservée de HelpSupport
+        private HelpSupport? _helpPage; // Instance conservée de HelpSupport
 
         public MainWindow()
         {
@@ -15,7 +16,6 @@ namespace KitBox_Project.Views
             var homePage = new HomePage();
             homePage.StartClicked += GoToDesignYourWardrobe;
             homePage.HelpClicked += GoToHelpSupport;
-            homePage.OrderClicked += OnRetourClick;
 
             MainContent.Content = homePage;
         }
@@ -30,7 +30,6 @@ namespace KitBox_Project.Views
             var homePage = new HomePage();
             homePage.StartClicked += GoToDesignYourWardrobe;
             homePage.HelpClicked += GoToHelpSupport;
-            homePage.OrderClicked += OnRetourClick;
 
             MainContent.Content = homePage;
         }
@@ -62,6 +61,13 @@ namespace KitBox_Project.Views
         private void OnRetourClick(object? sender, RoutedEventArgs e)
         {
             GoToHelpSupport(sender, e);
+        }
+
+        private void OnShoppingCartClick(object? sender, RoutedEventArgs e)
+        {
+            var shoppingCart = new ShoppingCart();
+            shoppingCart.HomeClicked += GoToHome; // Lien avec ta méthode existante
+            MainContent.Content = shoppingCart;
         }
     }
 }

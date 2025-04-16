@@ -47,12 +47,9 @@
             </SplitView.Pane>
         </SplitView>
 
-        <Image Source="avares://KitBox_Project/Assets/Panier.png" Width="32"
-        Height="32"
-        HorizontalAlignment="Right"
-        VerticalAlignment="Top"
-        Margin="10"/>
-
+        <Button Click="OnShoppingCartClick" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent">
+            <Image Source="avares://KitBox_Project/Assets/Panier.png" Width="32" Height="32"/>
+        </Button>
 
         <!-- Contenu principal de l'application -->
         <ContentControl x:Name="MainContent"/> <!-- il sert d’espace réservé où tu peux charger différentes vues sans recréer toute la fenêtre. -->
