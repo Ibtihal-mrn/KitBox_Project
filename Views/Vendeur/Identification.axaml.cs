@@ -33,6 +33,11 @@ namespace KitBox_Project.Views
             string matricule = MatriculeBox.Text?.Trim() ?? "";
             string motDePasse = PasswordBox.Text?.Trim() ?? "";
 
+            Console.WriteLine($"Tentative login : matricule = '{matricule}', mdp = '{motDePasse}'");
+            Console.WriteLine($"Matricule saisi = '{matricule}' (length={matricule.Length})");
+            Console.WriteLine($"Mot de passe saisi = '{motDePasse}' (length={motDePasse.Length})");
+
+
             string? role = DatabaseManager.AuthenticateUser(matricule, motDePasse);
 
             if (role == "vendeur"){
