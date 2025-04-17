@@ -9,7 +9,7 @@
         <StackPanel Margin="20" HorizontalAlignment="Center" Spacing="20">
             
             <!-- Titre centré -->
-            <TextBlock Text="Kit Box"
+            <TextBlock TextWrapping="Wrap" Text="Kit Box"
                        FontSize="24"
                        FontFamily="avares://KitBox_Project/Fonts#Anton"
                        HorizontalAlignment="Center"/>

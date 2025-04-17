@@ -6,7 +6,7 @@
              x:Class="KitBox_Project.Views.Delivery">
 
   <Grid Margin="20">
-    <TextBlock Text="Kit Box"
+    <TextBlock TextWrapping="Wrap" Text="Kit Box"
                FontSize="24"
                FontFamily="avares://KitBox_Project/Fonts#Anton"
                HorizontalAlignment="Center"/>
@@ -20,7 +20,7 @@
               HorizontalAlignment="Left"
               Click="OnRetourClick"/>
 
-      <TextBlock Text="Delivery"
+      <TextBlock TextWrapping="Wrap" Text="Delivery"
                  FontSize="22"
                  FontWeight="Bold"
                  Margin="0,10,0,0"/>
@@ -29,7 +29,7 @@
         <Run FontWeight="Bold">Your order will be ready for pickup in-store</Run> as soon as it has been received and prepared. <Run FontWeight="Bold">We will send you an email</Run> to notify you when your package is available.
       </TextBlock>
 
-      <TextBlock Margin="0,10,0,0">
+      <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
       Be sure to come and pick it up at the store to complete your purchase.
       </TextBlock>
     </StackPanel>

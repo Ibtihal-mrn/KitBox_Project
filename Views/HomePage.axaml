@@ -9,7 +9,7 @@
         <!-- StackPanel pour empiler les éléments de manière verticale -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
             <!-- Titre -->
-            <TextBlock Text="Kit Box"
+            <TextBlock TextWrapping="Wrap" Text="Kit Box"
                        FontSize="60"
                        FontFamily="avares://KitBox_Project/Fonts#Anton"
                        HorizontalAlignment="Center"/>
@@ -19,7 +19,7 @@
             
             <!-- Texte et bouton alignés -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="5">
-                <TextBlock VerticalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">
                     <Run Text="For more informations click"/>
                 </TextBlock>
                 <Button Content="here"
