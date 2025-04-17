@@ -46,21 +46,12 @@ namespace KitBox_Project.Views
             {
                 _helpPage = new HelpSupport();
                 _helpPage.PasserCommandeClicked += GoToPlaceMyOrder;
+                _helpPage.StudentDiscountClicked += GoToStudentDiscount; // si tu n'as pas cette ligne, en cliquant tu n'accèdes pas à la page même si tu as tout bien configuré, que tout est relié ...
+                _helpPage.FindMyInvoiceClicked += GoToFindMyInvoice;
+                _helpPage.DeliveryClicked += GoToDelivery;
             }
 
             MainContent.Content = _helpPage;
-        }
-
-        private void GoToPlaceMyOrder(object? sender, RoutedEventArgs e)
-        {
-            var placeMyOrder = new PlaceMyOrder();
-            placeMyOrder.RetourClicked += OnRetourClick; // Utilise ton nom
-            MainContent.Content = placeMyOrder;
-        }
-
-        private void OnRetourClick(object? sender, RoutedEventArgs e)
-        {
-            GoToHelpSupport(sender, e);
         }
 
         private void OnShoppingCartClick(object? sender, RoutedEventArgs e)
@@ -68,6 +59,38 @@ namespace KitBox_Project.Views
             var shoppingCart = new ShoppingCart();
             shoppingCart.HomeClicked += GoToHome; // Lien avec ta méthode existante
             MainContent.Content = shoppingCart;
+        }
+
+        private void GoToPlaceMyOrder(object? sender, RoutedEventArgs e)
+        {
+            var placeMyOrder = new PlaceMyOrder();
+            placeMyOrder.RetourClicked += OnRetourClick;
+            MainContent.Content = placeMyOrder;
+        }
+        private void GoToStudentDiscount(object? sender, RoutedEventArgs e)
+        {
+            var studentDiscount = new StudentDiscount();
+            studentDiscount.RetourClicked += OnRetourClick;
+            MainContent.Content = studentDiscount;
+        }
+
+        private void GoToFindMyInvoice(object? sender, RoutedEventArgs e)
+        {
+            var findMyInvoice = new FindMyInvoice();
+            findMyInvoice.RetourClicked += OnRetourClick;
+            MainContent.Content = findMyInvoice;
+        }
+
+        private void GoToDelivery(object? sender, RoutedEventArgs e)
+        {
+            var delivery = new Delivery();
+            delivery.RetourClicked += OnRetourClick;
+            MainContent.Content = delivery;
+        }
+
+        private void OnRetourClick(object? sender, RoutedEventArgs e)
+        {
+            GoToHelpSupport(sender, e);
         }
     }
 }

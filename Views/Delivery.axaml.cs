@@ -4,10 +4,10 @@ using Avalonia.Interactivity;
 
 namespace KitBox_Project.Views;
 
-public partial class PlaceMyOrder : UserControl
+public partial class Delivery : UserControl
 {
     public event EventHandler<RoutedEventArgs>? RetourClicked;
-    public PlaceMyOrder()
+    public Delivery()
     {
         InitializeComponent();
     }

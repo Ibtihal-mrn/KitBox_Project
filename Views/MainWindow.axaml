@@ -52,6 +52,6 @@
         </Button>
 
         <!-- Contenu principal de l'application -->
-        <ContentControl x:Name="MainContent"/> <!-- il sert d’espace réservé où tu peux charger différentes vues sans recréer toute la fenêtre. -->
+        <ContentControl x:Name="MainContent"/> <!-- il sert d’espace réservé où tu peux charger différentes vues sans recréer toute la fenêtre. Un ContentControl dans Avalonia prend par défaut la taille de son parent. Grid : Le ContentControl est placé dans un Grid, et un Grid par défaut prend tout l'espace disponible dans la fenêtre, sauf indication contraire. Par conséquent, le ContentControl hérite de la taille du Grid et s'étendra pour occuper toute l'espace disponible. Il n'est donc pas nécessaire de spécifier HorizontalAlignment="Stretch" et VerticalAlignment="Stretch" dans ton <ContentControl x:Name="MainContent"/> -->
     </Grid>
 </Window>

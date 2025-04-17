@@ -25,7 +25,7 @@
             </Image>
 
             <!-- Deuxième image réduite -->
-            <Image Source="avares://KitBox_Project/Assets/Salon1.jpg"
+            <Image Source="avares://KitBox_Project/Assets/Salon.jpg"
                    Width="450"
                    Stretch="Uniform"
                    RenderTransformOrigin="0.5,0.5">

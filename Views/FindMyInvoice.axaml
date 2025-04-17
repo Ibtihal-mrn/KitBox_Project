@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.FindMyInvoice">
+
+  <Grid Margin="20">
+    <TextBlock Text="Kit Box"
+               FontSize="24"
+               FontFamily="avares://KitBox_Project/Fonts#Anton"
+               HorizontalAlignment="Center"/>
+    
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="30,40,0,0">
+      <Button Content="← Back"
+              Background="Transparent"
+              BorderBrush="Transparent"
+              Foreground="Black"
+              Padding="0"
+              HorizontalAlignment="Left"
+              Click="OnRetourClick"/>
+
+      <TextBlock Text="Find my invoice"
+                 FontSize="22"
+                 FontWeight="Bold"
+                 Margin="0,10,0,0"/>
+
+      <TextBlock TextWrapping="Wrap" Margin="0,15,0,0"> <!-- TextWrapping="Wrap" dans le TextBlock : Cela permet de couper le texte sur plusieurs lignes pour s'ajuster à la largeur disponible du ContentControl. -->
+        Your invoice is available as soon as your order is confirmed, in your customer account under the <Run FontStyle="Italic">My Orders</Run> section. Click on the <Run FontStyle="Italic">View Details</Run> button of the relevant order, then on <Run FontStyle="Italic">Download My Invoice </Run> at the bottom of the page.
+      </TextBlock>
+
+      <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
+        If your invoice is not available in your customer account, please visit a sales representative with your receipt and order confirmation. The team will be able to issue an invoice upon request.
+      </TextBlock>
+    </StackPanel>
+  </Grid>
+
+</UserControl>
