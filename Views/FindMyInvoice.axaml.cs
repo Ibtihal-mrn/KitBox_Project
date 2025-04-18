@@ -10,6 +10,7 @@ public partial class FindMyInvoice : UserControl
     public FindMyInvoice()
     {
         InitializeComponent();
+        DataContext = new KitBox_Project.ViewModels.FindMyInvoiceViewModel();
     }
     private void OnRetourClick(object? sender, RoutedEventArgs e)
     {
