@@ -27,7 +27,7 @@
                  FontWeight="Bold"
                  Margin="0,10,0,0"/>
 
-      <TextBlock TextWrapping="Wrap" Margin="0,15,0,0"> <!-- TextWrapping="Wrap" dans le TextBlock : Cela permet de couper le texte sur plusieurs lignes pour s'ajuster à la largeur disponible du ContentControl. -->
+      <TextBlock TextWrapping="Wrap" Margin="0,15,0,0">
         Your invoice is available as soon as your order is confirmed, in your customer account under the <Run FontStyle="Italic">My Orders</Run> section. Click on the <Run FontStyle="Italic">View Details</Run> button of the relevant order, then on <Run FontStyle="Italic">Download My Invoice </Run> at the bottom of the page.
       </TextBlock>
 
@@ -36,8 +36,8 @@
       </TextBlock>
 
       <Button Content="Download Invoice"
-        Command="{Binding GeneratorInvoiceCommand}"
-        Margin="0,15,0,0"/>
+        Margin="0,15,0,0"
+        Click="OnDownloadInvoiceClick"/>  <!-- Lier l'événement Click au code-behind -->
 
     </StackPanel>
   </Grid>

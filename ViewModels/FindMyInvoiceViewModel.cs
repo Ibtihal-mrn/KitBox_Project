@@ -1,8 +1,9 @@
 ﻿using ReactiveUI;
 using System.Windows.Input;
-using KitBox_Project.Helpers; // Remplace par le bon namespace de InvoiceGenerator si nécessaire
+using KitBox_Project.Helpers;
+using System;
 
-namespace KitBox_Project.ViewModels // Ou KitBox_Project.ViewModels, selon ta structure réelle
+namespace KitBox_Project.ViewModels
 {
     public class FindMyInvoiceViewModel : ReactiveObject
     {
@@ -15,7 +16,16 @@ namespace KitBox_Project.ViewModels // Ou KitBox_Project.ViewModels, selon ta st
 
         private void GenerateInvoice()
         {
-            InvoiceGenerator.GenerateSampleInvoice();
+            try
+            {
+                InvoiceGenerator.GenerateSampleInvoice();
+                Console.WriteLine("✅ Invoice generated successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error generating invoice: " + ex.Message);
+            }
         }
+
     }
 }

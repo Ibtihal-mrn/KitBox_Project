@@ -1,8 +1,8 @@
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace KitBox_Project.Helpers
 {
@@ -54,17 +54,20 @@ namespace KitBox_Project.Helpers
                 });
             });
 
-            // Chemin du fichier généré
-            string filePath = "invoice.pdf";
+            // Création du chemin de sortie
+            var outputPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "invoice.pdf");
 
-            // Générer le fichier PDF
-            document.GeneratePdf(filePath);
 
-            // Ouvrir le fichier PDF après génération
-            if (File.Exists(filePath))
+            // Vérification que le répertoire existe
+            string? directoryPath = Path.GetDirectoryName(outputPath);
+            if (!string.IsNullOrEmpty(directoryPath))
             {
-                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                Directory.CreateDirectory(directoryPath); // Crée le dossier si nécessaire
             }
+
+            // Génération du PDF
+            QuestPDF.Settings.License = LicenseType.Community;
+            document.GeneratePdf(outputPath);
         }
     }
-}
+} 
