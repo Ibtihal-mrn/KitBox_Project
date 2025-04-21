@@ -45,18 +45,15 @@ namespace KitBox_Project.Views
         }
         
         public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
+        public event EventHandler<RoutedEventArgs>? HelpClicked;
 
         private void GoToDesign(object? sender, RoutedEventArgs e)
         {
             StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
         }
-
         private void GoToHelpSupport(object? sender, RoutedEventArgs e)
         {
-            if (this.VisualRoot is MainWindow mainWindow)
-                {
-                    mainWindow.MainContent.Content = new HelpSupport();
-                }
+            HelpClicked?.Invoke(this, new RoutedEventArgs()); // On déclenche l’événement
         }
 
     }
