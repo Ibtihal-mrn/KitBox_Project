@@ -38,7 +38,7 @@ namespace KitBox_Project.Data
             var command = connection.CreateCommand();
             command.CommandText = @"
                 INSERT OR IGNORE INTO utilisateurs (Username, Password, Role)
-                VALUES ('superviseur1', 'mdp123', 'superviseur');
+                VALUES ('1', 'mdp123', 'superviseur');
             ";
             command.ExecuteNonQuery();
         }

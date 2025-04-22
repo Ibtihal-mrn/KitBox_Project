@@ -36,12 +36,34 @@ namespace KitBox_Project.Views
             var homePage = new HomePage();
             homePage.StartClicked += GoToDesignYourWardrobe;
             MainContent.Content = homePage;
+            MenuPanel.IsVisible = true;
+            MenuButton.IsVisible = true;
+            HomeButton.IsVisible = true;
+            InspiButton.IsVisible = true;
+            DesignButton.IsVisible = true;
+            SupportButton.IsVisible = true;
+            OrderButton.IsVisible = false;
+            StockButton.IsVisible = false;
+            UserButton.IsVisible = false;
+            ScheduleButton.IsVisible = false;
+            QuitButton.IsVisible = false;
         }
 
         private void ShowVendorPage()
         {
             var identification = new Identification();
             MainContent.Content = identification;
+            MenuPanel.IsVisible = true;
+            MenuButton.IsVisible = true;
+            HomeButton.IsVisible = false;
+            InspiButton.IsVisible = false;
+            DesignButton.IsVisible = false;
+            SupportButton.IsVisible = false;
+            OrderButton.IsVisible = true;
+            StockButton.IsVisible = true;
+            UserButton.IsVisible = true;
+            ScheduleButton.IsVisible = true;
+            QuitButton.IsVisible = true;
         }
 
         public void ShowChooseUserTypePage()
@@ -50,6 +72,17 @@ namespace KitBox_Project.Views
             userTypePage.ClientChosen += (_, _) => ShowHomePage();
             userTypePage.VendorChosen += (_, _) => ShowVendorPage();
             MainContent.Content = userTypePage;
+            MenuPanel.IsVisible = false;
+            MenuButton.IsVisible = false;
+            HomeButton.IsVisible = false;
+            InspiButton.IsVisible = false;
+            DesignButton.IsVisible = false;
+            SupportButton.IsVisible = false;
+            OrderButton.IsVisible = false;
+            StockButton.IsVisible = false;
+            UserButton.IsVisible = false;
+            ScheduleButton.IsVisible = false;
+            QuitButton.IsVisible = false;
         }
 
 

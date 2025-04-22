@@ -20,11 +20,23 @@ namespace KitBox_Project.Views
             }
         }
 
+        
+
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
             {
                 mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+            }
+        }
+
+        
+
+        private void GoToCalendar(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.MainContent.Content = new WeeklyCalendar(); // ✅ les événements sont rebranchés ici
             }
         }
         

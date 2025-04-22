@@ -18,6 +18,7 @@
     </Window.Styles>
 
     <Grid>
+        <!-- Menu pour l'app côté-->
         <!-- Bouton ☰ pour ouvrir/fermer le menu -->
         <Button x:Name="MenuButton"
                 Content="☰"
@@ -26,7 +27,8 @@
                 VerticalAlignment="Top"
                 Margin="10"
                 Click="ToggleMenu"
-                ZIndex="2"/>
+                ZIndex="2"
+                IsVisible ="False"/>
 
         <!-- Le SplitView gère le menu coulissant -->
         <SplitView x:Name="MenuPanel"
@@ -35,15 +37,21 @@
                    OpenPaneLength="170"
                    CompactPaneLength="0"
                    PanePlacement="Left"
-                   ZIndex="1">
+                   ZIndex="1"
+                   IsVisible="False">
 
             <!-- Le contenu du menu DOIT être mis dans Pane -->
             <SplitView.Pane>
                 <StackPanel Background="LightGray">
-                    <Button Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome"/>
-                    <Button Content="Inspirations" Background="Transparent" Click="GoToInspirations"/>
-                    <Button Content="Design Your Wardrobe" Background="Transparent" Click="GoToDesignYourWardrobe"/>
-                    <Button Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport"/>
+                    <Button x:Name="HomeButton" Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome" IsVisible="False"/>
+                    <Button x:Name="InspiButton" Content="Inspirations" Background="Transparent" Click="GoToInspirations" IsVisible="False"/>
+                    <Button x:Name="DesignButton" Content="Design Your Wardrobe" Background="Transparent" Click="GoToDesignYourWardrobe" IsVisible="False"/>
+                    <Button x:Name="SupportButton" Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport" IsVisible="False"/>
+                    <Button x:Name="OrderButton" Content="Order" Background="Transparent" IsVisible="False"/>
+                    <Button x:Name="StockButton" Content="Inventory Management" Background="Transparent" IsVisible="False"/>
+                    <Button x:Name="UserButton" Content="Add new user" Background="Transparent" IsVisible="False"/>
+                    <Button x:Name="ScheduleButton" Content="Work Schedule" Background="Transparent" IsVisible="False"/>
+                    <Button x:Name="QuitButton" Content="Quit Session" Background="Transparent" IsVisible="False"/>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
