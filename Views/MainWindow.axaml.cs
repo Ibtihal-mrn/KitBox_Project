@@ -1,6 +1,7 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using KitBox_Project.Services ; 
 
 namespace KitBox_Project.Views
 {
@@ -10,6 +11,8 @@ namespace KitBox_Project.Views
         {
             InitializeComponent();
             ShowChooseUserTypePage(); // ✅ un seul point d’entrée
+            this.Show();
+         
 
 
         }
@@ -31,6 +34,12 @@ namespace KitBox_Project.Views
         private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
         private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
 
+        private void GoToAddUser(object sender, RoutedEventArgs e) => MainContent.Content = new AddUser();
+        
+        private void GoToCalendar(object sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
+
+
+
         private void ShowHomePage()
         {
             var homePage = new HomePage();
@@ -49,9 +58,33 @@ namespace KitBox_Project.Views
             QuitButton.IsVisible = false;
         }
 
+        private void ShowVendor(){
+            if (AuthenticationService.Instance.IsAuthenticated)
+            {
+                // Déjà connecté → montrer interface vendeur directement
+                ShowVendorPage();
+            }
+            else
+            {
+                // Pas connecté → demander login
+                ShowLoginDialog();
+            }
+        }
+
+        private async void ShowLoginDialog()
+        {
+            var dialog = new LoginDialog(); // Fenêtre modale
+            var result = await dialog.ShowDialog<bool>(this); // Passer 'this' pour désigner la fenêtre parente
+
+            if (result)
+            {
+                ShowVendorPage(); // connecté, on peut y aller
+            }
+        }
+
         private void ShowVendorPage()
         {
-            var identification = new Identification();
+            var identification = new Home_vendeur();
             MainContent.Content = identification;
             MenuPanel.IsVisible = true;
             MenuButton.IsVisible = true;
@@ -70,14 +103,16 @@ namespace KitBox_Project.Views
         {
             var userTypePage = new ChooseUserTypePage();
             userTypePage.ClientChosen += (_, _) => ShowHomePage();
-            userTypePage.VendorChosen += (_, _) => ShowVendorPage();
+            userTypePage.VendorChosen += (_, _) => ShowVendor();
             MainContent.Content = userTypePage;
+
             MenuPanel.IsVisible = false;
             MenuButton.IsVisible = false;
             HomeButton.IsVisible = false;
             InspiButton.IsVisible = false;
             DesignButton.IsVisible = false;
             SupportButton.IsVisible = false;
+
             OrderButton.IsVisible = false;
             StockButton.IsVisible = false;
             UserButton.IsVisible = false;

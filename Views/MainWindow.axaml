@@ -49,8 +49,8 @@
                     <Button x:Name="SupportButton" Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport" IsVisible="False"/>
                     <Button x:Name="OrderButton" Content="Order" Background="Transparent" IsVisible="False"/>
                     <Button x:Name="StockButton" Content="Inventory Management" Background="Transparent" IsVisible="False"/>
-                    <Button x:Name="UserButton" Content="Add new user" Background="Transparent" IsVisible="False"/>
-                    <Button x:Name="ScheduleButton" Content="Work Schedule" Background="Transparent" IsVisible="False"/>
+                    <Button x:Name="UserButton" Content="Add new user" Background="Transparent" IsVisible="False" Click="GoToAddUser"/>
+                    <Button x:Name="ScheduleButton" Content="Work Schedule" Background="Transparent" IsVisible="False" Click="GoToCalendar"/>
                     <Button x:Name="QuitButton" Content="Quit Session" Background="Transparent" IsVisible="False"/>
                 </StackPanel>
             </SplitView.Pane>

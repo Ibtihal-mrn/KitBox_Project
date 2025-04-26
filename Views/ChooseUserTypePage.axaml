@@ -1,9 +1,27 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="KitBox_Project.Views.ChooseUserTypePage">
-  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
-    <TextBlock Text="Bienvenue" FontSize="32" HorizontalAlignment="Center"/>
-    <Button Content="Client" Width="200" Click="OnClientClicked"/>
-    <Button Content="Vendeur" Width="200" Click="OnVendorClicked"/>
-  </StackPanel>
+  <Grid>
+    <!-- Définition des lignes -->
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />  <!-- Pour les deux premières phrases -->
+      <RowDefinition Height="*" />     <!-- Pour la phrase du milieu -->
+      <RowDefinition Height="Auto" />  <!-- Pour les boutons -->
+    </Grid.RowDefinitions>
+
+    <!-- Les deux premières phrases en haut -->
+    <StackPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,20,0,0">
+      <TextBlock Text="Design. Customize. Create." FontSize="40" HorizontalAlignment="Center" FontFamily="avares://KitBox_Project/Fonts#Anton"/>
+      <TextBlock Text="Welcome to KitBox !" FontSize="40" HorizontalAlignment="Center" FontFamily="avares://KitBox_Project/Fonts#Anton"/>
+    </StackPanel>
+
+    <!-- La troisième phrase au centre -->
+    <TextBlock Grid.Row="1" Text="Are you a Customer or a Store Associate? Choose your role to get started!" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="avares://KitBox_Project/Fonts#Anton"/>
+
+    <!-- Les boutons en bas -->
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20" Margin="0,100,0,100">
+      <Button Content="Customer" Width="200" Click="OnClientClicked" FontFamily="avares://KitBox_Project/Fonts#Anton"/>
+      <Button Content="Store Associate" Width="200" Click="OnVendorClicked" FontFamily="avares://KitBox_Project/Fonts#Anton"/>
+    </StackPanel>
+  </Grid>
 </UserControl>

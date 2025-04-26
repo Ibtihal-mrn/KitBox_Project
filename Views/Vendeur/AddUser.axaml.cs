@@ -39,7 +39,7 @@ namespace KitBox_Project.Views
 
             try
             {
-                KitBox_Project.Data.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
+                KitBox_Project.Services.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
                 Console.WriteLine("Utilisateur ajouté avec succès !");
                 // Tu peux aussi afficher une notification, vider les champs, ou revenir en arrière.
                 MatriculeBox.Text = "";
@@ -56,7 +56,7 @@ namespace KitBox_Project.Views
 
         private void ChargerUtilisateurs()
         {
-            var users = KitBox_Project.Data.DatabaseManager.GetAllUsers();
+            var users = KitBox_Project.Services.DatabaseManager.GetAllUsers();
             var affichage = users.Select(u => $"{u.Username} | {u.Role} | {u.Password}").ToList();
             ListeUtilisateurs.ItemsSource = affichage;
         }
@@ -67,10 +67,12 @@ namespace KitBox_Project.Views
             {
                 // On suppose que info = "username | role | password"
                 var username = info.Split(" | ")[0];
-                KitBox_Project.Data.DatabaseManager.SupprimerUser(username);
+                KitBox_Project.Services.DatabaseManager.SupprimerUser(username);
                 ChargerUtilisateurs(); // refresh la liste
             }
         }
+
+        
 
 
 

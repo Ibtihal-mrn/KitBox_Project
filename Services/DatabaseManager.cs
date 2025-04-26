@@ -2,7 +2,7 @@ using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
 
-namespace KitBox_Project.Data
+namespace KitBox_Project.Services 
 {
     public static class DatabaseManager
     {
@@ -38,7 +38,7 @@ namespace KitBox_Project.Data
             var command = connection.CreateCommand();
             command.CommandText = @"
                 INSERT OR IGNORE INTO utilisateurs (Username, Password, Role)
-                VALUES ('1', 'mdp123', 'superviseur');
+                VALUES ('test', 'mdp123', 'superviseur');
             ";
             command.ExecuteNonQuery();
         }
@@ -58,8 +58,16 @@ namespace KitBox_Project.Data
             command.Parameters.AddWithValue("$password", password);
 
             var result = command.ExecuteScalar();
-            return result?.ToString();
+
+            if (result == null)
+            {
+                Console.WriteLine("Aucun utilisateur trouvé avec ce nom d'utilisateur et mot de passe.");
+                return null;
+            }
+
+            return result.ToString();
         }
+
 
         public static void AjouterUtilisateur(string username, string password, string role)
         {
