@@ -45,6 +45,7 @@ namespace KitBox_Project.Views
         }
         
         public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
+        public event EventHandler<RoutedEventArgs>? HelpClicked;
 
         private void GoToDesign(object? sender, RoutedEventArgs e)
         {
