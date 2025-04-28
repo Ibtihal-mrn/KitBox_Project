@@ -98,6 +98,8 @@ namespace KitBox_Project.Views
 
 
 
+        //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
+
 
 
         private void ShowHomePage()
