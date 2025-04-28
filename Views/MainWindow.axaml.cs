@@ -38,6 +38,8 @@ namespace KitBox_Project.Views
         
         private void GoToCalendar(object sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
 
+        //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
+
 
 
         private void ShowHomePage()
