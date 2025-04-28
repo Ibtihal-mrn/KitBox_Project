@@ -91,7 +91,9 @@ namespace KitBox_Project.Views
             GoToHelpSupport(sender, e);
         }
 
+        private void GoToAddUser(object? sender, RoutedEventArgs e) => MainContent.Content = new AddUser();
 
+        private void GoToCalendar(object? sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
 
 
 
