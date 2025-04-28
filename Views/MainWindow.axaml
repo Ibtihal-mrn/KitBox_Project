@@ -56,6 +56,10 @@
             </SplitView.Pane>
         </SplitView>
 
+        <Button x:Name="PanierButton" Click="OnShoppingCartClick" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" ZIndex="2" IsVisible="False">
+            <Image Source="avares://KitBox_Project/Assets/Panier.png" Width="32" Height="32"/>
+        </Button>
+
         <!-- Contenu principal de l'application -->
         <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
     </Grid>

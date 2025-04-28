@@ -4,11 +4,125 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HelpSupport">
-  
-  <Grid>
-        <TextBlock Text="Bienvenue sur la page Help and Support"
+
+    <UserControl.Styles>
+        <Style Selector="#PasserCommandeButton:pointerover" x:SetterTargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style Selector="#StudentDiscountButton:pointerover" x:SetterTargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style Selector="#FindMyInvoiceButton:pointerover" x:SetterTargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+
+        <Style Selector="#DeliveryButton:pointerover" x:SetterTargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid Margin="20">
+        
+        <!-- Main title -->
+        <TextBlock TextWrapping="Wrap" Text="Kit Box"
                    FontSize="24"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"/>
+                   FontFamily="avares://KitBox_Project/Fonts#Anton"
+                   HorizontalAlignment="Center"/>
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="30,40,0,0">
+            <!-- Subtitle -->
+            <TextBlock Text="How can we help you?"
+                       FontSize="22"
+                       FontWeight="Bold"/>
+
+            <!-- Search bar -->
+            <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,15,0,0">
+                <TextBox x:Name="SearchBox"
+                         Width="400"
+                         Watermark="Find your answer by typing a keyword..."
+                         VerticalAlignment="Center"/>
+                <Button Content="Search"
+                        Click="OnSearchClicked"
+                        VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <TextBlock TextWrapping="Wrap" Text='Search examples: "Delivery", "Order", "Refund"'
+                       FontSize="13"
+                       Margin="0,5,0,0"/>
+
+            <!-- Help sections title -->
+            <TextBlock TextWrapping="Wrap" Text="Help Sections"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,25,0,0"/>
+
+            <!-- Help section list -->
+            <StackPanel Orientation="Vertical" Margin="0,15,0,0">
+                <!-- Section 1 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/commande.png"
+                               Width="29" Height="29" Stretch="Uniform"/>
+                    </Border>
+                    <Button x:Name="PasserCommandeButton"
+                            Content="Place my order"
+                            FontSize="14"
+                            Background="Transparent"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="OnPasserCommandeClicked"/>
+                </StackPanel>
+
+                <!-- Section 2 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/etudiant.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <Button x:Name="StudentDiscountButton"
+                            Content="Student discount"
+                            FontSize="14"
+                            Background="Transparent"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="OnStudentDiscountClicked"/>
+                </StackPanel>
+
+                <!-- Section 3 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/facture.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <Button x:Name="FindMyInvoiceButton"
+                            Content="Find my invoice"
+                            FontSize="14"
+                            Background="Transparent"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="OnFindMyInvoiceClicked"/> <!-- Attention à ne pas mettre FindMyInvoice car ici : Click="FindMyInvoiceClicked" fait référence à l’événement et non à la méthode handler !-->
+                </StackPanel>
+
+                <!-- Section 4 -->
+                <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                    <Border Width="48" Height="48" CornerRadius="24" Background="#EEEEEE" BorderBrush="Black" BorderThickness="0">
+                        <Image Source="avares://KitBox_Project/Assets/livraison.png"
+                               Width="28" Height="28" Stretch="Uniform"/>
+                    </Border>
+                    <Button x:Name="DeliveryButton"
+                            Content="Delivery"
+                            FontSize="14"
+                            Background="Transparent"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Click="OnDeliveryClicked"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Dynamic content (hidden until something is clicked) -->
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
     </Grid>
 </UserControl>

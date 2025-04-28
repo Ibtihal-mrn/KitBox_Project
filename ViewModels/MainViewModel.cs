@@ -17,13 +17,5 @@ namespace KitBox_Project.ViewModels
             get => _title;
             set => this.RaiseAndSetIfChanged(ref _title, value); // Grâce au binding et à RaiseAndSetIfChanged(), si la valeur de Title change dans le ViewModel, la View (UI) sera mise à jour automatiquement, sans qu'il soit nécessaire d'écrire du code supplémentaire pour rafraîchir l'affichage (chargé par le binding).
         }
-
-        private bool isVendor;
-        public bool IsVendor
-        {
-            get => isVendor;
-            set => this.RaiseAndSetIfChanged(ref isVendor, value);
-        }
-
     }
 } 

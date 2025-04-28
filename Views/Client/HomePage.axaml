@@ -19,8 +19,8 @@
             
             <!-- Texte et bouton alignés -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="5">
-                <TextBlock VerticalAlignment="Center">
-                    <Run Text="For more informations click" />
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">
+                    <Run Text="For more informations click"/>
                 </TextBlock>
                 <Button Content="here"
                         Background="Transparent"
