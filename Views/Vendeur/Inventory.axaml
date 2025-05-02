@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.Inventory">
+
+    
+
+    <Grid>
+       <TextBlock Text="Inventory"
+                       FontSize="60"
+                       FontFamily="avares://KitBox_Project/Fonts#Anton"
+                       HorizontalAlignment="Center"/>
+
+        
+
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+
+      
+    </Grid>
+</UserControl>

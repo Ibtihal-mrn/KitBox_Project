@@ -95,11 +95,20 @@ namespace KitBox_Project.Views
 
         private void GoToCalendar(object? sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
 
+        private void GoToInventory(object? sender, RoutedEventArgs e) => MainContent.Content = new Inventory();
 
-
+        private void GoToOrder(object? sender, RoutedEventArgs e) => MainContent.Content = new Home_vendeur();
 
         //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
 
+        private void GoToChooseUserTypePage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                AuthenticationService.Instance.Logout(); // ✅ On déconnecte vraiment l'utilisateur ici
+                mainWindow.ShowChooseUserTypePage();      // ✅ Puis on affiche la page de choix
+            }
+        }
 
 
         private void ShowHomePage()

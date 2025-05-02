@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <data name="Home" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="Inspirations" xml:space="preserve">
+    <value>Inspirations</value>
+  </data>
+  <data name="DesignWardrobe" xml:space="preserve">
+    <value>Concevez votre garde-robe</value>
+  </data>
+  <data name="HelpSupport" xml:space="preserve">
+    <value>Aide et support</value>
+  </data>
+</root>
+
+
