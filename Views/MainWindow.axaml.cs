@@ -11,10 +11,10 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
-            ShowChooseUserTypePage(); // ✅ un seul point d’entrée
-            this.Show();
-         
-
+                var userTypePage = new ChooseUserTypePage();
+                userTypePage.ClientChosen += (_, _) => ShowHomePage();
+                userTypePage.VendorChosen += (_, _) => ShowVendorPage();
+                MainContent.Content = userTypePage;
 
         }
 
@@ -90,26 +90,9 @@ namespace KitBox_Project.Views
         {
             GoToHelpSupport(sender, e);
         }
-
-        private void GoToAddUser(object? sender, RoutedEventArgs e) => MainContent.Content = new AddUser();
-
-        private void GoToCalendar(object? sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
-
-        private void GoToInventory(object? sender, RoutedEventArgs e) => MainContent.Content = new Inventory();
-
-        private void GoToOrder(object? sender, RoutedEventArgs e) => MainContent.Content = new Home_vendeur();
-
-        //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
-
-        private void GoToChooseUserTypePage(object sender, RoutedEventArgs e)
-        {
-            if (VisualRoot is MainWindow mainWindow)
-            {
-                AuthenticationService.Instance.Logout(); // ✅ On déconnecte vraiment l'utilisateur ici
-                mainWindow.ShowChooseUserTypePage();      // ✅ Puis on affiche la page de choix
-            }
-        }
-
+        private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
+        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
+        private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
 
         private void ShowHomePage()
         {
@@ -171,29 +154,6 @@ namespace KitBox_Project.Views
             QuitButton.IsVisible = true;
             PanierButton.IsVisible = false ; 
         }
-
-        public void ShowChooseUserTypePage()
-        {
-            var userTypePage = new ChooseUserTypePage();
-            userTypePage.ClientChosen += (_, _) => ShowHomePage();
-            userTypePage.VendorChosen += (_, _) => ShowVendor();
-            MainContent.Content = userTypePage;
-
-            MenuPanel.IsVisible = false;
-            MenuButton.IsVisible = false;
-            HomeButton.IsVisible = false;
-            InspiButton.IsVisible = false;
-            DesignButton.IsVisible = false;
-            SupportButton.IsVisible = false;
-            PanierButton.IsVisible = false ; 
-
-            OrderButton.IsVisible = false;
-            StockButton.IsVisible = false;
-            UserButton.IsVisible = false;
-            ScheduleButton.IsVisible = false;
-            QuitButton.IsVisible = false;
-        }
-
 
     }
 }
