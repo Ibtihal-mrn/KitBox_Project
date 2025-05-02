@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.DesignYourWardrobe">
+
+  <Grid>
+    <StackPanel>
+
+        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        
+        <TextBlock Text="Largeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox  Name="Largeur" Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+            <ComboBoxItem Content="80cm" />
+            <ComboBoxItem Content="100cm" />
+            <ComboBoxItem Content="120cm" />
+        </ComboBox>
+
+        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+        </ComboBox>
+
+      <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+      <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
+        <ComboBoxItem Content="Option 1" />
+        <ComboBoxItem Content="Option 2" />
+        <ComboBoxItem Content="Option 3" />
+      </ComboBox>
+
+      <!-- Message d'erreur affiché si les sélections ne sont pas valides -->
+      <TextBlock x:Name="ErrorMessage"
+                 Text="Veuillez sélectionner à la fois la longueur et la profondeur avant de continuer."
+                 Foreground="Red"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 IsVisible="False"/>
+
+        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+
+
+    </StackPanel>
+
+    <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+  </Grid>
+</UserControl>

@@ -7,7 +7,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="KitBox_Project.Views.MainWindow"
         Title="{Binding Title}"
-        x:DataType="viewModels:MainViewModel">
+        x:DataType="viewModels:MainViewModel"
+        Background = "LightGray">
 
    <!-- Style global appliqué aux boutons du menu : Tous les boutons s'adaptent automatiquement à la largeur du menu, garantissant une apparence uniforme sans avoir à les modifier individuellement. Idéal pour maintenir un design cohérent, surtout en cas de nombreux boutons. Si je dois faire individuellement, je dois ajouter HorizontalAlignment="Stretch" à chaque bouton. -->
     <Window.Styles>
@@ -17,6 +18,7 @@
     </Window.Styles>
 
     <Grid>
+        <!-- Menu pour l'app côté-->
         <!-- Bouton ☰ pour ouvrir/fermer le menu -->
         <Button x:Name="MenuButton"
                 Content="☰"
@@ -25,7 +27,8 @@
                 VerticalAlignment="Top"
                 Margin="10"
                 Click="ToggleMenu"
-                ZIndex="2"/>
+                ZIndex="2"
+                IsVisible ="False"/>
 
         <!-- Le SplitView gère le menu coulissant -->
         <SplitView x:Name="MenuPanel"
@@ -34,20 +37,26 @@
                    OpenPaneLength="170"
                    CompactPaneLength="0"
                    PanePlacement="Left"
-                   ZIndex="1">
+                   ZIndex="1"
+                   IsVisible="False">
 
             <!-- Le contenu du menu DOIT être mis dans Pane -->
             <SplitView.Pane>
                 <StackPanel Background="LightGray">
-                    <Button Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome"/>
-                    <Button Content="Inspirations" Background="Transparent" Click="GoToInspirations"/>
-                    <Button Content="Design Your Wardrobe" Background="Transparent" Click="GoToColor"/>
-                    <Button Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport"/>
+                    <Button x:Name="HomeButton" Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome" IsVisible="False"/>
+                    <Button x:Name="InspiButton" Content="Inspirations" Background="Transparent" Click="GoToInspirations" IsVisible="False"/>
+                    <Button x:Name="DesignButton" Content="Design Your Wardrobe" Background="Transparent" Click="GoToDesignYourWardrobe" IsVisible="False"/>
+                    <Button x:Name="SupportButton" Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport" IsVisible="False"/>
+                    <Button x:Name="OrderButton" Content="Order" Margin="0,45,0,0" Background="Transparent" IsVisible="False" Click="GoToOrder"/>
+                    <Button x:Name="StockButton" Content="Inventory Management" Background="Transparent" IsVisible="False" Click="GoToInventory"/>
+                    <Button x:Name="UserButton" Content="Add new user" Background="Transparent" IsVisible="False" Click="GoToAddUser"/>
+                    <Button x:Name="ScheduleButton" Content="Work Schedule" Background="Transparent" IsVisible="False" Click="GoToCalendar"/>
+                    <Button x:Name="QuitButton" Content="Quit Session" Background="Transparent" IsVisible="False" Click="GoToChooseUserTypePage" />
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>
 
-        <Button Click="OnShoppingCartClick" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" ZIndex="2">
+        <Button x:Name="PanierButton" Click="OnShoppingCartClick" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" ZIndex="2" IsVisible="False">
             <Image Source="avares://KitBox_Project/Assets/Panier.png" Width="32" Height="32"/>
         </Button>
 

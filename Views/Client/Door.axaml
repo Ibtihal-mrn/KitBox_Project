@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.Door">
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="4. Choix de la porte" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+            
+            <TextBlock Text="Ajouter une porte ? " Margin="0,50,0,5" HorizontalAlignment="Center"/>
+            <ComboBox Name="Porte" Width="200" HorizontalAlignment="Center">
+                <ComboBoxItem Content="Oui" />
+                <ComboBoxItem Content="Non" />
+            </ComboBox>
+        </StackPanel>
+        
+
+        <!-- Demander si le client veut une porte, et si oui afficher les choix possibles -->
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+            <Button Content="Back" Click="GoToColor" Margin="5,0"/>
+            <Button Content="Next" Click="GoToChoice" Margin="5,0"/>
+        </StackPanel>
+
+        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+    </Grid>
+</UserControl>

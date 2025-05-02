@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="KitBox_Project.Views.WeeklyCalendar">
+  <StackPanel Margin="20" Spacing="10">
+
+    <TextBlock Text="Choisissez un jour" FontWeight="Bold" />
+    <ComboBox x:Name="DaySelector" Width="200">
+      <ComboBoxItem Content="Lundi"/>
+      <ComboBoxItem Content="Mardi"/>
+      <ComboBoxItem Content="Mercredi"/>
+      <ComboBoxItem Content="Jeudi"/>
+      <ComboBoxItem Content="Vendredi"/>
+      <ComboBoxItem Content="Samedi"/>
+      <ComboBoxItem Content="Dimanche"/>
+    </ComboBox>
+
+    <TextBlock Text="Choisissez une heure" FontWeight="Bold" />
+    <ComboBox x:Name="HourSelector" Width="200">
+      <ComboBoxItem Content="09:00"/>
+      <ComboBoxItem Content="10:00"/>
+      <ComboBoxItem Content="11:00"/>
+      <ComboBoxItem Content="12:00"/>
+      <ComboBoxItem Content="13:00"/>
+      <ComboBoxItem Content="14:00"/>
+      <ComboBoxItem Content="15:00"/>
+      <ComboBoxItem Content="16:00"/>
+      <ComboBoxItem Content="17:00"/>
+      <ComboBoxItem Content="18:00"/>
+    </ComboBox>
+
+    <TextBlock Text="Nom du rendez-vous" FontWeight="Bold" />
+    <TextBox x:Name="AppointmentTextBox" Width="200" Watermark="Ex: Client Dupont" />
+
+    <Button Content="Ajouter le rendez-vous" Click="OnAddAppointment" Width="200" />
+
+    <TextBlock Text="Rendez-vous pour le jour sélectionné :" FontWeight="Bold" Margin="0,10,0,0"/>
+    <ListBox x:Name="AppointmentsList" Height="200" />
+
+  </StackPanel>
+</UserControl>

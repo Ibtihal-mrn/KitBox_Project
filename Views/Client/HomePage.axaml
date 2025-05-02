@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="KitBox_Project.Views.HomePage">
+
+    <Grid>
+        <!-- StackPanel pour empiler les éléments de manière verticale -->
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+            <!-- Titre -->
+            <TextBlock TextWrapping="Wrap" Text="Kit Box"
+                       FontSize="60"
+                       FontFamily="avares://KitBox_Project/Fonts#Anton"
+                       HorizontalAlignment="Center"/>
+            
+            <!-- Bouton Start -->
+            <Button Content="Start configuring your cabinet" HorizontalAlignment="Center" Click="GoToDesign"/>
+            
+            <!-- Texte et bouton alignés -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="5">
+                <TextBlock TextWrapping="Wrap" VerticalAlignment="Center">
+                    <Run Text="For more informations click"/>
+                </TextBlock>
+                <Button Content="here"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Blue"
+                        Cursor="Hand"
+                        VerticalAlignment="Center" 
+                        Click="GoToHelpSupport"
+                        Padding="2, 0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Slogan -->
+        <TextBlock x:Name="MovingText"
+                   Text="From Store to Home, a Smarter Way to Build Your Ideal Storage!"
+                   FontSize="17"
+                   FontFamily="avares://KitBox_Project/Fonts#Anton"
+                   HorizontalAlignment="Left"
+                   Foreground="Black"
+                   Margin="20,20,0,0"/>
+
+        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+
+        <!-- Contenu principal de l'application -->
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/> <!--Je définis l'espace principal dans lequel je peux faire afficher dynamiquement les pages qui ont un usercontrol, comme ça j'affiche toujours le menu et le panier. -->
+    </Grid>
+</UserControl>
