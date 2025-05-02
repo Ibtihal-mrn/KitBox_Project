@@ -49,5 +49,14 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Order(); // ✅ Modifie le bon ContentControl
             }
         }
+
+        private void GoToConfirmation(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
+            if (mainWindow != null) // Vérifie que mainWindow n'est pas null
+            {
+                mainWindow.MainContent.Content = new Confirmation(); // ✅ Modifie le bon ContentControl
+            }
+        }
     }
 }

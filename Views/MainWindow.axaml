@@ -7,7 +7,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="KitBox_Project.Views.MainWindow"
         Title="{Binding Title}"
-        x:DataType="viewModels:MainViewModel">
+        x:DataType="viewModels:MainViewModel"
+        Background = "LightGray">
 
    <!-- Style global appliqué aux boutons du menu : Tous les boutons s'adaptent automatiquement à la largeur du menu, garantissant une apparence uniforme sans avoir à les modifier individuellement. Idéal pour maintenir un design cohérent, surtout en cas de nombreux boutons. Si je dois faire individuellement, je dois ajouter HorizontalAlignment="Stretch" à chaque bouton. -->
     <Window.Styles>

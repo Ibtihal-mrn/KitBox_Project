@@ -12,12 +12,11 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
+                var userTypePage = new ChooseUserTypePage();
+                userTypePage.ClientChosen += (_, _) => ShowHomePage();
+                userTypePage.VendorChosen += (_, _) => ShowVendorPage();
+                MainContent.Content = userTypePage;
 
-            var homePage = new HomePage();
-            homePage.StartClicked += GoToColor;
-            homePage.HelpClicked += GoToHelpSupport;
-
-            MainContent.Content = homePage;
         }
 
         private void ToggleMenu(object? sender, RoutedEventArgs e)
@@ -92,5 +91,27 @@ namespace KitBox_Project.Views
         {
             GoToHelpSupport(sender, e);
         }
+        private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
+        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
+        private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
+
+        private void ShowHomePage()
+        {
+            var homePage = new HomePage();
+            homePage.StartClicked += GoToDesignYourWardrobe;
+            MainContent.Content = homePage;
+        }
+
+        private void ShowVendorPage()
+        {
+            MainContent.Content = new TextBlock
+            {
+                Text = "Interface vendeur à venir...",
+                FontSize = 24,
+                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                VerticalAlignment = Avalonia.Layout.VerticalAlignment.Center
+            };
+        }
+
     }
 }

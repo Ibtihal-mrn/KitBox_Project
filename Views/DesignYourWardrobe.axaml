@@ -8,14 +8,27 @@
   <Grid>
     <StackPanel>
 
-      <TextBlock Text="2. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        
+        <TextBlock Text="Largeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox  Name="Largeur" Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+            <ComboBoxItem Content="80cm" />
+            <ComboBoxItem Content="100cm" />
+            <ComboBoxItem Content="120cm" />
+        </ComboBox>
 
-      <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
-      <ComboBox Name="Longueur" Width="200" HorizontalAlignment="Center">
-        <ComboBoxItem Content="Option 1" />
-        <ComboBoxItem Content="Option 2" />
-        <ComboBoxItem Content="Option 3" />
-      </ComboBox>
+        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+        </ComboBox>
 
       <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
       <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
