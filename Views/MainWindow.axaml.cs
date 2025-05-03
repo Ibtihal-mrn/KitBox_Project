@@ -1,23 +1,21 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Views;
+using KitBox_Project.Services ; 
 
 namespace KitBox_Project.Views
 {
     public partial class MainWindow : Window
     {
-        private HelpSupport? _helpPage; // Instance conservée de HelpSupport
-
+        private HelpSupport? _helpPage;
         public MainWindow()
         {
             InitializeComponent();
+            ShowChooseUserTypePage(); // ✅ un seul point d’entrée
+            this.Show();
+         
 
-            var homePage = new HomePage();
-            homePage.StartClicked += GoToColor;
-            homePage.HelpClicked += GoToHelpSupport;
 
-            MainContent.Content = homePage;
         }
 
         private void ToggleMenu(object? sender, RoutedEventArgs e)
@@ -92,5 +90,110 @@ namespace KitBox_Project.Views
         {
             GoToHelpSupport(sender, e);
         }
+
+        private void GoToAddUser(object? sender, RoutedEventArgs e) => MainContent.Content = new AddUser();
+
+        private void GoToCalendar(object? sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
+
+        private void GoToInventory(object? sender, RoutedEventArgs e) => MainContent.Content = new Inventory();
+
+        private void GoToOrder(object? sender, RoutedEventArgs e) => MainContent.Content = new Home_vendeur();
+
+        //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
+
+        private void GoToChooseUserTypePage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                AuthenticationService.Instance.Logout(); // ✅ On déconnecte vraiment l'utilisateur ici
+                mainWindow.ShowChooseUserTypePage();      // ✅ Puis on affiche la page de choix
+            }
+        }
+
+
+        private void ShowHomePage()
+        {
+            var homePage = new HomePage();
+            homePage.StartClicked += GoToColor;
+            MainContent.Content = homePage;
+            MenuPanel.IsVisible = true;
+            MenuButton.IsVisible = true;
+            HomeButton.IsVisible = true;
+            InspiButton.IsVisible = true;
+            DesignButton.IsVisible = true;
+            SupportButton.IsVisible = true;
+            OrderButton.IsVisible = false;
+            StockButton.IsVisible = false;
+            UserButton.IsVisible = false;
+            ScheduleButton.IsVisible = false;
+            QuitButton.IsVisible = false;
+            PanierButton.IsVisible = true ; 
+        }
+
+        private void ShowVendor(){
+            if (AuthenticationService.Instance.IsAuthenticated)
+            {
+                // Déjà connecté → montrer interface vendeur directement
+                ShowVendorPage();
+            }
+            else
+            {
+                // Pas connecté → demander login
+                ShowLoginDialog();
+            }
+        }
+
+        private async void ShowLoginDialog()
+        {
+            var dialog = new LoginDialog(); // Fenêtre modale
+            var result = await dialog.ShowDialog<bool>(this); // Passer 'this' pour désigner la fenêtre parente
+
+            if (result)
+            {
+                ShowVendorPage(); // connecté, on peut y aller
+            }
+        }
+
+        private void ShowVendorPage()
+        {
+            var identification = new Home_vendeur();
+            MainContent.Content = identification;
+            MenuPanel.IsVisible = true;
+            MenuButton.IsVisible = true;
+            HomeButton.IsVisible = false;
+            InspiButton.IsVisible = false;
+            DesignButton.IsVisible = false;
+            SupportButton.IsVisible = false;
+            OrderButton.IsVisible = true;
+            StockButton.IsVisible = true;
+            UserButton.IsVisible = true;
+            ScheduleButton.IsVisible = true;
+            QuitButton.IsVisible = true;
+            PanierButton.IsVisible = false ; 
+        }
+
+        public void ShowChooseUserTypePage()
+        {
+            var userTypePage = new ChooseUserTypePage();
+            userTypePage.ClientChosen += (_, _) => ShowHomePage();
+            userTypePage.VendorChosen += (_, _) => ShowVendor();
+            MainContent.Content = userTypePage;
+
+            MenuPanel.IsVisible = false;
+            MenuButton.IsVisible = false;
+            HomeButton.IsVisible = false;
+            InspiButton.IsVisible = false;
+            DesignButton.IsVisible = false;
+            SupportButton.IsVisible = false;
+            PanierButton.IsVisible = false ; 
+
+            OrderButton.IsVisible = false;
+            StockButton.IsVisible = false;
+            UserButton.IsVisible = false;
+            ScheduleButton.IsVisible = false;
+            QuitButton.IsVisible = false;
+        }
+
+
     }
 }
