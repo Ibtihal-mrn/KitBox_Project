@@ -1,40 +1,36 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="KitBox_Project.Views.WeeklyCalendar">
-  <StackPanel Margin="20" Spacing="10">
 
-    <TextBlock Text="Choisissez un jour" FontWeight="Bold" />
-    <ComboBox x:Name="DaySelector" Width="200">
-      <ComboBoxItem Content="Lundi"/>
-      <ComboBoxItem Content="Mardi"/>
-      <ComboBoxItem Content="Mercredi"/>
-      <ComboBoxItem Content="Jeudi"/>
-      <ComboBoxItem Content="Vendredi"/>
-      <ComboBoxItem Content="Samedi"/>
-      <ComboBoxItem Content="Dimanche"/>
-    </ComboBox>
+  <StackPanel Margin="10">
 
-    <TextBlock Text="Choisissez une heure" FontWeight="Bold" />
-    <ComboBox x:Name="HourSelector" Width="200">
-      <ComboBoxItem Content="09:00"/>
-      <ComboBoxItem Content="10:00"/>
-      <ComboBoxItem Content="11:00"/>
-      <ComboBoxItem Content="12:00"/>
-      <ComboBoxItem Content="13:00"/>
-      <ComboBoxItem Content="14:00"/>
-      <ComboBoxItem Content="15:00"/>
-      <ComboBoxItem Content="16:00"/>
-      <ComboBoxItem Content="17:00"/>
-      <ComboBoxItem Content="18:00"/>
-    </ComboBox>
+    <!-- Confirmation -->
+    <TextBlock x:Name="ConfirmationText" Foreground="Green" FontWeight="Bold" Margin="0,0,0,10"/>
 
-    <TextBlock Text="Nom du rendez-vous" FontWeight="Bold" />
-    <TextBox x:Name="AppointmentTextBox" Width="200" Watermark="Ex: Client Dupont" />
+    <!-- Calendrier -->
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+      <Grid x:Name="CalendarGrid">
+        <!-- Généré dynamiquement dans le .cs -->
+      </Grid>
+    </ScrollViewer>
 
-    <Button Content="Ajouter le rendez-vous" Click="OnAddAppointment" Width="200" />
+    <!-- Formulaire RDV -->
+    <StackPanel Orientation="Horizontal" Margin="0,15,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Spacing="10">
+      <TextBox x:Name="NameBox" Width="150" Watermark="Nom client"/>
+      <TextBox x:Name="PhoneBox" Width="130" Watermark="Téléphone"/>
+      <ComboBox x:Name="DayBox" Width="100"/>
+      <ComboBox x:Name="HourBox" Width="100"/>
+      <Button Content="Ajouter RDV" Click="AddAppointment_Click" Background="#2E8B57" Foreground="White"/>
+    </StackPanel>
 
-    <TextBlock Text="Rendez-vous pour le jour sélectionné :" FontWeight="Bold" Margin="0,10,0,0"/>
-    <ListBox x:Name="AppointmentsList" Height="200" />
+    <!-- Détails RDV sélectionné -->
+    <StackPanel x:Name="SelectedAppointmentPanel" Margin="0,20,0,0" IsVisible="False" Spacing="8">
+      <TextBlock Text="Détails du rendez-vous" FontWeight="Bold" FontSize="16"/>
+      <TextBlock x:Name="SelectedAppointmentInfo"/>
+      <TextBox x:Name="CommentBox" Watermark="Ajouter un commentaire..." AcceptsReturn="True" Height="60"/>
+      <Button Content="Enregistrer commentaire" Click="SaveComment_Click"/>
+      <Button Content="Annuler ce rendez-vous" Click="ConfirmDeleteAppointment_Click" Background="Red" Foreground="White"/>
+    </StackPanel>
 
   </StackPanel>
 </UserControl>
