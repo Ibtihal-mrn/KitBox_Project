@@ -17,8 +17,8 @@
         <!-- FORMULAIRE -->
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
             <TextBox x:Name="MatriculeBox" Width="200" Watermark="Matricule"/>
-            <TextBox x:Name="PasswordBox" Width="200" Margin="10" Watermark=" Ajouter le mot de passe"/>
-            <TextBox x:Name="ConfirmPasswordBox" Width="200" Margin="10" Watermark="Répéter le mot de passe"/>
+            <TextBox x:Name="PasswordBox" Width="200" Margin="10" Watermark=" Ajouter le mot de passe" PasswordChar="●"/>
+            <TextBox x:Name="ConfirmPasswordBox" Width="200" Margin="10" Watermark="Répéter le mot de passe" PasswordChar="●"/>
             <ComboBox x:Name="Rôle" Width="200" Margin="10">
                 <ComboBoxItem Content="Superviseur"/>
                 <ComboBoxItem Content="Vendeur"/>
