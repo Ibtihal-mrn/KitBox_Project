@@ -11,11 +11,15 @@ namespace KitBox_Project.Views
         public MainWindow()
         {
             InitializeComponent();
-            ShowChooseUserTypePage(); // ✅ un seul point d’entrée
-            this.Show();
-         
+                var userTypePage = new ChooseUserTypePage();
+                userTypePage.ClientChosen += (_, _) => ShowHomePage();
+                userTypePage.VendorChosen += (_, _) => ShowVendorPage();
+                MainContent.Content = userTypePage;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
         }
 
         private void ToggleMenu(object? sender, RoutedEventArgs e)
@@ -26,7 +30,11 @@ namespace KitBox_Project.Views
         private void GoToHome(object? sender, RoutedEventArgs e)
         {
             var homePage = new HomePage();
+<<<<<<< HEAD
             homePage.StartClicked += GoToColor;
+=======
+            homePage.StartClicked += GoToDesignYourWardrobe;
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
             homePage.HelpClicked += GoToHelpSupport;
 
             MainContent.Content = homePage;
@@ -90,26 +98,9 @@ namespace KitBox_Project.Views
         {
             GoToHelpSupport(sender, e);
         }
-
-        private void GoToAddUser(object? sender, RoutedEventArgs e) => MainContent.Content = new AddUser();
-
-        private void GoToCalendar(object? sender, RoutedEventArgs e) => MainContent.Content = new WeeklyCalendar();
-
-        private void GoToInventory(object? sender, RoutedEventArgs e) => MainContent.Content = new Inventory();
-
-        private void GoToOrder(object? sender, RoutedEventArgs e) => MainContent.Content = new Home_vendeur();
-
-        //private void GoToChooseUserTypePage(object sender, RoutedEventArgs e) => MainContent.Content = new ChooseUserTypePage();
-
-        private void GoToChooseUserTypePage(object sender, RoutedEventArgs e)
-        {
-            if (VisualRoot is MainWindow mainWindow)
-            {
-                AuthenticationService.Instance.Logout(); // ✅ On déconnecte vraiment l'utilisateur ici
-                mainWindow.ShowChooseUserTypePage();      // ✅ Puis on affiche la page de choix
-            }
-        }
-
+        private void GoToInspirations(object? sender, RoutedEventArgs e) => MainContent.Content = new Inspirations();
+        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) => MainContent.Content = new DesignYourWardrobe();
+        private void GoToHelpSupport(object? sender, RoutedEventArgs e) => MainContent.Content = new HelpSupport();
 
         private void ShowHomePage()
         {
@@ -172,6 +163,7 @@ namespace KitBox_Project.Views
             PanierButton.IsVisible = false ; 
         }
 
+<<<<<<< HEAD
         public void ShowChooseUserTypePage()
         {
             var userTypePage = new ChooseUserTypePage();
@@ -195,5 +187,7 @@ namespace KitBox_Project.Views
         }
 
 
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     }
 }

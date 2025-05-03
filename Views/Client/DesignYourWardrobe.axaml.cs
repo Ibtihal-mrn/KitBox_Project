@@ -116,6 +116,7 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = heightView;
             }
         }
+<<<<<<< HEAD
         private void GoToColor(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
@@ -129,5 +130,15 @@ namespace KitBox_Project.Views
             var consoleWindow = new ConsoleWindow();
             consoleWindow.Show();
         }
+=======
+
+        private void GoToFirstPage(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+            }
+        }
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     }
 }

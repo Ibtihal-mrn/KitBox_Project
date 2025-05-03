@@ -5,6 +5,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.Inventory">
 
+<<<<<<< HEAD
 <<<<<<< HEAD:Views/Inspirations.axaml
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel Margin="20" HorizontalAlignment="Center" Spacing="20">
@@ -38,6 +39,8 @@
         </StackPanel>
     </ScrollViewer>
 =======
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     
 
     <Grid>
@@ -52,7 +55,10 @@
 
       
     </Grid>
+<<<<<<< HEAD
 >>>>>>> fusion:Views/Vendeur/Inventory.axaml
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
 </UserControl>
 
 <!-- <UserControl xmlns="https://github.com/avaloniaui"

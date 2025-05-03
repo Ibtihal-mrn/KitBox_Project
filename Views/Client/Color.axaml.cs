@@ -73,7 +73,10 @@ namespace KitBox_Project.Views
             }
         }
 
+<<<<<<< HEAD
         
 
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     }
 }

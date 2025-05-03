@@ -8,6 +8,7 @@
   <Grid>
     <StackPanel>
 
+<<<<<<< HEAD
       <TextBlock Text="2. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
 
       <TextBlock Text="Longueur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
@@ -16,6 +17,29 @@
         <ComboBoxItem Content="Option 2" />
         <ComboBoxItem Content="Option 3" />
       </ComboBox>
+=======
+        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        
+        <TextBlock Text="Largeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox  Name="Largeur" Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+            <ComboBoxItem Content="80cm" />
+            <ComboBoxItem Content="100cm" />
+            <ComboBoxItem Content="120cm" />
+        </ComboBox>
+
+        <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
+        <ComboBox Width="200" HorizontalAlignment="Center">
+            <ComboBoxItem Content="32cm" />
+            <ComboBoxItem Content="42cm" />
+            <ComboBoxItem Content="52cm" />
+            <ComboBoxItem Content="62cm" />
+        </ComboBox>
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
 
       <TextBlock Text="Profondeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
       <ComboBox Name="Profondeur" Width="200" HorizontalAlignment="Center">
@@ -32,10 +56,14 @@
                  VerticalAlignment="Center"
                  IsVisible="False"/>
 
+<<<<<<< HEAD
       <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
       <Button Content="Back" Click="GoToColor" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
       <Button Content="Ouvrir la console" Click="OnOpenConsoleClick"/>
 
+=======
+        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
 
 
     </StackPanel>

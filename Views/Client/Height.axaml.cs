@@ -283,6 +283,7 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new DesignYourWardrobe();
             }
         }
+<<<<<<< HEAD
     }}
 
         private void GoToDoor(object sender, RoutedEventArgs e)
@@ -293,6 +294,8 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
             }
         }
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {

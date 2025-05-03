@@ -56,8 +56,11 @@
             <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
         </StackPanel>
 
+<<<<<<< HEAD
         <!-- MainContent dans sa propre rangée -->
         <ContentControl x:Name="MainContent" Grid.Row="5" Margin="0,20,0,0"/>
+=======
+>>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
         <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
         
         <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
