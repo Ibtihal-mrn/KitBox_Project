@@ -22,19 +22,24 @@ namespace KitBox_Project.Views
         public Height()
         {
             InitializeComponent();
-            Loaded += OnControlLoaded;
+            Initialized += OnInitialized;
+
         }
 
-        private void OnControlLoaded(object? sender, RoutedEventArgs e)
+        private void OnInitialized(object? sender, EventArgs e)
         {
-            LoadHeightData();
-
-            var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
-            if (hauteurComboBox != null)
+            if (SelectedLength > 0 && SelectedDepth > 0)
             {
-                hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
+                LoadHeightData();
+
+                var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
+                if (hauteurComboBox != null)
+                {
+                    hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
+                }
             }
         }
+
 
         private void OnHeightSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
@@ -260,31 +265,14 @@ namespace KitBox_Project.Views
             });
         }
 
-        private void GoToDoor(object sender, RoutedEventArgs e)
-        {
-            if (SelectedHeight == 0)
-            {
-                var errorMessageTextBlock = this.FindControl<TextBlock>("ErrorMessage");
-                if (errorMessageTextBlock != null)
-                    errorMessageTextBlock.IsVisible = true;
-                return;
-            }
-
-            if (VisualRoot is MainWindow mainWindow)
-            {
-                mainWindow.MainContent.Content = new Door();
-            }
-        }
-
         private void GoToSize(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow)
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter le cast direct
+            if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new DesignYourWardrobe();
+                mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
             }
         }
-<<<<<<< HEAD
-    }}
 
         private void GoToDoor(object sender, RoutedEventArgs e)
         {
@@ -294,8 +282,6 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
             }
         }
-=======
->>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {

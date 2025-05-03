@@ -4,7 +4,6 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
 using KitBox_Project.Data;
 using System.Linq;
-using System;
 
 namespace KitBox_Project.Views
 {
@@ -26,7 +25,7 @@ namespace KitBox_Project.Views
 
         private void LoadLengthData()
         {
-            var longueurComboBox = this.Find<ComboBox>("Longueur");
+            var longueurComboBox = this.FindControl<ComboBox>("Longueur");
             if (longueurComboBox == null) return;
 
             var dataAccess = new DataAccess();
@@ -47,8 +46,7 @@ namespace KitBox_Project.Views
 
         private void OnLengthSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            var longueurComboBox = sender as ComboBox;
-            if (longueurComboBox?.SelectedItem is ComboBoxItem selectedItem &&
+            if (sender is ComboBox combo && combo.SelectedItem is ComboBoxItem selectedItem &&
                 int.TryParse(selectedItem.Content?.ToString(), out int selectedLength))
             {
                 SelectedLength = selectedLength;
@@ -58,7 +56,7 @@ namespace KitBox_Project.Views
 
         private void LoadDepthData(int selectedLength)
         {
-            var profondeurComboBox = this.Find<ComboBox>("Profondeur");
+            var profondeurComboBox = this.FindControl<ComboBox>("Profondeur");
             if (profondeurComboBox == null) return;
 
             var dataAccess = new DataAccess();
@@ -79,8 +77,7 @@ namespace KitBox_Project.Views
 
         private void OnDepthSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
-            var profondeurComboBox = sender as ComboBox;
-            if (profondeurComboBox?.SelectedItem is ComboBoxItem selectedItem &&
+            if (sender is ComboBox combo && combo.SelectedItem is ComboBoxItem selectedItem &&
                 int.TryParse(selectedItem.Content?.ToString(), out int selectedDepth))
             {
                 SelectedDepth = selectedDepth;
@@ -89,24 +86,19 @@ namespace KitBox_Project.Views
 
         private void GoToHeightWindow(object sender, RoutedEventArgs e)
         {
-            var errorMessageTextBlock = this.Find<TextBlock>("ErrorMessage");
+            var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
 
             if (SelectedLength == 0 || SelectedDepth == 0)
             {
-                if (errorMessageTextBlock != null)
-                {
-                    errorMessageTextBlock.IsVisible = true;
-                }
+                if (errorMessage != null)
+                    errorMessage.IsVisible = true;
                 return;
             }
 
-            if (errorMessageTextBlock != null)
-            {
-                errorMessageTextBlock.IsVisible = false;
-            }
+            if (errorMessage != null)
+                errorMessage.IsVisible = false;
 
-            var mainWindow = VisualRoot as MainWindow;
-            if (mainWindow != null)
+            if (VisualRoot is MainWindow mainWindow)
             {
                 var heightView = new Height
                 {
@@ -116,7 +108,7 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = heightView;
             }
         }
-<<<<<<< HEAD
+
         private void GoToColor(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
@@ -124,21 +116,5 @@ namespace KitBox_Project.Views
                 mainWindow.MainContent.Content = new Color();
             }
         }
-
-        public void OnOpenConsoleClick(object sender, RoutedEventArgs e)
-        {
-            var consoleWindow = new ConsoleWindow();
-            consoleWindow.Show();
-        }
-=======
-
-        private void GoToFirstPage(object sender, RoutedEventArgs e)
-        {
-            if (VisualRoot is MainWindow mainWindow)
-            {
-                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
-            }
-        }
->>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     }
 }

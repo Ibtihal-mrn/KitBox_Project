@@ -15,18 +15,8 @@ namespace KitBox_Project.Views
         }
 
         // Gestionnaire d'événement pour le bouton "Next"
-        
-    
-        private void GoToDesign(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter un cast direct
-            if (mainWindow != null)
-            {
-                mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
-            }
-        }
 
-        private void GoToDesignYourWardrobe(object sender, RoutedEventArgs e)
+        private void GoToDesign(object sender, RoutedEventArgs e)
         {
             // MODIFIER : Vérifier si une couleur a été sélectionnée avant de passer à la vue suivante
             if (string.IsNullOrEmpty(selectedColor) || selectedColor == "Color not selected")
@@ -73,10 +63,7 @@ namespace KitBox_Project.Views
             }
         }
 
-<<<<<<< HEAD
         
 
-=======
->>>>>>> cd5af01330f730360e31a6f2dac567778dc3836b
     }
 }
