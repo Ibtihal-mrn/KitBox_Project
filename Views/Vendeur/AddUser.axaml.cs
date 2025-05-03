@@ -28,6 +28,7 @@ namespace KitBox_Project.Views
         {
             var matricule = MatriculeBox.Text.Trim();
             var motDePasse = PasswordBox.Text.Trim();
+            var confirmationMotDePasse = ConfirmPasswordBox.Text.Trim();
             var role = (Rôle.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
             if (string.IsNullOrWhiteSpace(matricule) || string.IsNullOrWhiteSpace(motDePasse) || string.IsNullOrWhiteSpace(role))
@@ -39,14 +40,22 @@ namespace KitBox_Project.Views
 
             try
             {
-                KitBox_Project.Services.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
-                Console.WriteLine("Utilisateur ajouté avec succès !");
-                // Tu peux aussi afficher une notification, vider les champs, ou revenir en arrière.
-                MatriculeBox.Text = "";
-                PasswordBox.Text = "";
-                Rôle.SelectedIndex = -1;
+                if(confirmationMotDePasse == motDePasse){
+                    KitBox_Project.Services.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
+                    Console.WriteLine("Utilisateur ajouté avec succès !");
+                    // Tu peux aussi afficher une notification, vider les champs, ou revenir en arrière.
+                    MatriculeBox.Text = "";
+                    PasswordBox.Text = "";
+                    ConfirmPasswordBox.Text = "";
+                    Rôle.SelectedIndex = -1;
 
-                ChargerUtilisateurs();
+                    ChargerUtilisateurs();
+                }
+
+                else{
+                    Console.WriteLine("Les mots de passes ne correspondent pas, veuillez résaayer");
+                }
+                
             }
             catch (Exception ex)
             {
@@ -57,7 +66,7 @@ namespace KitBox_Project.Views
         private void ChargerUtilisateurs()
         {
             var users = KitBox_Project.Services.DatabaseManager.GetAllUsers();
-            var affichage = users.Select(u => $"{u.Username} | {u.Role} | {u.Password}").ToList();
+            var affichage = users.Select(u => $"{u.Username} | {u.Role}").ToList();
             ListeUtilisateurs.ItemsSource = affichage;
         }
 
