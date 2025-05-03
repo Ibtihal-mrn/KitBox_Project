@@ -23,12 +23,15 @@ namespace KitBox_Project.Views
             }
         }
 
-        private void GoToFirstPage(object sender, RoutedEventArgs e)
+        private void GoToColor(object sender, RoutedEventArgs e)
         {
-            if (VisualRoot is MainWindow mainWindow)
+            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter un cast direct
+            if (mainWindow != null)
             {
-                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
             }
         }
+
+        
     }
 }

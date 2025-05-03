@@ -20,7 +20,7 @@
         <!-- Demander si le client veut une porte, et si oui afficher les choix possibles -->
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-            <Button Content="Back" Click="GoToColor" Margin="5,0"/>
+            <Button Content="Back" Click="GoToHeight" Margin="5,0"/>
             <Button Content="Next" Click="GoToChoice" Margin="5,0"/>
         </StackPanel>
 

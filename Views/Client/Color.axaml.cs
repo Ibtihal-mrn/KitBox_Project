@@ -14,21 +14,13 @@ namespace KitBox_Project.Views
 
         // Gestionnaire d'événement pour le bouton "Next"
         
-        private void GoToHeight(object sender, RoutedEventArgs e)
+    
+        private void GoToDesign(object sender, RoutedEventArgs e)
         {
             var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter un cast direct
             if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
-            }
-        }
-
-        private void GoToDoor(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter un cast direct
-            if (mainWindow != null)
-            {
-                mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
             }
         }
 
@@ -54,6 +46,8 @@ namespace KitBox_Project.Views
                 mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
             }
         }
+
+        
 
     }
 }

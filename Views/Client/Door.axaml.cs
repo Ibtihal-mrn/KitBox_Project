@@ -13,11 +13,11 @@ namespace KitBox_Project.Views
         }
 
         // Gestionnaire d'événement pour le bouton "Next"
-        private void GoToColor(object sender, RoutedEventArgs e)
+        private void GoToHeight(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow) // Vérifie si VisualRoot est une MainWindow
             {
-                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
             }
         }
 

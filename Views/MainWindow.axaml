@@ -45,7 +45,7 @@
                 <StackPanel Background="LightGray">
                     <Button x:Name="HomeButton" Content="Home" Background="Transparent" Margin="0,45,0,0" Click="GoToHome" IsVisible="False"/>
                     <Button x:Name="InspiButton" Content="Inspirations" Background="Transparent" Click="GoToInspirations" IsVisible="False"/>
-                    <Button x:Name="DesignButton" Content="Design Your Wardrobe" Background="Transparent" Click="GoToDesignYourWardrobe" IsVisible="False"/>
+                    <Button x:Name="DesignButton" Content="Design Your Wardrobe" Background="Transparent" Click="GoToColor" IsVisible="False"/>
                     <Button x:Name="SupportButton" Content="Help &amp; Support" Background="Transparent" Click="GoToHelpSupport" IsVisible="False"/>
                     <Button x:Name="OrderButton" Content="Order" Margin="0,45,0,0" Background="Transparent" IsVisible="False" Click="GoToOrder"/>
                     <Button x:Name="StockButton" Content="Inventory Management" Background="Transparent" IsVisible="False" Click="GoToInventory"/>

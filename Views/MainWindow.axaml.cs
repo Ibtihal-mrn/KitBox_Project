@@ -26,7 +26,7 @@ namespace KitBox_Project.Views
         private void GoToHome(object? sender, RoutedEventArgs e)
         {
             var homePage = new HomePage();
-            homePage.StartClicked += GoToDesignYourWardrobe;
+            homePage.StartClicked += GoToColor;
             homePage.HelpClicked += GoToHelpSupport;
 
             MainContent.Content = homePage;
@@ -35,8 +35,8 @@ namespace KitBox_Project.Views
         private void GoToInspirations(object? sender, RoutedEventArgs e) =>
             MainContent.Content = new Inspirations();
 
-        private void GoToDesignYourWardrobe(object? sender, RoutedEventArgs e) =>
-            MainContent.Content = new DesignYourWardrobe();
+        private void GoToColor(object? sender, RoutedEventArgs e) =>
+            MainContent.Content = new Color();
 
         private void GoToHelpSupport(object? sender, RoutedEventArgs e)
         {
@@ -114,7 +114,7 @@ namespace KitBox_Project.Views
         private void ShowHomePage()
         {
             var homePage = new HomePage();
-            homePage.StartClicked += GoToDesignYourWardrobe;
+            homePage.StartClicked += GoToColor;
             MainContent.Content = homePage;
             MenuPanel.IsVisible = true;
             MenuButton.IsVisible = true;

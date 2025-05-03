@@ -47,7 +47,7 @@ namespace KitBox_Project.Views
         public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
         public event EventHandler<RoutedEventArgs>? HelpClicked;
 
-        private void GoToDesign(object? sender, RoutedEventArgs e)
+        private void GoToColor(object? sender, RoutedEventArgs e)
         {
             StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
         }
@@ -67,6 +67,8 @@ namespace KitBox_Project.Views
                 mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
             }
         }
+
+        
 
     }
 }

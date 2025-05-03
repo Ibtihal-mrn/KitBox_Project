@@ -7,7 +7,7 @@
     
     <Grid>
         <StackPanel>
-            <TextBlock Text="3. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+            <TextBlock Text="1. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">           
                 <TextBlock x:Name="SelectedColorText" Text="Couleur sélectionnée : White" 
@@ -22,8 +22,8 @@
         
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-            <Button Content="Back" Click="GoToHeight" Margin="5,0"/>
-            <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
+            <Button Content="Back" Click="GoToFirstPage" Margin="5,0"/>
+            <Button Content="Next" Click="GoToDesign" Margin="5,0"/>
         </StackPanel>
 
         <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>

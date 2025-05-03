@@ -8,7 +8,7 @@
   <Grid>
         <StackPanel>
 
-        <TextBlock Text="1. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        <TextBlock Text="2. Dimensions de la base" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
         
         
         <TextBlock Text="Largeur :" Margin="0,50,0,5" HorizontalAlignment="Center"/>
@@ -34,7 +34,7 @@
 
         <Button Content="Next" Click="GoToHeightWindow" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,50,0,0"/>
 
-        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+        <Button Content="Back" HorizontalAlignment="Center" Click="GoToColor"/>
 
 
     </StackPanel>
