@@ -89,8 +89,8 @@ namespace KitBox_Project.Views
                 return;
             }
 
-            var name = NameBox.Text;
-            var phone = PhoneBox.Text;
+            var name = NameBox.Text ?? "";
+            var phone = PhoneBox.Text ?? "";
 
             try
             {
@@ -167,7 +167,7 @@ namespace KitBox_Project.Views
         {
             if (selectedAppointment != null)
             {
-                DatabaseCalendar.UpdateComment(selectedAppointment.Day, selectedAppointment.Hour, CommentBox.Text);
+                DatabaseCalendar.UpdateComment(selectedAppointment.Day, selectedAppointment.Hour, CommentBox.Text ??"");
                 ConfirmationText.Text = "Commentaire enregistré.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Green;
             }

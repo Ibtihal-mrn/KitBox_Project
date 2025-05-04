@@ -27,9 +27,9 @@ namespace KitBox_Project.Views
 
         private void AjouterUtilisateur(object sender, RoutedEventArgs e)
         {
-            var matricule = MatriculeBox.Text.Trim();
-            var motDePasse = PasswordBox.Text.Trim();
-            var confirmationMotDePasse = ConfirmPasswordBox.Text.Trim();
+            var matricule = MatriculeBox.Text?.Trim();
+            var motDePasse = PasswordBox.Text?.Trim();
+            var confirmationMotDePasse = ConfirmPasswordBox.Text?.Trim();
             var role = (Rôle.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
             if (string.IsNullOrWhiteSpace(matricule) || string.IsNullOrWhiteSpace(motDePasse) || string.IsNullOrWhiteSpace(role))
