@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace KitBox_Project.Views
 {
@@ -40,6 +41,12 @@ namespace KitBox_Project.Views
 
             try
             {
+                if (!Regex.IsMatch(matricule, @"^\d{5}$"))
+                {
+                    Console.WriteLine("Format incorrect");
+                    return;
+                }
+
                 if(confirmationMotDePasse == motDePasse){
                     KitBox_Project.Services.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
                     Console.WriteLine("Utilisateur ajouté avec succès !");
@@ -55,6 +62,13 @@ namespace KitBox_Project.Views
                 else{
                     Console.WriteLine("Les mots de passes ne correspondent pas, veuillez résaayer");
                 }
+
+                var utilisateursExistants = Services.DatabaseManager.GetAllUsers();
+                if (utilisateursExistants.Any(u => u.Username == matricule))
+                {
+                    Console.WriteLine("Ce matricule est déjà utilisé."); 
+                    return;
+                }
                 
             }
             catch (Exception ex)
@@ -66,7 +80,7 @@ namespace KitBox_Project.Views
         private void ChargerUtilisateurs()
         {
             var users = KitBox_Project.Services.DatabaseManager.GetAllUsers();
-            var affichage = users.Select(u => $" Matricule : {u.Username} - Status :  {u.Role}").ToList();
+            var affichage = users.Select(u => $"Employee ID : {u.Username}   Status :  {u.Role}").ToList();
             ListeUtilisateurs.ItemsSource = affichage;
         }
 
