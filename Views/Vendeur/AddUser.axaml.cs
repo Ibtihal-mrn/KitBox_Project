@@ -66,7 +66,7 @@ namespace KitBox_Project.Views
         private void ChargerUtilisateurs()
         {
             var users = KitBox_Project.Services.DatabaseManager.GetAllUsers();
-            var affichage = users.Select(u => $"{u.Username} | {u.Role}").ToList();
+            var affichage = users.Select(u => $" Matricule : {u.Username} - Status :  {u.Role}").ToList();
             ListeUtilisateurs.ItemsSource = affichage;
         }
 
@@ -75,7 +75,7 @@ namespace KitBox_Project.Views
             if (sender is Button bouton && bouton.DataContext is string info)
             {
                 // On suppose que info = "username | role | password"
-                var username = info.Split(" | ")[0];
+                var username = info.Split(':')[1].Split('-')[0].Trim();
                 KitBox_Project.Services.DatabaseManager.SupprimerUser(username);
                 ChargerUtilisateurs(); // refresh la liste
             }
