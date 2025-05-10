@@ -1,13 +1,15 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using KitBox_Project.Services ; 
+using KitBox_Project.Services ;
+using KitBox_Project.Views.Client;
 
 namespace KitBox_Project.Views
 {
     public partial class MainWindow : Window
     {
         private HelpSupport? _helpPage;
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -51,6 +53,8 @@ namespace KitBox_Project.Views
 
             MainContent.Content = _helpPage;
         }
+
+
 
         private void OnShoppingCartClick(object? sender, RoutedEventArgs e)
         {

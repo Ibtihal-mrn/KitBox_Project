@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using KitBox_Project.Data;
 using KitBox_Project.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,9 @@ namespace KitBox_Project.Views
 {
     public partial class Door : UserControl
     {
+        public int SelectedLength { get; set; }
+        public int SelectedDepth { get; set; }
+        public int SelectedHeight { get; set; }
         private ComboBox _porteComboBox;
         private ComboBox _availableDoorsComboBox;
 
@@ -16,7 +20,6 @@ namespace KitBox_Project.Views
         {
             InitializeComponent();
 
-            // Récupère les références aux ComboBox
             _porteComboBox = this.FindControl<ComboBox>("Porte")!;
             _availableDoorsComboBox = this.FindControl<ComboBox>("AvailableDoors") ?? new ComboBox();
         }
@@ -30,9 +33,7 @@ namespace KitBox_Project.Views
                 _availableDoorsComboBox.IsVisible = true;
                 var doorPrompt = this.FindControl<TextBlock>("DoorPrompt");
                 if (doorPrompt != null)
-                {
-                    doorPrompt.IsVisible = true;  // Affiche le message
-                }
+                    doorPrompt.IsVisible = true;
             }
             else
             {
@@ -40,33 +41,27 @@ namespace KitBox_Project.Views
                 _availableDoorsComboBox.ItemsSource = null;
                 var doorPrompt = this.FindControl<TextBlock>("DoorPrompt");
                 if (doorPrompt != null)
-                {
-                    doorPrompt.IsVisible = false; // Cache le message
-                }
+                    doorPrompt.IsVisible = false;
             }
         }
 
-
         private void LoadAvailableDoors()
         {
-            // Récupère les dimensions sélectionnées dans AppState
             int height = AppState.SelectedHeight;
             int length = AppState.SelectedLength;
 
             var db = new DataAccess();
             List<Article> doors = db.GetAvailableDoors(height, length);
 
-            // Ne prendre que la couleur, et enlever les doublons
             var doorColors = doors
-                .Select(d => d.Color)
+                .Select(d => d.Color?.Trim())
+                .Where(c => !string.IsNullOrEmpty(c))
                 .Distinct()
                 .OrderBy(c => c)
                 .ToList();
 
-            // Lie la liste des couleurs au ComboBox
             _availableDoorsComboBox.ItemsSource = doorColors;
         }
-
 
         private void GoToHeight(object sender, RoutedEventArgs e)
         {
@@ -77,7 +72,27 @@ namespace KitBox_Project.Views
         private void GoToChoice(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mw)
+            {
+                if (_porteComboBox.SelectedItem is ComboBoxItem item &&
+                    item.Content?.ToString() == "Oui" &&
+                    _availableDoorsComboBox.SelectedItem is string selectedColor)
+                {
+                    var door = StaticArticleDatabase.AllArticles.FirstOrDefault(a =>
+                        a.Reference != null &&
+                        a.Reference.ToLower().Contains("door") &&
+                        a.Height == AppState.SelectedHeight &&
+                        a.Length == AppState.SelectedLength &&
+                        a.Color?.Trim().Equals(selectedColor.Trim(), StringComparison.OrdinalIgnoreCase) == true &&
+                        a.NumberOfPiecesAvailable > 0);
+
+                    if (door != null)
+                        AppState.AddToCart(door);
+                    else
+                        Console.WriteLine($"Erreur : Aucune porte disponible pour Hauteur={AppState.SelectedHeight}, Longueur={AppState.SelectedLength}, Couleur={selectedColor}.");
+                }
+
                 mw.MainContent.Content = new Choice();
+            }
         }
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)

@@ -26,8 +26,8 @@ namespace KitBox_Project.Views
 
         private void AjouterUtilisateur(object sender, RoutedEventArgs e)
         {
-            var matricule = MatriculeBox.Text.Trim();
-            var motDePasse = PasswordBox.Text.Trim();
+            var matricule = MatriculeBox?.Text?.Trim() ?? string.Empty;
+            var motDePasse = PasswordBox?.Text?.Trim() ?? string.Empty;
             var role = (Rôle.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
             if (string.IsNullOrWhiteSpace(matricule) || string.IsNullOrWhiteSpace(motDePasse) || string.IsNullOrWhiteSpace(role))
@@ -42,8 +42,14 @@ namespace KitBox_Project.Views
                 KitBox_Project.Services.DatabaseManager.AjouterUtilisateur(matricule, motDePasse, role);
                 Console.WriteLine("Utilisateur ajouté avec succès !");
                 // Tu peux aussi afficher une notification, vider les champs, ou revenir en arrière.
-                MatriculeBox.Text = "";
-                PasswordBox.Text = "";
+                if (MatriculeBox != null)
+                {
+                    MatriculeBox.Text = "";
+                }
+                if (PasswordBox != null)
+                {
+                    PasswordBox.Text = "";
+                }
                 Rôle.SelectedIndex = -1;
 
                 ChargerUtilisateurs();

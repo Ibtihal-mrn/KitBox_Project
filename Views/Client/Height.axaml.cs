@@ -23,7 +23,6 @@ namespace KitBox_Project.Views
         {
             InitializeComponent();
             Initialized += OnInitialized;
-
         }
 
         private void OnInitialized(object? sender, EventArgs e)
@@ -38,8 +37,8 @@ namespace KitBox_Project.Views
                     hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
                 }
             }
+            
         }
-
 
         private void OnHeightSelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
@@ -50,16 +49,12 @@ namespace KitBox_Project.Views
                 
                 if (!_isUpdatingItemsSource)
                 {
-                    // Effacer complètement les avertissements avant de vérifier le stock
                     ResetAllWarnings();
-                    
-                    // Maintenant vérifier si besoin d'afficher des avertissements
                     CheckAngleIronsStock();
                 }
             }
         }
 
-        // Nouvelle méthode pour réinitialiser tous les avertissements
         private void ResetAllWarnings()
         {
             var stockWarningText = this.FindControl<TextBlock>("StockWarning");
@@ -100,8 +95,6 @@ namespace KitBox_Project.Views
                 }
 
                 var dataAccess = new DataAccess();
-
-                // 1) Chargement des hauteurs dispos
                 var uniqueHeights = dataAccess
                     .GetHeightOfPanel(SelectedLength, SelectedDepth, KitBox_Project.AppState.SelectedColor)
                     .Select(p => p.Height)
@@ -114,16 +107,12 @@ namespace KitBox_Project.Views
                 var lowStockItems = dataAccess.GetLowStockItems(SelectedLength, SelectedDepth);
                 if (lowStockItems.Count > 0)
                 {
-                    // Afficher l'avertissement de stock limité
                     AfficherAvertissementStock(lowStockItemsList, lowStockItems);
                 }
                 else
                 {
-                    // Réinitialiser les affichages
                     ResetAllWarnings();
                 }
-                
-                // Pas de vérification du stock des angle irons ici, cela se fait dans OnHeightSelectionChanged
             }
             finally
             {
@@ -141,20 +130,13 @@ namespace KitBox_Project.Views
 
             var dataAccess = new DataAccess();
             string desiredColor = KitBox_Project.AppState.SelectedColor;
-
-            // 1) Récupère le dictionnaire hauteur→(couleur→quantité)
             var aiStock = dataAccess.GetAngleIronStockByHeight(SelectedHeight);
-
-            // 2) Cherche la clé “exacte” dans aiStock (insensible à la casse)
             var actualKey = aiStock.Keys
                 .FirstOrDefault(k => string.Equals(k, desiredColor, StringComparison.OrdinalIgnoreCase));
 
-            // 3) Si on a trouvé la clé ET qu’il y a du stock → on arrête tout, pas de warning
             if (actualKey != null && aiStock[actualKey] > 0)
                 return;
 
-            // Ici, on sait que la couleur sélectionnée n’est pas dispo,
-            // on peut construire la liste des autres couleurs
             var otherColors = aiStock
                 .Where(kv => kv.Value > 0 && !string.Equals(kv.Key, desiredColor, StringComparison.OrdinalIgnoreCase))
                 .Select(kv => kv.Key)
@@ -180,7 +162,6 @@ namespace KitBox_Project.Views
             }
         }
 
-
         private void OnAlternateColorSelected(object? sender, SelectionChangedEventArgs e)
         {
             var alternateColorComboBox = sender as ComboBox;
@@ -194,18 +175,15 @@ namespace KitBox_Project.Views
             var stockWarningText = this.FindControl<TextBlock>("StockWarning");
             if (stockWarningText == null) return;
             
-            // Vérifier la disponibilité avec la nouvelle couleur
             var dataAccess = new DataAccess();
             var aiStock = dataAccess.GetAngleIronStockByHeight(SelectedHeight);
             bool hasStock = aiStock.TryGetValue(newColor, out int newColorQty) && newColorQty > 0;
             
             if (hasStock)
             {
-                // Mettre à jour le message avec la nouvelle couleur (positif)
                 stockWarningText.Text = $"✓ Couleur « {newColor} » sélectionnée. Stock disponible.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Green);
                 
-                // Cacher le message après un délai
                 var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(3) };
                 timer.Tick += (s, args) =>
                 {
@@ -216,7 +194,6 @@ namespace KitBox_Project.Views
             }
             else
             {
-                // La nouvelle couleur n'a pas de stock non plus
                 stockWarningText.Text = $"⚠️ Plus d'angle irons en « {newColor} » non plus. Essayez une autre.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Red);
             }
@@ -267,19 +244,166 @@ namespace KitBox_Project.Views
 
         private void GoToSize(object sender, RoutedEventArgs e)
         {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter le cast direct
+            var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new DesignYourWardrobe(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new DesignYourWardrobe();
             }
         }
 
         private void GoToDoor(object sender, RoutedEventArgs e)
         {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter le cast direct
-            if (mainWindow != null)
+            var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
+
+            // --- VALIDATION DES CHAMPS ---
+            if (SelectedLength == 0 || SelectedDepth == 0 || SelectedHeight == 0)
             {
-                mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
+                if (errorMessage != null)
+                    errorMessage.IsVisible = true;
+                return;
+            }
+            if (errorMessage != null)
+                errorMessage.IsVisible = false;
+
+            // --- MISE À JOUR DE L'ÉTAT GLOBAL ---
+            AppState.SelectedLength = SelectedLength;
+            AppState.SelectedDepth  = SelectedDepth;
+            AppState.SelectedHeight = SelectedHeight;
+
+            // --- RECHERCHE DES PANNEAUX BACK ---
+            Console.WriteLine("[DEBUG] Recherche de panneaux BACK...");
+            Console.WriteLine($"  Longueur={SelectedLength}, Hauteur={SelectedHeight}, Couleur={AppState.SelectedColor}");
+            Console.WriteLine($"[DEBUG] SelectedColor (brut) = '{AppState.SelectedColor}' (Length={AppState.SelectedColor?.Length})");
+
+            var allBackPanels = StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null &&
+                            a.Reference.Replace(" ", "_").ToLower().Contains("panel_back"))
+                .ToList();
+
+            Console.WriteLine($"[DEBUG] {allBackPanels.Count} panneau(x) back trouvé(s) en base.");
+            foreach (var panel in allBackPanels)
+            {
+                Console.WriteLine($"  → Ref: '{panel.Reference}', L={panel.Length}, H={panel.Height}, C='{panel.Color}', Stock={panel.NumberOfPiecesAvailable}");
+            }
+
+            var backPanel = allBackPanels.FirstOrDefault(a =>
+                a.Length == SelectedLength &&
+                a.Height == SelectedHeight &&
+                a.Color != null &&
+                a.Color.Trim().Equals(AppState.SelectedColor?.Trim(), StringComparison.OrdinalIgnoreCase) &&
+                a.NumberOfPiecesAvailable > 0);
+
+            if (backPanel != null)
+            {
+                AppState.AddToCart(backPanel);
+                Console.WriteLine($"[SUCCESS] Panneau BACK ajouté au panier: '{backPanel.Reference}'");
+            }
+            else
+            {
+                Console.WriteLine($"❌ Aucun panneau BACK trouvé pour L={SelectedLength}, H={SelectedHeight}, C={AppState.SelectedColor}");
+                // … vos logs de fallback ici …
+            }
+
+            // === PANNEAUX LEFT OR RIGHT ===
+            Console.WriteLine("\n[DEBUG] Recherche de panneaux LEFT OR RIGHT...");
+            var allLeftRightPanels = StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null &&
+                            a.Reference.Replace(" ", "_").ToLower().Contains("panel_left_or_right"))
+                .ToList();
+
+            Console.WriteLine($"[DEBUG] {allLeftRightPanels.Count} panneau(x) LEFT OR RIGHT trouvé(s) en base.");
+            foreach (var panel in allLeftRightPanels)
+            {
+                Console.WriteLine($"  → Ref: '{panel.Reference}', H={panel.Height}, D={panel.Depth}, C='{panel.Color}', Stock={panel.NumberOfPiecesAvailable}");
+            }
+
+            var leftRightPanel = allLeftRightPanels.FirstOrDefault(a =>
+                a.Height == SelectedHeight &&
+                a.Depth  == SelectedDepth  &&
+                a.Color != null &&
+                a.Color.Trim().Equals(AppState.SelectedColor?.Trim(), StringComparison.OrdinalIgnoreCase) &&
+                a.NumberOfPiecesAvailable >= 2);
+
+            if (leftRightPanel != null)
+            {
+                AppState.AddToCart(leftRightPanel);
+                AppState.AddToCart(leftRightPanel);
+                Console.WriteLine($"[SUCCESS] 2 panneaux LEFT OR RIGHT ajoutés au panier: '{leftRightPanel.Reference}'");
+            }
+            else
+            {
+                Console.WriteLine($"❌ Aucun panneau LEFT OR RIGHT trouvé pour H={SelectedHeight}, D={SelectedDepth}, C={AppState.SelectedColor}");
+                // … vos logs de fallback ici …
+            }
+
+            // --- LOG COMPLET DES VERTICAL BATTENS ---
+            Console.WriteLine("\n[DEBUG] Liste complète des vertical battens en base :");
+            StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null &&
+                            a.Reference.IndexOf("vertical batten", StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList()
+                .ForEach(a =>
+                    Console.WriteLine($"    Ref='{a.Reference}', L={a.Length}, P={a.Depth}, Stock={a.NumberOfPiecesAvailable}")
+                );
+
+            // --- AJOUT DES 4 VERTICAL BATTENS ---
+            Console.WriteLine("\n[DEBUG] Ajout de 4 vertical battens...");
+            var verticalBatten = StaticArticleDatabase.AllArticles
+                .FirstOrDefault(a =>
+                    a.Reference != null &&
+                    a.Reference.IndexOf("vertical batten", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    a.Depth == SelectedDepth &&
+                    a.NumberOfPiecesAvailable > 3);
+            if (verticalBatten != null)
+            {
+                for (int i = 0; i < 4; i++)
+                    AppState.AddToCart(verticalBatten);
+                Console.WriteLine($"[SUCCESS] 4 vertical battens ajoutés: Ref='{verticalBatten.Reference}', P={verticalBatten.Depth}");
+            }
+            else
+            {
+                Console.WriteLine($"[WARN] Moins de 4 vertical battens disponibles pour P={SelectedDepth}");
+            }
+
+            // --- LOG COMPLET DES ANGLE IRONS ---
+            Console.WriteLine("\n[DEBUG] Liste complète des angle irons en base :");
+            StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null &&
+                            a.Reference.IndexOf("angle_iron", StringComparison.OrdinalIgnoreCase) >= 0)
+                .ToList()
+                .ForEach(a =>
+                    Console.WriteLine($"    Ref='{a.Reference}', L={a.Length}, H={a.Height}, Stock={a.NumberOfPiecesAvailable}")
+                );
+
+            // --- AJOUT DES 4 ANGLE IRONS ---
+            Console.WriteLine("\n[DEBUG] Ajout de 4 angle irons...");
+            var angleIron = StaticArticleDatabase.AllArticles
+                .FirstOrDefault(a =>
+                    a.Reference != null &&
+                    a.Reference.IndexOf("Angle iron", StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    a.Height == SelectedHeight &&
+                    a.NumberOfPiecesAvailable > 3);
+            if (angleIron != null)
+            {
+                for (int i = 0; i < 4; i++)
+                    AppState.AddToCart(angleIron);
+                Console.WriteLine($"[SUCCESS] 4 angle irons ajoutés: Ref='{angleIron.Reference}', H={angleIron.Height}");
+            }
+            else
+            {
+                Console.WriteLine($"[WARN] Moins de 4 angle irons disponibles pour H={SelectedHeight}");
+            }
+
+            // === NAVIGATION VERS PAGE PORTE ===
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                var doorView = new Door
+                {
+                    SelectedLength = SelectedLength,
+                    SelectedDepth  = SelectedDepth,
+                    SelectedHeight = SelectedHeight
+                };
+                mainWindow.MainContent.Content = doorView;
             }
         }
 
@@ -287,7 +411,7 @@ namespace KitBox_Project.Views
         {
             if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+                mainWindow.ShowChooseUserTypePage();
             }
         }
     }

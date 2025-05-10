@@ -1,26 +1,56 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KitBox_Project.Views.Order">
-    
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignWidth="800" d:DesignHeight="450"
+    x:Class="KitBox_Project.Views.Order"
+    x:DataType="vm:ShoppingCartViewModel"
+    xmlns:vm="clr-namespace:KitBox_Project.ViewModels">
+
     <Grid>
-        <StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20" Spacing="20">
 
-            <TextBlock Text="6. Récapitulatif de votre commande" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+                <TextBlock Text="6. Récapitulatif de votre commande"
+                           HorizontalAlignment="Center"
+                           FontSize="24"
+                           FontWeight="Bold" />
 
-            <!-- Mettre un résumé des dimensions -->
+                <!-- Liste des articles du panier -->
+                <ItemsControl ItemsSource="{Binding CartItems}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Reference}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Dimensions}"/>
+                                    <TextBlock Text="{Binding Color, StringFormat='Couleur : {0}'}"/>
+                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantité : {0}'}"/>
+                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Prix unitaire : {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total : {0:0.00} €'}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-                <Button Content="Back" Click="GoToChoice" Margin="5,0"/>
-                <Button Content="Confirmer votre commande" Margin="5,0"/>
-                <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+                <!-- Totaux -->
+                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                    <TextBlock Text="Total articles :" />
+                    <TextBlock Text="{Binding TotalItemCount}" FontWeight="Bold"/>
+                    <TextBlock Text=" | Total :"/>
+                    <TextBlock Text="{Binding TotalPrice, StringFormat=' {0:0.00} €'}" FontWeight="Bold"/>
+                </StackPanel>
+
+                <!-- Boutons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
+                    <Button Content="Back" Click="GoToChoice" Margin="5,0"/>
+                    <Button Content="Confirmer la commande" Click="GoToConfirmation" Margin="5,0"/>
+                    <Button Content="Abandonner la transaction" Click="GoToFirstPage" Margin="5,0"/>
+                </StackPanel>
             </StackPanel>
-
-        </StackPanel>
-
-        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+        </ScrollViewer>
     </Grid>
-
 </UserControl>

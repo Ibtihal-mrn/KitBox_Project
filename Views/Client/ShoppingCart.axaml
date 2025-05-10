@@ -1,31 +1,71 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KitBox_Project.Views.ShoppingCart">
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vm="clr-namespace:KitBox_Project.ViewModels"
+    x:Class="KitBox_Project.Views.Client.ShoppingCart"
+    x:DataType="vm:ShoppingCartViewModel"
+    x:Name="cart">
 
-  <Grid Margin="20">
-    <TextBlock TextWrapping="Wrap" Text="Kit Box"
-    FontSize="24"
-    FontFamily="avares://KitBox_Project/Fonts#Anton"
-    HorizontalAlignment="Center"/>
+    <UserControl.Resources>
+        <vm:ShoppingCartViewModel x:Key="ViewModel"/>
+    </UserControl.Resources>
 
-    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="30,40,0,0">
-      <TextBlock TextWrapping="Wrap" Text="Your cart is empty"
-      FontSize="22"
-      FontWeight="Bold"/>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Margin="20" Spacing="20">
+            <TextBlock Text="Mon Panier" FontSize="24" FontWeight="Bold" />
 
-      <TextBlock TextWrapping="Wrap" Margin="0,15,0,0">
-        When you add products to your cart, they will appear here.
-      </TextBlock>
+            <ItemsControl x:Name="itemsCtrl" ItemsSource="{Binding CartItems}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5">
+                            <StackPanel Orientation="Horizontal" Spacing="20">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Reference}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Dimensions}"/>
+                                    <TextBlock Text="{Binding Color, StringFormat='Couleur : {0}'}"/>
+                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantité : {0}'}"/>
+                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Prix unitaire : {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total : {0:0.00} €'}"/>
+                                    <StackPanel Orientation="Horizontal" Spacing="5">
+                                        <Button Content="−"
+                                                Width="30" Height="30"
+                                                Command="{Binding Source={StaticResource ViewModel}, Path=DecreaseQuantityCommand}"
+                                                CommandParameter="{Binding}" />
 
-      <TextBlock TextWrapping="Wrap" Margin="0,10,0,0">
-       Can't find your products? Make sure you've added them to your cart.
-      </TextBlock>
+                                        <Button Content="+"
+                                                Width="30" Height="30"
+                                                Command="{Binding Source={StaticResource ViewModel}, Path=IncreaseQuantityCommand}"
+                                                CommandParameter="{Binding}" />
+                                        <Button Content="🗑" 
+                                                Width="30" Height="30"
+                                                Command="{Binding Source={StaticResource ViewModel}, Path=RemoveItemCommand}"
+                                                CommandParameter="{Binding}" />
 
-      <Button Content="Go to home" Margin="0,20,0,0" Click="GoToHome"/>
 
-    </StackPanel>
-  </Grid> 
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Nombre d'articles :"/>
+                <TextBlock Text="{Binding TotalItemCount}" FontWeight="Bold"/>
+                <TextBlock Text=" | Total :"/>
+                <TextBlock Text="{Binding TotalPrice, StringFormat=' {0:0.00} €'}" FontWeight="Bold"/>
+            </StackPanel>
+
+            <Button Content="Vider le panier"
+                    Command="{Binding ClearCartCommand}"
+                    IsEnabled="{Binding !IsCartEmpty}"/>
+
+            <Button Content="Retour à l'accueil"
+                    Click="OnHomeButtonClick"/>
+            <Button Content="Confirmer la commande" Click="GoToConfirmation" Margin="5,0"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
