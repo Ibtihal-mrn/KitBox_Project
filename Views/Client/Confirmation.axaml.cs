@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
+using KitBox_Project.Services;
 
 namespace KitBox_Project.Views
 {
@@ -17,11 +18,15 @@ namespace KitBox_Project.Views
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {
+            // 🔄 Recharge le stock selon les commandes passées
+            StockService.LoadConfirmedOrdersAndAdjustStock();
+
             if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.ShowChooseUserTypePage(); // ✅ les événements sont rebranchés ici
+                mainWindow.ShowChooseUserTypePage(); // ✅ Les événements sont rebranchés ici
             }
         }
+
     }
 
     

@@ -1,4 +1,3 @@
-
 using ReactiveUI;
 using System;
 using System.Reactive;
@@ -6,24 +5,24 @@ using System.Threading.Tasks;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using KitBox_Project.Data;
-
+using KitBox_Project.Services; // Ajout pour accéder à StockService
 
 namespace KitBox_Project.ViewModels
 {
-    public class MainViewModel : ReactiveObject // offert par ReactiveUI -> utilisé par Avalonia pour la réactivité)
+    public class MainViewModel : ReactiveObject
     {
         private string _title = "Bienvenue sur KitBox !";
 
         public string Title
         {
             get => _title;
-            set => this.RaiseAndSetIfChanged(ref _title, value); // Grâce au binding et à RaiseAndSetIfChanged(), si la valeur de Title change dans le ViewModel, la View (UI) sera mise à jour automatiquement, sans qu'il soit nécessaire d'écrire du code supplémentaire pour rafraîchir l'affichage (chargé par le binding).
+            set => this.RaiseAndSetIfChanged(ref _title, value);
         }
 
         public MainViewModel()
         {
-            StartupLoader.LoadArticlesFromDatabase();
+            StartupLoader.LoadArticlesFromDatabase(); // Charge les articles depuis la base de données
+            StockService.LoadConfirmedOrdersAndAdjustStock(); // 🔁 Ajuste le stock en fonction du fichier JSON
         }
-
     }
-} 
+}

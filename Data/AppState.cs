@@ -77,5 +77,7 @@ namespace KitBox_Project
                 Console.WriteLine($"⚠️ Article '{reference}' avec couleur '{color}' non trouvé ou en rupture de stock.");
             }
         }
+        
     }
+    
 }

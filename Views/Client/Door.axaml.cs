@@ -69,7 +69,7 @@ namespace KitBox_Project.Views
                 mw.MainContent.Content = new Height();
         }
 
-        private void GoToChoice(object sender, RoutedEventArgs e)
+       private void GoToChoice(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mw)
             {
@@ -86,14 +86,37 @@ namespace KitBox_Project.Views
                         a.NumberOfPiecesAvailable > 0);
 
                     if (door != null)
+                    {
                         AppState.AddToCart(door);
+
+                        // ✅ Si la couleur n’est pas "glass", on ajoute deux "coupelles"
+                        if (!selectedColor.Trim().Equals("glass", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var coupelle = StaticArticleDatabase.AllArticles.FirstOrDefault(a =>
+                                a.Reference != null &&
+                                a.Reference.ToLower().Contains("coupelle"));
+
+                            if (coupelle != null)
+                            {
+                                AppState.AddToCart(coupelle);
+                                AppState.AddToCart(coupelle); // Ajout une deuxième fois
+                            }
+                            else
+                            {
+                                Console.WriteLine("Erreur : Article 'coupelle' non trouvé.");
+                            }
+                        }
+                    }
                     else
+                    {
                         Console.WriteLine($"Erreur : Aucune porte disponible pour Hauteur={AppState.SelectedHeight}, Longueur={AppState.SelectedLength}, Couleur={selectedColor}.");
+                    }
                 }
 
                 mw.MainContent.Content = new Choice();
             }
         }
+
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {

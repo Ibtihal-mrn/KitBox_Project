@@ -57,5 +57,6 @@ namespace KitBox_Project.Views
                 mainWindow.ShowChooseUserTypePage();
             }
         }
+        
     }
 }
