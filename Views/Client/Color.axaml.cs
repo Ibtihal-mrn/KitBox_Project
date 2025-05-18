@@ -8,9 +8,16 @@ namespace KitBox_Project.Views
 {
     public partial class Color : UserControl
     {
-        public Color()
+        private bool fromChoice = false; 
+
+        public Color() : this(false)
+        {
+        }
+
+        public Color(bool fromChoice)
         {
             InitializeComponent();
+            this.fromChoice = fromChoice; 
         }
 
         private void SelectColor(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -50,6 +57,22 @@ namespace KitBox_Project.Views
             }
         }
 
+        private void GoToPrevious(object sender, RoutedEventArgs e)
+        {
+            if (VisualRoot is MainWindow mainWindow)
+            {
+                //Navigue vers Choice si fromChoice est vrai, sinon vers la page initiale
+                if (fromChoice)
+                {
+                    mainWindow.MainContent.Content = new Choice();
+                }
+                else
+                {
+                    mainWindow.ShowChooseUserTypePage();
+                }
+            }
+        }
+
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
@@ -57,6 +80,5 @@ namespace KitBox_Project.Views
                 mainWindow.ShowChooseUserTypePage();
             }
         }
-        
     }
 }

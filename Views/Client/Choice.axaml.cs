@@ -8,8 +8,6 @@ using KitBox_Project.Data;
 using System.Linq;
 using KitBox_Project.Models;
 
-
-
 namespace KitBox_Project.Views
 {
     public partial class Choice : UserControl
@@ -44,7 +42,7 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
             if (mainWindow != null) // Vérifie que mainWindow n'est pas null
             {
-                mainWindow.MainContent.Content = new Color(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Color(true); // ✅ Modifie le bon ContentControl
             }
         }
 
@@ -113,9 +111,6 @@ namespace KitBox_Project.Views
             // 8. Navigation vers la page de confirmation
             mainWindow.MainContent.Content = new Confirmation();
         }
-
-
-
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {

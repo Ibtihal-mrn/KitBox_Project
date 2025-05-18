@@ -21,7 +21,7 @@
         
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
-            <Button Content="Back" Click="GoToFirstPage" Margin="5,0"/>
+            <Button Content="Back" Click="GoToPrevious" Margin="5,0"/>
             <Button Content="Next" Click="GoToDesign" Margin="5,0"/>
         </StackPanel>
 
