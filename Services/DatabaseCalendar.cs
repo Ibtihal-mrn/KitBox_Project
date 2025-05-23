@@ -108,8 +108,7 @@ namespace KitBox_Project.Services
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = @"
-                SELECT * FROM Appointments 
+            command.CommandText = @"SELECT Day, Hour, Name_of_customer, Phone_number, Comment FROM Appointments
                 WHERE Day = $day AND Hour = $hour
             ";
             command.Parameters.AddWithValue("$day", day);
