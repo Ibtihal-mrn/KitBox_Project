@@ -46,6 +46,39 @@
                     <ComboBoxItem Content="Seller"/>
                 </ComboBox>
                 <Button Content="Add User" Width="250" Click="AjouterUtilisateur"/>
+
+                <TextBlock x:Name="WrongPassword"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="Password missmatch, please try again"
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="WrongID"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="Wrong ID, please use 5 numbers"
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="DoubleID"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="The ID already exist, please choose another one"
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="EmptyInformations"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="Complete all informations"
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
             </StackPanel>
         </Border>
 

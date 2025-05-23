@@ -4,6 +4,7 @@ using KitBox_Project.Services;
 using System;
 using System.Collections.Generic;
 using Avalonia;
+using System.Text.RegularExpressions;
 
 namespace KitBox_Project.Views
 {
@@ -91,6 +92,14 @@ namespace KitBox_Project.Views
 
             var name = NameBox.Text ?? "";
             var phone = PhoneBox.Text ?? "";
+
+            var regexPhone = new Regex(@"^(?:\+\d{2} \d{3} \d{2} \d{2} \d{2}|00\d{3} \d{2} \d{2} \d{2} \d{2})$");
+            if (!regexPhone.IsMatch(phone))
+            {
+                ConfirmationText.Text = "Format du numéro de téléphone invalide. Ex : +32 546 56 90 98 ou 00485 66 88 67 50";
+                ConfirmationText.Foreground = Avalonia.Media.Brushes.Red;
+                return;
+            }
 
             try
             {

@@ -25,8 +25,16 @@ namespace KitBox_Project.Views
             }
         }
 
+        private void CacherMessages()
+        {
+            WrongID.IsVisible = false;
+            WrongPassword.IsVisible = false;
+            DoubleID.IsVisible = false;
+        }
         private void AjouterUtilisateur(object sender, RoutedEventArgs e)
         {
+            CacherMessages();
+
             var matricule = MatriculeBox.Text?.Trim();
             var motDePasse = PasswordBox.Text?.Trim();
             var confirmationMotDePasse = ConfirmPasswordBox.Text?.Trim();
@@ -35,6 +43,7 @@ namespace KitBox_Project.Views
             if (string.IsNullOrWhiteSpace(matricule) || string.IsNullOrWhiteSpace(motDePasse) || string.IsNullOrWhiteSpace(role))
             {
                 // Tu peux afficher un message à l'utilisateur ici
+                EmptyInformations.IsVisible = true;
                 Console.WriteLine("Tous les champs doivent être remplis.");
                 return;
             }
@@ -43,7 +52,16 @@ namespace KitBox_Project.Views
             {
                 if (!Regex.IsMatch(matricule, @"^\d{5}$"))
                 {
+                    WrongID.IsVisible = true;
                     Console.WriteLine("Format incorrect");
+                    return;
+                }
+
+                var utilisateursExistants = Services.DatabaseManager.GetAllUsers();
+                if (utilisateursExistants.Any(u => u.Username == matricule))
+                {
+                    DoubleID.IsVisible = true ; 
+                    Console.WriteLine("Ce matricule est déjà utilisé."); 
                     return;
                 }
 
@@ -60,15 +78,11 @@ namespace KitBox_Project.Views
                 }
 
                 else{
+                    WrongPassword.IsVisible = true;
                     Console.WriteLine("Les mots de passes ne correspondent pas, veuillez résaayer");
                 }
 
-                var utilisateursExistants = Services.DatabaseManager.GetAllUsers();
-                if (utilisateursExistants.Any(u => u.Username == matricule))
-                {
-                    Console.WriteLine("Ce matricule est déjà utilisé."); 
-                    return;
-                }
+                
                 
             }
             catch (Exception ex)
