@@ -51,7 +51,7 @@
                 Foreground="Red"
                 FontWeight="Bold"
                 Margin="10"
-                Text="Password missmatch, please try again"
+                Text="Passwords do not match."
                 IsVisible="False"
                 HorizontalAlignment="Center"/>
 
@@ -59,7 +59,7 @@
                 Foreground="Red"
                 FontWeight="Bold"
                 Margin="10"
-                Text="Wrong ID, please use 5 numbers"
+                Text="ID must be exactly 5 digits."
                 IsVisible="False"
                 HorizontalAlignment="Center"/>
 
@@ -67,7 +67,7 @@
                 Foreground="Red"
                 FontWeight="Bold"
                 Margin="10"
-                Text="The ID already exist, please choose another one"
+                Text="ID already taken."
                 IsVisible="False"
                 HorizontalAlignment="Center"/>
 
@@ -75,7 +75,7 @@
                 Foreground="Red"
                 FontWeight="Bold"
                 Margin="10"
-                Text="Complete all informations"
+                Text="Missing information(s)."
                 IsVisible="False"
                 HorizontalAlignment="Center"/>
 
