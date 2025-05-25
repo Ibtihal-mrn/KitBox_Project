@@ -37,7 +37,7 @@
                                                 Command="{Binding Source={StaticResource ViewModel}, Path=IncreaseQuantityCommand}"
                                                 CommandParameter="{Binding}" />
                                         <Button Content="🗑" 
-                                                Width="30" Height="30"
+                                                Width="40" Height="40"
                                                 Command="{Binding Source={StaticResource ViewModel}, Path=RemoveItemCommand}"
                                                 CommandParameter="{Binding}" />
 

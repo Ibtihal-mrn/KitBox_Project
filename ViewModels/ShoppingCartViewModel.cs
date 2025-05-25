@@ -6,31 +6,39 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using KitBox_Project.Models;
 using MsBox.Avalonia.ViewModels.Commands;
+using KitBox_Project.Data;
 
 namespace KitBox_Project.ViewModels
 {
     public class ShoppingCartViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Article> _cartItems = new ObservableCollection<Article>();
-
-        public ObservableCollection<Article> CartItems
+        private ObservableCollection<CartItemViewModel> _cartItems = new();
+        private string _orderId = string.Empty;
+        public string OrderId
+        {
+            get => _orderId;
+            set
+            {
+                if (_orderId != value)
+                {
+                    _orderId = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public ObservableCollection<CartItemViewModel> CartItems
         {
             get => _cartItems;
             set
             {
-                if (_cartItems != value)
-                {
-                    _cartItems = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(TotalPrice));
-                    OnPropertyChanged(nameof(TotalItemCount));
-                    OnPropertyChanged(nameof(IsCartEmpty));
-                }
+                _cartItems = value;
+                OnPropertyChanged();
+                NotifyPriceChange();
             }
         }
 
-        public decimal TotalPrice => CartItems?.Sum(item => item.TotalPrice) ?? 0m;
-        public int TotalItemCount => CartItems?.Sum(item => item.Quantity) ?? 0;
+        public decimal TotalPrice => CartItems.Sum(item => item.TotalPrice);
+        public int TotalItemCount => CartItems.Sum(item => item.Quantity);
         public bool IsCartEmpty => TotalItemCount == 0;
 
         public ICommand ClearCartCommand { get; }
@@ -40,48 +48,23 @@ namespace KitBox_Project.ViewModels
 
         public ShoppingCartViewModel()
         {
-            UpdateCartItems(); // premier affichage groupé
-
-            AppState.SelectedArticles.CollectionChanged += (s, e) =>
-            {
-                UpdateCartItems(); // mise à jour à chaque changement
-            };
+            LoadCartItems();
+            AppState.SelectedArticles.CollectionChanged += (s, e) => LoadCartItems();
 
             ClearCartCommand = new RelayCommand(_ => ClearCart(), _ => !IsCartEmpty);
-            DecreaseQuantityCommand = new RelayCommand(DecreaseQuantity, CanDecreaseQuantity);
-            IncreaseQuantityCommand = new RelayCommand(IncreaseQuantity, CanIncreaseQuantity); // Added CanExecute
-            RemoveItemCommand = new RelayCommand<Article>(RemoveItem);  // Commande générique pour supprimer un item
+            DecreaseQuantityCommand = new RelayCommand(param => DecreaseQuantity(param as CartItemViewModel), param => CanDecrease(param as CartItemViewModel));
+            IncreaseQuantityCommand = new RelayCommand(param => IncreaseQuantity(param as CartItemViewModel));
+            RemoveItemCommand = new RelayCommand(param => RemoveItem(param as CartItemViewModel));
         }
 
-        private void RemoveItem(Article item)
-        {
-            if (item != null)
-            {
-                // Suppression dans AppState.SelectedArticles (source de données)
-                var articlesToRemove = AppState.SelectedArticles
-                    .Where(a => a.Reference == item.Reference && 
-                           a.Color == item.Color && 
-                           a.Dimensions == item.Dimensions)
-                    .ToList();
-
-                foreach (var article in articlesToRemove)
-                {
-                    AppState.SelectedArticles.Remove(article);
-                }
-
-                // La mise à jour de CartItems se fera automatiquement via l'événement CollectionChanged
-            }
-        }
-
-
-        private void UpdateCartItems()
+        private void LoadCartItems()
         {
             var grouped = AppState.SelectedArticles
                 .GroupBy(a => new { a.Reference, a.Color, a.Dimensions })
-                .Select(group =>
+                .Select(g =>
                 {
-                    var first = group.First();
-                    return new Article
+                    var first = g.First();
+                    return new CartItemViewModel
                     {
                         Reference = first.Reference,
                         Color = first.Color,
@@ -90,46 +73,108 @@ namespace KitBox_Project.ViewModels
                         Depth = first.Depth,
                         Height = first.Height,
                         SellingPrice = first.SellingPrice,
-                        Quantity = group.Sum(a => a.Quantity)
+                        Quantity = g.Count(),
+                        NumberOfPiecesAvailable = first.NumberOfPiecesAvailable
                     };
-                });
+                }).ToList();
 
-            CartItems = new ObservableCollection<Article>(grouped);
+            foreach (var item in CartItems)
+                item.QuantityChanged -= OnCartItemQuantityChanged;
+
+            CartItems = new ObservableCollection<CartItemViewModel>(grouped);
+
+            foreach (var item in CartItems)
+                item.QuantityChanged += OnCartItemQuantityChanged;
+
+            NotifyPriceChange();
         }
 
-        private void DecreaseQuantity(object? parameter)
+        private void OnCartItemQuantityChanged()
         {
-            if (parameter is Article article && article.Quantity > 1)
+            SyncAppStateFromCartItems();
+            NotifyPriceChange();
+        }
+
+        private void SyncAppStateFromCartItems()
+        {
+            AppState.ClearCart();
+            foreach (var item in CartItems)
             {
-                article.Quantity--;
-                NotifyPriceChange();
+                var article = StaticArticleDatabase.AllArticles.FirstOrDefault(a =>
+                    a.Reference == item.Reference &&
+                    a.Color == item.Color &&
+                    a.Dimensions == item.Dimensions);
+
+                if (article != null)
+                {
+                    for (int i = 0; i < item.Quantity; i++)
+                        AppState.AddToCart(article);
+                }
             }
         }
 
         private void IncreaseQuantity(object? parameter)
         {
-            if (parameter is Article article)
+            if (parameter is CartItemViewModel item)
             {
-                article.Quantity++;
-                NotifyPriceChange();
+                var totalInCart = AppState.SelectedArticles
+                    .Count(a => a.Reference == item.Reference && a.Color == item.Color && a.Dimensions == item.Dimensions);
+
+                if (totalInCart >= item.NumberOfPiecesAvailable)
+                {
+                    Console.WriteLine($"❌ Pas assez de stock pour {item.Reference} ({item.Color}) !");
+                    return;
+                }
+
+                var firstArticle = StaticArticleDatabase.AllArticles.FirstOrDefault(a =>
+                    a.Reference == item.Reference &&
+                    a.Color == item.Color &&
+                    a.Dimensions == item.Dimensions);
+
+                if (firstArticle != null)
+                {
+                    AppState.AddToCart(firstArticle);
+                    LoadCartItems();
+                    NotifyPriceChange();
+                }
             }
         }
 
-        private bool CanDecreaseQuantity(object? parameter)
+
+        private void DecreaseQuantity(CartItemViewModel? item)
         {
-            return parameter is Article article && article.Quantity > 1;
+            if (item == null || item.Quantity <= 1) return;
+
+            var toRemove = AppState.SelectedArticles.FirstOrDefault(a =>
+                a.Reference == item.Reference && a.Color == item.Color && a.Dimensions == item.Dimensions);
+
+            if (toRemove != null)
+            {
+                AppState.SelectedArticles.Remove(toRemove);
+                LoadCartItems();
+            }
         }
 
-        private bool CanIncreaseQuantity(object? parameter)
+        private bool CanDecrease(CartItemViewModel? item) => item != null && item.Quantity > 1;
+
+        private void RemoveItem(CartItemViewModel? item)
         {
-            return parameter is Article; // Always allow increase unless additional logic is needed
+            if (item == null) return;
+
+            var toRemove = AppState.SelectedArticles
+                .Where(a => a.Reference == item.Reference && a.Color == item.Color && a.Dimensions == item.Dimensions)
+                .ToList();
+
+            foreach (var article in toRemove)
+                AppState.SelectedArticles.Remove(article);
+
+            LoadCartItems();
         }
 
         private void ClearCart()
         {
             AppState.ClearCart();
             CartItems.Clear();
-            NotifyPriceChange();
         }
 
         private void NotifyPriceChange()
@@ -140,41 +185,7 @@ namespace KitBox_Project.ViewModels
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
-    // Classe RelayCommand générique
-    public class RelayCommand<T> : ICommand
-    {
-        private readonly Action<T> _execute;
-        private readonly Func<T, bool>? _canExecute;
-
-        public RelayCommand(Action<T> execute, Func<T, bool>? canExecute = null)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object? parameter)
-        {
-            if (parameter is null || !(parameter is T))
-                return false;
-
-            return _canExecute?.Invoke((T)parameter) ?? true;
-        }
-
-        public void Execute(object? parameter)
-        {
-            if (parameter is T validParameter)
-            {
-                _execute(validParameter);
-            }
-        }
-
-        public event EventHandler? CanExecuteChanged;
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
 }

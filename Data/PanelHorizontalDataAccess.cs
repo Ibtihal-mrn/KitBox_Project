@@ -1,34 +1,68 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using KitBox_Project.Models;
+using KitBox_Project.Services;
+using KitBox_Project.Views;
 using MySql.Data.MySqlClient;
+using KitBox_Project.Config;
 
 
 namespace KitBox_Project.Data
 {
     public class DataAccess
     {
+        // Fusionne BDD + commandes + UI avant tout accès à AllArticles
         // On suppose que StaticArticleDatabase.AllArticles est déjà rempli avant tout appel.
+        string conn = DatabaseConfig.ConnectionString;
 
+        public DataAccess()
+        {
+            
+        }
+        
         public List<Article> GetArticles()
         {
-            var articles = StaticArticleDatabase.AllArticles.ToList();
+            var articles = new List<Article>();
+
             try
             {
-                Console.WriteLine("[DEBUG] Début de GetArticles");
-                foreach (var a in articles.Where(a => a.Reference?.IndexOf("panel horizontal", StringComparison.OrdinalIgnoreCase) >= 0))
+                // Connexion à ta vraie base de données
+                using (var connection = new MySqlConnection(conn)) // Utilisation de MySqlConnection
                 {
-                    Console.WriteLine($"[DEBUG] Article chargé : Ref={a.Reference}, L={a.Length}, P={a.Depth}, C={a.Color}, Stock={a.NumberOfPiecesAvailable}");
+                    connection.Open();
+                    var command = new MySqlCommand("SELECT * FROM new_table", connection);
+                    var reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        articles.Add(new Article
+                        {
+                            Code = reader["Code"].ToString(),
+                            Reference = reader["Reference"].ToString(),
+                            Color = reader["Color"].ToString(),
+                            NumberOfPiecesAvailable = Convert.ToInt32(reader["number of pieces available"]),
+                            Length = reader["Length"] != DBNull.Value ? Convert.ToInt32(reader["Length"]) : 0,
+                            Depth = reader["Depth"] != DBNull.Value ? Convert.ToInt32(reader["Depth"]) : 0,
+                            Height = reader["Height"] != DBNull.Value ? Convert.ToInt32(reader["Height"]) : 0,
+                            Dimensions = reader["Dimensions"]?.ToString(),
+                            SellingPrice = reader["selling price"] != DBNull.Value ? Convert.ToDecimal(reader["selling price"]) : 0,
+
+                        });
+                    }
                 }
+
+                Console.WriteLine($"[DEBUG] {articles.Count} articles récupérés depuis la BDD");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Erreur dans GetArticles : {ex.Message}");
+                Console.WriteLine($"❌ Erreur BDD : {ex.Message}");
             }
+
             return articles;
         }
-
         public List<Article> GetLengthOfPanelHorizontal()
         {
             Console.WriteLine("[DEBUG] Début de GetLengthOfPanelHorizontal");
@@ -231,7 +265,7 @@ namespace KitBox_Project.Data
         {
             Console.WriteLine("[DEBUG] Début de GetAngleIron");
             var result = StaticArticleDatabase.AllArticles
-                .Where(a => a.Reference?.IndexOf("angle iron", StringComparison.OrdinalIgnoreCase) >= 0)
+                .Where(a => a.Reference?.IndexOf("angle", StringComparison.OrdinalIgnoreCase) >= 0)
                 .Where(a => a.Height == height)
                 .ToList();
 
@@ -263,19 +297,61 @@ namespace KitBox_Project.Data
 
         public Dictionary<string, int> GetAngleIronStockByHeight(int height)
         {
-            Console.WriteLine("[DEBUG] Début de GetAngleIronStockByHeight");
-            var dict = StaticArticleDatabase.AllArticles
-                .Where(a => a.Reference?.IndexOf("angle iron", StringComparison.OrdinalIgnoreCase) >= 0)
+            // 1. Récupérer les articles angle iron avec la bonne hauteur
+            var stockFromDb = StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null && a.Reference.ToLower().Contains("angle"))
                 .Where(a => a.Height == height)
                 .GroupBy(a => a.Color)
                 .Where(g => g.Key != null)
-                .ToDictionary(g => g.Key!, g => g.Sum(a => a.NumberOfPiecesAvailable));
+                .ToDictionary(
+                    g => g.Key!,
+                    g => g.Sum(a => a.NumberOfPiecesAvailable)
+                );
 
-            foreach (var kv in dict)
-                Console.WriteLine($"[DEBUG] Couleur : {kv.Key}, Quantité : {kv.Value}");
-            return dict;
+            // 2. Lire les commandes confirmées
+            var orderedCounts = new Dictionary<string, int>();
+            var confirmedOrders = ConfirmedOrderService.LoadAllOrders();
+
+            foreach (var order in confirmedOrders)
+            {
+                foreach (var article in order.Articles)
+                {
+                    if (article.Reference != null && article.Reference.ToLower().Contains("angle")
+                        && article.Height == height)
+                    {
+                        var color = article.Color ?? "Unknown";
+
+                        if (!orderedCounts.ContainsKey(color))
+                            orderedCounts[color] = 0;
+
+                        orderedCounts[color] += article.Quantity;
+                    }
+                }
+            }
+
+            // 3. Soustraire les quantités commandées
+            foreach (var kvp in orderedCounts)
+            {
+                if (stockFromDb.ContainsKey(kvp.Key))
+                {
+                    stockFromDb[kvp.Key] -= kvp.Value;
+
+                    if (stockFromDb[kvp.Key] <= 0)
+                        stockFromDb.Remove(kvp.Key);
+                }
+            }
+
+            // 4. Debug
+            Console.WriteLine($"[DEBUG] Début de GetAngleIronStockByHeight pour hauteur = {height}");
+            foreach (var kv in stockFromDb)
+            {
+                Console.WriteLine($"[DEBUG] Couleur : {kv.Key}, Quantité disponible réelle : {kv.Value}");
+            }
+
+            return stockFromDb;
         }
-        
+
+
         private int? TryExtractHeightFromDimension(string? dimensions)
         {
             if (string.IsNullOrEmpty(dimensions))
@@ -287,7 +363,27 @@ namespace KitBox_Project.Data
 
             return null;
         }
-        
+        public void UpdateStock(string reference, string color, int newQuantity, int height)
+        {
+            Console.WriteLine($"[DEBUG] UpdateStock: Ref={reference}, Color={color}, Qty={newQuantity}, Height={height}");
+
+            var article = StaticArticleDatabase.AllArticles.FirstOrDefault(a =>
+                a.Reference?.Equals(reference, StringComparison.OrdinalIgnoreCase) == true &&
+                a.Color?.Equals(color, StringComparison.OrdinalIgnoreCase) == true &&
+                a.Height == height);
+
+
+            if (article != null)
+            {
+                Console.WriteLine($"[DEBUG] Avant maj: Stock actuel = {article.NumberOfPiecesAvailable}");
+                article.NumberOfPiecesAvailable = newQuantity;
+                Console.WriteLine($"✅ Stock mis à jour: Nouveau stock = {article.NumberOfPiecesAvailable}");
+            }
+            else
+            {
+                Console.WriteLine($"❌ Article non trouvé: Ref={reference}, Color={color}");
+            }
+        }
 
         public class LowStockItem
         {

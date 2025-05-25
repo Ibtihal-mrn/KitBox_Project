@@ -88,6 +88,7 @@ namespace KitBox_Project.Views
                     if (door != null)
                     {
                         AppState.AddToCart(door);
+                        AppState.AddToCart(door);
 
                         // ✅ Si la couleur n’est pas "glass", on ajoute deux "coupelles"
                         if (!selectedColor.Trim().Equals("glass", StringComparison.OrdinalIgnoreCase))

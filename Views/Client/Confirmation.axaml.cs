@@ -1,33 +1,58 @@
-using Avalonia;
+using System;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using KitBox_Project.Services;
+using KitBox_Project.ViewModels;
 
-namespace KitBox_Project.Views
+namespace KitBox_Project.Views.Client
 {
     public partial class Confirmation : UserControl
     {
         public Confirmation()
         {
+            // Charge le XAML généré
             InitializeComponent();
+            LoadConfirmation();
         }
 
-        // Gestionnaire d'événements pour les boutons
+        // Méthode générée manuellement pour Avalonia <= v11
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
 
+        private void LoadConfirmation()
+        {
+            var lastOrder = ConfirmedOrderService.GetLastConfirmedOrder();
+            if (lastOrder == null)
+                return;
+
+            var vm = new ConfirmationViewModel
+            {
+                OrderId   = lastOrder.OrderId,
+                OrderDate = DateTime.Now
+            };
+
+            foreach (var art in lastOrder.Articles)
+            {
+                vm.Items.Add(new ConfirmedOrderItemViewModel
+                {
+                    Reference    = art.Reference ?? "",
+                    Color        = art.Color ?? "",
+                    Dimensions   = art.Dimensions ?? "",
+                    SellingPrice = art.SellingPrice,
+                    Quantity     = art.Quantity
+                });
+            }
+
+            DataContext = vm;
+        }
 
         private void GoToFirstPage(object sender, RoutedEventArgs e)
         {
-            // 🔄 Recharge le stock selon les commandes passées
-            StockService.LoadConfirmedOrdersAndAdjustStock();
-
             if (VisualRoot is MainWindow mainWindow)
-            {
-                mainWindow.ShowChooseUserTypePage(); // ✅ Les événements sont rebranchés ici
-            }
+                mainWindow.ShowChooseUserTypePage();
         }
-
     }
-
-    
 }

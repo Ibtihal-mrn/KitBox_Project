@@ -10,6 +10,7 @@ namespace KitBox_Project.Views
     {
         private HelpSupport? _helpPage;
         
+        
         public MainWindow()
         {
             InitializeComponent();

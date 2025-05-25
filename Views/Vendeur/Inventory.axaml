@@ -1,22 +1,99 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="KitBox_Project.Views.Inventory">
+             xmlns:vm="clr-namespace:KitBox_Project.ViewModels"
+             xmlns:models="clr-namespace:KitBox_Project.Models"
+             x:Class="KitBox_Project.Views.Inventory"
+             x:DataType="vm:InventoryViewModel">
 
-    
+  <Grid Margin="20" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
 
-    <Grid>
-       <TextBlock Text="Inventory"
-                       FontSize="60"
-                       FontFamily="avares://KitBox_Project/Fonts#Anton"
-                       HorizontalAlignment="Center"/>
+    <!-- Bouton Sauvegarder en haut à droite -->
+    <Button Content="Sauvegarder les modifications"
+            Width="250"
+            Height="40"
+            Command="{Binding SaveArticlesCommand}"
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            Margin="0,0,0,10"/>
 
-        
+    <!-- Barre de chargement -->
+    <ProgressBar Grid.Row="0"
+                 Grid.Column="0"
+                 IsVisible="{Binding IsLoading}"
+                 IsIndeterminate="True"
+                 Height="20"
+                 Margin="0,0,10,10" />
 
-        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+    <!-- Contenu principal -->
+    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Spacing="10" IsVisible="{Binding ArticlesGridVisible}">
 
-      
-    </Grid>
+      <TextBlock Text="Inventaire"
+                 FontSize="36"
+                 FontWeight="Bold"
+                 HorizontalAlignment="Center"
+                 Margin="0,0,0,10"/>
+
+      <TextBlock Text="Aucun article trouvé."
+                 IsVisible="{Binding NoArticlesVisible}"
+                 FontSize="16"
+                 HorizontalAlignment="Center"
+                 Foreground="Gray"/>
+
+      <!-- En-tête -->
+      <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,0,0,5" Background="#f0f0f0">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
+          </Grid.ColumnDefinitions>
+
+          <TextBlock Text="Référence" Grid.Column="0" FontWeight="Bold"/>
+          <TextBlock Text="Couleur" Grid.Column="1" FontWeight="Bold"/>
+          <TextBlock Text="Dimensions" Grid.Column="2" FontWeight="Bold"/>
+          <TextBlock Text="Prix" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Right"/>
+          <TextBlock Text="Code" Grid.Column="4" FontWeight="Bold" HorizontalAlignment="Right"/>
+          <TextBlock Text="Nombre de pièces" Grid.Column="5" FontWeight="Bold" HorizontalAlignment="Center"/>
+        </Grid>
+      </Border>
+
+      <!-- Liste des articles -->
+      <ScrollViewer Height="600">
+        <ItemsControl ItemsSource="{Binding Articles}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="models:Article">
+              <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="8" Padding="10" Margin="0,0,0,5">
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
+                  </Grid.ColumnDefinitions>
+
+                  <!-- Données non modifiables -->
+                  <TextBlock Text="{Binding Reference}" Grid.Column="0" VerticalAlignment="Center"/>
+                  <TextBlock Text="{Binding Color}" Grid.Column="1" VerticalAlignment="Center"/>
+                  <TextBlock Text="{Binding Dimensions}" Grid.Column="2" VerticalAlignment="Center"/>
+                  <TextBlock Text="{Binding SellingPrice, StringFormat='F2'}" Grid.Column="3" VerticalAlignment="Center" />
+                  <TextBlock Text="{Binding Code}" Grid.Column="4" VerticalAlignment="Center" />
+
+                  <!-- Colonne modifiable uniquement -->
+                  <TextBox Text="{Binding NumberOfPiecesAvailable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                           Grid.Column="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </StackPanel>
+
+  </Grid>
 </UserControl>
