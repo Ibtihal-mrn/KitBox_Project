@@ -5,9 +5,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.HomePage">
 
-    <Grid>
-        <!-- StackPanel pour empiler les éléments de manière verticale -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
+    <Grid RowDefinitions="*,Auto">
+        <!-- Contenu centré -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="20">
             <!-- Titre -->
             <TextBlock Text="Kit Box"
                        FontSize="60"
@@ -33,6 +33,9 @@
             </StackPanel>
         </StackPanel>
 
+        <!-- Bouton Quit en bas de la page -->
+        <Button Grid.Row="1" Content="Quit Session" HorizontalAlignment="Center" Margin="0,20" Click="GoToFirstPage"/>
+
         <!-- Slogan -->
         <TextBlock x:Name="MovingText"
                    Text="From Store to Home, a Smarter Way to Build Your Ideal Storage!"
@@ -40,11 +43,10 @@
                    FontFamily="avares://KitBox_Project/Fonts#Anton"
                    HorizontalAlignment="Left"
                    Foreground="Black"
-                   Margin="20,20,0,0"/>
+                   Margin="20,20,0,0"
+                   Grid.Row="0"/>
 
-        <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
-
-        <!-- Contenu principal de l'application -->
-        <ContentControl x:Name="MainContent" Margin="50,0,0,0"/>
+        <!-- Contenu principal -->
+        <ContentControl x:Name="MainContent" Margin="50,0,0,0" Grid.Row="0"/>
     </Grid>
 </UserControl>

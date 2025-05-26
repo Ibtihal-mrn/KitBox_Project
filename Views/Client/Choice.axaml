@@ -19,7 +19,7 @@
                 <Button Content="Confirmer la commande" Click="GoToConfirmation" Margin="5,0"/>
             </StackPanel>
 
-            <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/>
+            <!-- <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/> -->
 
         </StackPanel>
 
