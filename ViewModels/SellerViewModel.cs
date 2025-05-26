@@ -33,12 +33,15 @@ namespace KitBox_Project.ViewModels
         private void RefreshOrders()
         {
             Orders.Clear();
-            foreach (var order in ConfirmedOrderService.LoadConfirmedOrders())
+
+            // 1️⃣ On charge désormais toutes les commandes, pas seulement celles du fichier current
+            var allOrders = ConfirmedOrderService.LoadAllOrders();
+
+            foreach (var order in allOrders)
             {
-                // Regroupement des articles par référence et couleur
+                // 2️⃣ On regroupe ensuite les articles comme avant
                 var groupedArticles = GroupArticlesByReferenceAndColor(order.Articles);
                 
-                // Créer un nouveau ConfirmedOrder avec les articles regroupés
                 var groupedOrder = new ConfirmedOrder(order.OrderId)
                 {
                     Articles = groupedArticles.ToList()
@@ -47,6 +50,7 @@ namespace KitBox_Project.ViewModels
                 Orders.Add(groupedOrder);
             }
         }
+
 
         // Méthode pour regrouper les articles par référence et couleur
         private ObservableCollection<Article> GroupArticlesByReferenceAndColor(IEnumerable<Article> articles)

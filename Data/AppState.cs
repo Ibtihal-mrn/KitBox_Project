@@ -1,83 +1,54 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel; // Add this for ObservableCollection
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using KitBox_Project.Data;
 using KitBox_Project.Models;
+using KitBox_Project.Services;
 
 namespace KitBox_Project
 {
     public static class AppState
     {
         public static string SelectedColor { get; set; } = "White";
+        public static string? SelectedAngleIronColor { get; set; }
+
         public static int SelectedLength { get; set; }
         public static int SelectedDepth { get; set; }
         public static int SelectedHeight { get; set; }
 
-        // Change List<Article> to ObservableCollection<Article>
-        public static ObservableCollection<Article> SelectedArticles { get; private set; } = new ObservableCollection<Article>();
+        public static ObservableCollection<Article> SelectedArticles { get; } = new();
 
         public static void AddToCart(Article article)
         {
-            if (article != null && article.NumberOfPiecesAvailable > 0)
-            {
-                SelectedArticles.Add(article);
-                Console.WriteLine($"Article ajouté au panier : {article.Reference}, Color: {article.Color}, Price: {article.SellingPrice}, Stock: {article.NumberOfPiecesAvailable}");
-            }
-            else
-            {
-                Console.WriteLine($"Erreur : Impossible d'ajouter l'article {article?.Reference} (stock insuffisant ou article nul).");
-            }
-        }
+            if (article == null) return;
 
-        public static void AddRangeToCart(IEnumerable<Article> articles)
-        {
-            foreach (var article in articles)
+            int alreadyInCart = SelectedArticles.Count(a =>
+                a.Code == article.Code && a.Color == article.Color && a.Height == article.Height);
+
+            if (alreadyInCart >= article.NumberOfPiecesAvailable)
             {
-                if (article != null && article.NumberOfPiecesAvailable > 0)
-                {
-                    SelectedArticles.Add(article);
-                }
+                Console.WriteLine($"🚫 Stock épuisé pour {article.Reference} ({article.Color})");
+                return;
             }
-            Console.WriteLine($"Ajout de {articles.Count()} articles au panier.");
+
+            SelectedArticles.Add(article);
+            Console.WriteLine($"✅ Article ajouté : {article.Reference}, {alreadyInCart+1}/{article.NumberOfPiecesAvailable}");
         }
 
         public static void ClearCart()
         {
             SelectedArticles.Clear();
-            Console.WriteLine("Panier vidé.");
+            Console.WriteLine("🧹 Panier vidé.");
         }
 
-        public static async Task LoadArticlesFromDatabase()
+        public static async Task ReloadAllAsync()
         {
-            try
-            {
-                var dataAccess = new DataAccess();
-                StaticArticleDatabase.AllArticles = await Task.Run(() => dataAccess.GetArticles());
-                Console.WriteLine($"Chargement terminé. {StaticArticleDatabase.AllArticles.Count} articles chargés dans StaticArticleDatabase.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erreur lors du chargement des articles : {ex.Message}");
-            }
+            // Ne pas vider le panier ici
+            StaticArticleDatabase.AllArticles.Clear();
+            StockService.ResetInitializationFlag();
+            await StockService.InitializeStockAsync();
+            Console.WriteLine("🔄 AppState rechargé.");
         }
-
-        public static void AddToCartFromDatabase(string reference, string color)
-        {
-            var article = StaticArticleDatabase.AllArticles
-                .FirstOrDefault(a => a.Reference == reference && a.Color == color && a.NumberOfPiecesAvailable > 0);
-
-            if (article != null)
-            {
-                AddToCart(article);
-            }
-            else
-            {
-                Console.WriteLine($"⚠️ Article '{reference}' avec couleur '{color}' non trouvé ou en rupture de stock.");
-            }
-        }
-        
     }
-    
 }
