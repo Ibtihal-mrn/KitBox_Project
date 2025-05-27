@@ -23,33 +23,38 @@ namespace KitBox_Project.Views
             InitializeComponent();
         }
 
-        // Gestionnaire d'événements pour les boutons
-
-        private void GoToHeight(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
-            if (mainWindow != null) // Vérifie que mainWindow n'est pas null
-            {
-                mainWindow.MainContent.Content = new Height(); // ✅ Modifie le bon ContentControl
-            }
-        }
 
         private void GoToDoor(object sender, RoutedEventArgs e)
         {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
-            if (mainWindow != null) // Vérifie que mainWindow n'est pas null
+            var mainWindow = VisualRoot as MainWindow;
+            if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new Door(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Door();
             }
         }
 
         private async void GoToColor(object sender, RoutedEventArgs e)
         {
+            var mainWindow = VisualRoot as MainWindow;
+            if (mainWindow == null) return;
+
+            bool isStacking = (sender is Button button && button.Content?.ToString() == "Empiler un casier");
+
+            // Validation pour "Empiler un casier"
+            if (isStacking && (AppState.SelectedLength == 0 || AppState.SelectedDepth == 0 || AppState.SelectedHeight == 0))
+            {
+                var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
+                if (errorMessage != null)
+                {
+                    errorMessage.Text = "Configurez un casier avant d'empiler.";
+                    errorMessage.IsVisible = true;
+                }
+                Console.WriteLine("Erreur : Configurez un casier avant d'empiler.");
+                return;
+            }
+
             try
             {
-                //StockService.ResetInitializationFlag();
-                // Ne pas vider le panier
-                //StaticArticleDatabase.AllArticles.Clear();
                 await StockService.InitializeStockAsync();
                 StartClicked?.Invoke(this, new RoutedEventArgs());
             }
@@ -57,19 +62,16 @@ namespace KitBox_Project.Views
             {
                 Console.WriteLine(ex.Message);
             }
-            var mainWindow = VisualRoot as MainWindow;
-            if (mainWindow != null)
-            {
-                mainWindow.MainContent.Content = new Color(true);
-            }
+
+            mainWindow.MainContent.Content = new Color(fromChoice: true, isStacking: isStacking);
         }
 
         private void GoToOrder(object sender, RoutedEventArgs e)
         {
-            var mainWindow = VisualRoot as MainWindow; // Utilisation de 'as' pour éviter une exception
-            if (mainWindow != null) // Vérifie que mainWindow n'est pas null
+            var mainWindow = VisualRoot as MainWindow;
+            if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new Order(); // ✅ Modifie le bon ContentControl
+                mainWindow.MainContent.Content = new Order();
             }
         }
 
@@ -100,9 +102,8 @@ namespace KitBox_Project.Views
                         Length         = first.Length,
                         Depth          = first.Depth,
                         Height         = first.Height,
-                        SellingPrice   = first.SellingPrice,    // ← on récupère enfin le vrai prix unitaire
+                        SellingPrice   = first.SellingPrice,
                         Quantity       = g.Count(),
-                        // si tu veux, ton modèle calcule déjà TotalPrice = SellingPrice * Quantity
                         NumberOfPiecesAvailable = first.NumberOfPiecesAvailable
                     };
                 })
@@ -117,7 +118,6 @@ namespace KitBox_Project.Views
             // 5. Sauvegarde de la commande dans le JSON
             ConfirmedOrderService.SaveConfirmedOrder(confirmedOrder);
             Console.WriteLine($"🗂 Commande {orderId} sauvegardée avec {confirmedOrder.Articles.Count} article(s).");
-
             // 5bis. On vide les ajustements manuels (inventory_current.json)
             //InventoryModificationService.SnapshotCurrent();
 
@@ -129,8 +129,8 @@ namespace KitBox_Project.Views
                 Console.WriteLine($"🧾 {article.Reference} ({article.Color})");
                 Console.WriteLine($"    ➖ Quantité déduite : {article.Quantity}");
                 Console.WriteLine($"    📦 Stock restant   : {stockArticle?.NumberOfPiecesAvailable}");
-                Console.WriteLine($"    💶 Prix unitaire  : {article.SellingPrice:0.00} €");       // <— vérification avant vidage
-                Console.WriteLine($"    🔢 Sous-total     : {article.TotalPrice:0.00} €");      // <— idem
+                Console.WriteLine($"    💶 Prix unitaire  : {article.SellingPrice:0.00} €");
+                Console.WriteLine($"    🔢 Sous-total     : {article.TotalPrice:0.00} €");
             }
 
             // 7. Vidage du panier pour la prochaine commande
@@ -141,16 +141,11 @@ namespace KitBox_Project.Views
             mainWindow.MainContent.Content = new Confirmation();
         }
 
-
-
         private async void GoToFirstPage(object sender, RoutedEventArgs e)
         {
             try
             {
-                // 🔄 Force le rechargement complet du stock : BDD + commandes + UI
                 await StockService.ForceReloadStockAsync();
-
-                // Puis repasse à la page de choix
                 if (VisualRoot is MainWindow mainWindow)
                     mainWindow.ShowChooseUserTypePage();
             }

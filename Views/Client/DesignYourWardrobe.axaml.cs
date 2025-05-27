@@ -12,16 +12,78 @@ namespace KitBox_Project.Views
     {
         public int SelectedLength { get; private set; }
         public int SelectedDepth { get; private set; }
+        private bool isStacking = false;
 
-        public DesignYourWardrobe()
+        public DesignYourWardrobe() : this(false)
+        {
+        }
+
+        public DesignYourWardrobe(bool isStacking)
         {
             InitializeComponent();
+            this.isStacking = isStacking;
             Loaded += OnControlLoaded;
         }
 
         private void OnControlLoaded(object? sender, RoutedEventArgs e)
         {
-            LoadLengthData();
+            if (isStacking && AppState.SelectedLength > 0 && AppState.SelectedDepth > 0)
+            {
+                LoadFixedDimensions();
+            }
+            else
+            {
+                LoadLengthData();
+            }
+        }
+
+        private void LoadFixedDimensions()
+        {
+            var longueurComboBox = this.FindControl<ComboBox>("Longueur");
+            var profondeurComboBox = this.FindControl<ComboBox>("Profondeur");
+            var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
+
+            if (longueurComboBox == null || profondeurComboBox == null || errorMessage == null) return;
+
+            longueurComboBox.IsEnabled = false;
+            profondeurComboBox.IsEnabled = false;
+
+            longueurComboBox.Items.Clear();
+            longueurComboBox.Items.Add(new ComboBoxItem { Content = AppState.SelectedLength.ToString() });
+            longueurComboBox.SelectedIndex = 0;
+
+            profondeurComboBox.Items.Clear();
+            profondeurComboBox.Items.Add(new ComboBoxItem { Content = AppState.SelectedDepth.ToString() });
+            profondeurComboBox.SelectedIndex = 0;
+
+            SelectedLength = AppState.SelectedLength;
+            SelectedDepth = AppState.SelectedDepth;
+
+            Console.WriteLine("[DEBUG] Vérification du stock pour dimensions figées:");
+            Console.WriteLine($"  Longueur={SelectedLength}, Profondeur={SelectedDepth}, Couleur={AppState.SelectedColor}");
+
+            var allHorizontalPanels = StaticArticleDatabase.AllArticles
+                .Where(a => a.Reference != null &&
+                    (a.Reference.Contains("panel_horizontal", StringComparison.OrdinalIgnoreCase) ||
+                    a.Reference.Contains("Panel horizontal", StringComparison.OrdinalIgnoreCase)))
+                .ToList();
+
+            var horizontalPanel = allHorizontalPanels.FirstOrDefault(a =>
+                a.Length == SelectedLength &&
+                a.Depth == SelectedDepth &&
+                a.Color != null && a.Color.Equals(AppState.SelectedColor, StringComparison.OrdinalIgnoreCase) &&
+                a.NumberOfPiecesAvailable > 0);
+
+            if (horizontalPanel == null)
+            {
+                errorMessage.Text = $"⚠️ Aucun panneau horizontal disponible pour L={SelectedLength}, P={SelectedDepth}, C={AppState.SelectedColor}";
+                errorMessage.IsVisible = true;
+                Console.WriteLine($"❌ Erreur: Aucun panneau horizontal disponible pour L={SelectedLength}, P={SelectedDepth}, C={AppState.SelectedColor}");
+            }
+            else
+            {
+                errorMessage.IsVisible = false;
+            }
         }
 
         private void LoadLengthData()
@@ -140,7 +202,6 @@ namespace KitBox_Project.Views
                     .ForEach(a =>
                         Console.WriteLine($"    Ref='{a.Reference}', L={a.Length}, P={a.Depth}, Stock={a.NumberOfPiecesAvailable}")
                     );
-
                 // 2) Ajout du crossbar front de même longueur
                 var crossbarFront = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
@@ -157,7 +218,6 @@ namespace KitBox_Project.Views
                 {
                     Console.WriteLine($"[WARN] Aucun crossbar front trouvé pour L={SelectedLength}");
                 }
-
                 // 3) Ajout du crossbar back de même longueur
                 var crossbarBack = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
@@ -174,7 +234,6 @@ namespace KitBox_Project.Views
                 {
                     Console.WriteLine($"[WARN] Aucun crossbar back trouvé pour L={SelectedLength}");
                 }
-
                 // 4) Ajout de 2 crossbar left or right de même profondeur
                 var sideCrossbar = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
@@ -221,7 +280,7 @@ namespace KitBox_Project.Views
 
             if (VisualRoot is MainWindow mainWindow)
             {
-                var heightView = new Height
+                var heightView = new Height(isStacking)
                 {
                     SelectedLength = SelectedLength,
                     SelectedDepth = SelectedDepth
@@ -230,13 +289,11 @@ namespace KitBox_Project.Views
             }
         }
 
-
-
         private void GoToColor(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mainWindow)
             {
-                mainWindow.MainContent.Content = new Color();
+                mainWindow.MainContent.Content = new Color(fromChoice: true, isStacking: isStacking);
             }
         }
     }

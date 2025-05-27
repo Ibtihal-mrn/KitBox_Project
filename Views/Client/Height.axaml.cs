@@ -16,27 +16,59 @@ namespace KitBox_Project.Views
         public int SelectedLength { get; set; }
         public int SelectedDepth { get; set; }
         public int SelectedHeight { get; private set; } = 0;
-
         private bool _isUpdatingItemsSource = false;
+        private bool isStacking = false;
 
-        public Height()
+        public Height() : this(false)
+        {
+        }
+
+        public Height(bool isStacking)
         {
             InitializeComponent();
+            this.isStacking = isStacking;
             Initialized += OnInitialized;
         }
 
         private void OnInitialized(object? sender, EventArgs e)
         {
-            if (SelectedLength > 0 && SelectedDepth > 0)
+            if (isStacking && AppState.SelectedHeight > 0)
+            {
+                LoadFixedHeight();
+            }
+            else if (SelectedLength > 0 && SelectedDepth > 0)
             {
                 LoadHeightData();
-
-                var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
-                if (hauteurComboBox != null)
-                {
-                    hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
-                }
             }
+
+            var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
+            if (hauteurComboBox != null)
+            {
+                hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
+            }
+        }
+
+        private void LoadFixedHeight()
+        {
+            var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
+            var lowStockItemsList = this.FindControl<ListBox>("LowStockItemsList");
+
+            if (hauteurComboBox == null || lowStockItemsList == null) return;
+
+            hauteurComboBox.IsEnabled = false;
+            hauteurComboBox.Items.Clear();
+            hauteurComboBox.Items.Add(AppState.SelectedHeight.ToString());
+            hauteurComboBox.SelectedIndex = 0;
+
+            SelectedHeight = AppState.SelectedHeight;
+            var dataAccess = new DataAccess();
+            var lowStockItems = dataAccess.GetLowStockItems(SelectedLength, SelectedDepth);
+            if (lowStockItems.Count > 0)
+            {
+                AfficherAvertissementStock(lowStockItemsList, lowStockItems);
+            }
+
+            CheckAngleIronsStock();
         }
 
         private void OnHeightSelectionChanged(object? sender, SelectionChangedEventArgs e)
@@ -128,7 +160,6 @@ namespace KitBox_Project.Views
             if (stockWarningText == null || alternateColorComboBox == null) return;
 
             var dataAccess = new DataAccess();
-
             // Utiliser la couleur principale pour les angle irons (pas de couleur spécifique sauvegardée)
             string desiredAngleIronColor = KitBox_Project.AppState.SelectedColor ?? string.Empty;
 
@@ -181,14 +212,13 @@ namespace KitBox_Project.Views
 
             if (hasStock)
             {
-                // ⭐ Sauvegarder TEMPORAIREMENT la couleur sélectionnée dans AppState
+                // Sauvegarder TEMPORAIREMENT la couleur sélectionnée dans AppState
                 KitBox_Project.AppState.SelectedAngleIronColor = newColor;
                 
                 stockWarningText.Text = $"✓ Couleur « {newColor} » sélectionnée. Vous pouvez maintenant continuer.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Green);
 
                 Console.WriteLine($"[DEBUG] Couleur angle iron mise à jour TEMPORAIREMENT : '{newColor}'");
-                
                 // Masquer la ComboBox après sélection
                 alternateColorComboBox.IsVisible = false;
             }
@@ -247,14 +277,13 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new DesignYourWardrobe();
+                mainWindow.MainContent.Content = new DesignYourWardrobe(isStacking);
             }
         }
 
         private void GoToDoor(object? sender, RoutedEventArgs e)
         {
             var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
-
             // --- VALIDATION DES CHAMPS ---
             if (SelectedLength == 0 || SelectedDepth == 0 || SelectedHeight == 0)
             {

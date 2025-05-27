@@ -8,31 +8,29 @@ namespace KitBox_Project.Views
 {
     public partial class Color : UserControl
     {
-        private bool fromChoice = false; 
+        private bool fromChoice = false;
+        private bool isStacking = false;
 
-        public Color() : this(false)
+        public Color() : this(false, false)
         {
         }
 
-        public Color(bool fromChoice)
+        public Color(bool fromChoice, bool isStacking)
         {
             InitializeComponent();
-            this.fromChoice = fromChoice; 
+            this.fromChoice = fromChoice;
+            this.isStacking = isStacking;
         }
 
         private void SelectColor(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is not null)
             {
-                // Mettre à jour AppState.SelectedColor directement
-                AppState.SelectedColor = button.Tag?.ToString() ?? "White"; // Valeur par défaut si Tag est null
-
-                // Afficher la couleur sélectionnée dans l'interface
+                AppState.SelectedColor = button.Tag?.ToString() ?? "White";
                 if (this.FindControl<TextBlock>("SelectedColorText") is TextBlock textBlock)
                 {
                     textBlock.Text = $"Couleur sélectionnée : {AppState.SelectedColor}";
                 }
-
                 Console.WriteLine($"Couleur sélectionnée : {AppState.SelectedColor}");
             }
         }
@@ -48,12 +46,11 @@ namespace KitBox_Project.Views
                 }
                 return;
             }
-
             // Passer à la vue suivante
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
-                mainWindow.MainContent.Content = new DesignYourWardrobe();
+                mainWindow.MainContent.Content = new DesignYourWardrobe(isStacking);
             }
         }
 
