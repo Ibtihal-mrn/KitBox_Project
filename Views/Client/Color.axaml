@@ -7,10 +7,10 @@
     
     <Grid>
         <StackPanel>
-            <TextBlock Text="1. Couleur de l'armoire" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+            <TextBlock Text="1. Cabinet color" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
             
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,20,0,0">           
-                <TextBlock x:Name="SelectedColorText" Text="Couleur sélectionnée : White" 
+                <TextBlock x:Name="SelectedColorText" Text="Selected color : White" 
                 HorizontalAlignment="Center" FontSize="16" Margin="10"/>
                 <Button Background="SaddleBrown" Width="50" Height="50" Click="SelectColor" Tag="Brown"/>
                 <Button Background="White" Width="50" Height="50" Click="SelectColor" Tag="White"/>

@@ -5,7 +5,7 @@ namespace KitBox_Project.Data
 {
     public static class StaticArticleDatabase
     {
-        // Contiendra tous les articles récupérés depuis la base de données
+        // will contain all items retrieved from the database
         public static List<Article> AllArticles { get; set; } = new List<Article>();
     }
 }

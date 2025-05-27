@@ -37,7 +37,7 @@ namespace KitBox_Project.Views
 
         private void GoToDesign(object sender, RoutedEventArgs e)
         {
-            // Vérifier si une couleur a été sélectionnée
+            // Check if a color has been selected
             if (string.IsNullOrEmpty(AppState.SelectedColor))
             {
                 if (this.FindControl<TextBlock>("SelectedColorText") is TextBlock textBlock)
@@ -46,7 +46,7 @@ namespace KitBox_Project.Views
                 }
                 return;
             }
-            // Passer à la vue suivante
+            // Go to next view
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow != null)
             {
@@ -58,7 +58,6 @@ namespace KitBox_Project.Views
         {
             if (VisualRoot is MainWindow mainWindow)
             {
-                //Navigue vers Choice si fromChoice est vrai, sinon vers la page initiale
                 if (fromChoice)
                 {
                     mainWindow.MainContent.Content = new Choice();

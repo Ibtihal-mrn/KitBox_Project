@@ -38,9 +38,9 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow == null) return;
 
-            bool isStacking = (sender is Button button && button.Content?.ToString() == "Empiler un casier");
+            bool isStacking = (sender is Button button && button.Content?.ToString() == "Stacking a locker");
 
-            // Validation pour "Empiler un casier"
+            // Validation to "Stack a locker"
             if (isStacking && (AppState.SelectedLength == 0 || AppState.SelectedDepth == 0 || AppState.SelectedHeight == 0))
             {
                 var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
@@ -80,14 +80,14 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow == null) return;
 
-            // 1. Mise à jour du stock
+            // 1. Stock update
             StockService.UpdateStock(AppState.SelectedArticles);
-            Console.WriteLine("✅ Stock mis à jour avec succès.");
+            Console.WriteLine("Stock mis à jour avec succès.");
 
-            // 2. Génération d'un nouvel ID de commande
+            // 2. Generating a new order ID
             string orderId = ConfirmedOrderService.GenerateOrderId();
 
-            // 3. Regroupement des articles DU PANIER + on copie le SellingPrice !
+            // 3. Grouping articles in the basket + paste the SellingPrice !
             var groupedArticles = AppState.SelectedArticles
                 .GroupBy(a => new { a.Reference, a.Color, a.Code, a.Dimensions, a.SellingPrice })
                 .Select(g =>
@@ -109,35 +109,33 @@ namespace KitBox_Project.Views
                 })
                 .ToList();
 
-            // 4. Création de l'objet ConfirmedOrder avec les articles regroupés
+            // 4. Creation of ConfirmedOrder object with grouped items
             var confirmedOrder = new ConfirmedOrder(orderId)
             {
                 Articles = groupedArticles
             };
 
-            // 5. Sauvegarde de la commande dans le JSON
+            // 5. Save the order in the JSON folder
             ConfirmedOrderService.SaveConfirmedOrder(confirmedOrder);
             Console.WriteLine($"🗂 Commande {orderId} sauvegardée avec {confirmedOrder.Articles.Count} article(s).");
-            // 5bis. On vide les ajustements manuels (inventory_current.json)
-            //InventoryModificationService.SnapshotCurrent();
 
-            // 6. Log détaillé
+            // 6. Detailed log
             foreach (var article in confirmedOrder.Articles)
             {
                 var stockArticle = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a => a.Code == article.Code);
-                Console.WriteLine($"🧾 {article.Reference} ({article.Color})");
-                Console.WriteLine($"    ➖ Quantité déduite : {article.Quantity}");
-                Console.WriteLine($"    📦 Stock restant   : {stockArticle?.NumberOfPiecesAvailable}");
-                Console.WriteLine($"    💶 Prix unitaire  : {article.SellingPrice:0.00} €");
-                Console.WriteLine($"    🔢 Sous-total     : {article.TotalPrice:0.00} €");
+                Console.WriteLine($"{article.Reference} ({article.Color})");
+                Console.WriteLine($"Quantité déduite : {article.Quantity}");
+                Console.WriteLine($"Stock restant   : {stockArticle?.NumberOfPiecesAvailable}");
+                Console.WriteLine($"Prix unitaire  : {article.SellingPrice:0.00} €");
+                Console.WriteLine($"Sous-total     : {article.TotalPrice:0.00} €");
             }
 
-            // 7. Vidage du panier pour la prochaine commande
+            // 7. Emptying the basket for the next order
             AppState.ClearCart();
             Console.WriteLine("🧹 Panier vidé pour la prochaine commande.");
 
-            // 8. Navigation vers la page de confirmation
+            // 8. Going to the confirmation page
             mainWindow.MainContent.Content = new Confirmation();
         }
 
@@ -151,7 +149,7 @@ namespace KitBox_Project.Views
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Erreur pendant la confirmation : {ex.Message}");
+                Console.WriteLine($"Erreur pendant la confirmation : {ex.Message}");
             }
         }
     }

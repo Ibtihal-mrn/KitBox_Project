@@ -160,7 +160,7 @@ namespace KitBox_Project.Views
             if (stockWarningText == null || alternateColorComboBox == null) return;
 
             var dataAccess = new DataAccess();
-            // Utiliser la couleur principale pour les angle irons (pas de couleur spécifique sauvegardée)
+            // Use main color for angle irons (no specific color saved)
             string desiredAngleIronColor = KitBox_Project.AppState.SelectedColor ?? string.Empty;
 
             var aiStock = dataAccess.GetAngleIronStockByHeight(SelectedHeight);
@@ -177,7 +177,7 @@ namespace KitBox_Project.Views
 
             if (otherColors.Any())
             {
-                stockWarningText.Text = $"⚠️ Plus d'angle irons en « {desiredAngleIronColor} ». Veuillez choisir une autre couleur.";
+                stockWarningText.Text = $"Plus d'angle irons en « {desiredAngleIronColor} ». Veuillez choisir une autre couleur.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Red);
                 stockWarningText.IsVisible = true;
 
@@ -188,7 +188,7 @@ namespace KitBox_Project.Views
             }
             else
             {
-                stockWarningText.Text = $"⚠️ Aucun angle iron disponible pour cette hauteur.";
+                stockWarningText.Text = $" Aucun angle iron disponible pour cette hauteur.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Red);
                 stockWarningText.IsVisible = true;
                 alternateColorComboBox.IsVisible = false;
@@ -212,19 +212,19 @@ namespace KitBox_Project.Views
 
             if (hasStock)
             {
-                // Sauvegarder TEMPORAIREMENT la couleur sélectionnée dans AppState
+                // Save the selected color TEMPORARILY in AppState
                 KitBox_Project.AppState.SelectedAngleIronColor = newColor;
                 
-                stockWarningText.Text = $"✓ Couleur « {newColor} » sélectionnée. Vous pouvez maintenant continuer.";
+                stockWarningText.Text = $"Couleur « {newColor} » sélectionnée. Vous pouvez maintenant continuer.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Green);
 
                 Console.WriteLine($"[DEBUG] Couleur angle iron mise à jour TEMPORAIREMENT : '{newColor}'");
-                // Masquer la ComboBox après sélection
+                // Hide combobox after selection
                 alternateColorComboBox.IsVisible = false;
             }
             else
             {
-                stockWarningText.Text = $"⚠️ Plus d'angle irons en « {newColor} » non plus. Essayez une autre.";
+                stockWarningText.Text = $"Plus d'angle irons en « {newColor} » non plus. Essayez une autre.";
                 stockWarningText.Foreground = new SolidColorBrush(Colors.Red);
             }
         }
@@ -236,7 +236,7 @@ namespace KitBox_Project.Views
 
             if (stockWarningText == null || lowStockPanel == null) return;
 
-            stockWarningText.Text = "⚠️ Attention : Stock limité pour certains panneaux!";
+            stockWarningText.Text = " Attention : Stock limité pour certains panneaux!";
             stockWarningText.IsVisible = true;
             lowStockPanel.IsVisible = true;
 
@@ -284,7 +284,7 @@ namespace KitBox_Project.Views
         private void GoToDoor(object? sender, RoutedEventArgs e)
         {
             var errorMessage = this.FindControl<TextBlock>("ErrorMessage");
-            // --- VALIDATION DES CHAMPS ---
+            
             if (SelectedLength == 0 || SelectedDepth == 0 || SelectedHeight == 0)
             {
                 if (errorMessage != null)
@@ -294,12 +294,12 @@ namespace KitBox_Project.Views
             if (errorMessage != null)
                 errorMessage.IsVisible = false;
 
-            // --- MISE À JOUR DE L'ÉTAT GLOBAL ---
+            // global status update
             AppState.SelectedLength = SelectedLength;
             AppState.SelectedDepth = SelectedDepth;
             AppState.SelectedHeight = SelectedHeight;
 
-            // --- RECHERCHE DES PANNEAUX BACK ---
+            // looking for back panels
             Console.WriteLine("[DEBUG] Recherche de panneaux BACK...");
             Console.WriteLine($"  Longueur={SelectedLength}, Hauteur={SelectedHeight}, Couleur={AppState.SelectedColor}");
             Console.WriteLine($"[DEBUG] SelectedColor (brut) = '{AppState.SelectedColor}' (Length={AppState.SelectedColor?.Length})");
@@ -329,10 +329,10 @@ namespace KitBox_Project.Views
             }
             else
             {
-                Console.WriteLine($"❌ Aucun panneau BACK trouvé pour L={SelectedLength}, H={SelectedHeight}, C={AppState.SelectedColor}");
+                Console.WriteLine($" Aucun panneau BACK trouvé pour L={SelectedLength}, H={SelectedHeight}, C={AppState.SelectedColor}");
             }
 
-            // === PANNEAUX LEFT OR RIGHT ===
+            // Panels LEFT OR RIGHT 
             Console.WriteLine("\n[DEBUG] Recherche de panneaux LEFT OR RIGHT...");
             var allLeftRightPanels = StaticArticleDatabase.AllArticles
                 .Where(a => a.Reference != null &&
@@ -360,10 +360,10 @@ namespace KitBox_Project.Views
             }
             else
             {
-                Console.WriteLine($"❌ Aucun panneau LEFT OR RIGHT trouvé pour H={SelectedHeight}, D={SelectedDepth}, C={AppState.SelectedColor}");
+                Console.WriteLine($" Aucun panneau LEFT OR RIGHT trouvé pour H={SelectedHeight}, D={SelectedDepth}, C={AppState.SelectedColor}");
             }
 
-            // --- LOG COMPLET DES VERTICAL BATTENS ---
+            // Full log with vertical battens 
             Console.WriteLine("\n[DEBUG] Liste complète des vertical battens en base :");
             StaticArticleDatabase.AllArticles
                 .Where(a => a.Reference != null &&
@@ -373,7 +373,7 @@ namespace KitBox_Project.Views
                     Console.WriteLine($"    Ref='{a.Reference}', L={a.Length}, Stock={a.NumberOfPiecesAvailable}")
                 );
 
-            // --- AJOUT DES 4 VERTICAL BATTENS ---
+            // Adding 4 vertical battens
             Console.WriteLine("\n[DEBUG] Ajout de 4 vertical battens...");
             var verticalBatten = StaticArticleDatabase.AllArticles
                 .FirstOrDefault(a =>
@@ -391,13 +391,13 @@ namespace KitBox_Project.Views
             }
             else
             {
-                Console.WriteLine($"❌ Aucun vertical batten avec profondeur {SelectedDepth} et stock > 3 trouvé");
+                Console.WriteLine($" Aucun vertical batten avec profondeur {SelectedDepth} et stock > 3 trouvé");
             }
 
-            // --- AJOUT ANGLE IRONS AVEC COULEUR TEMPORAIRE ---
+            // Adding angle irons with the temporary color 
             Console.WriteLine("\n[DEBUG] Ajout angle irons...");
             
-            // Déterminer la couleur à utiliser pour les angle irons
+            // Determine the color to be used for the angle irons
             string angleIronColor = KitBox_Project.AppState.SelectedAngleIronColor ?? KitBox_Project.AppState.SelectedColor ?? string.Empty;
             
             Console.WriteLine($"[DEBUG] Couleur angle iron à utiliser : '{angleIronColor}'");
@@ -410,14 +410,14 @@ namespace KitBox_Project.Views
 
             Console.WriteLine($"[DEBUG] {angleIrons.Count} angle irons trouvés en base");
 
-            // Chercher avec la couleur exacte (case-sensitive d'abord)
+            // Search with exact color (case-sensitive d'abord)
             var angleIronExact = angleIrons.FirstOrDefault(a =>
                 a.Color != null &&
                 a.Color.Trim() == angleIronColor.Trim() &&
                 a.Height == SelectedHeight &&
                 a.NumberOfPiecesAvailable >= 4);
 
-            // Si pas trouvé, chercher case-insensitive
+            // If not found, searching case-insensitive
             var angleIronToAdd = angleIronExact ?? angleIrons.FirstOrDefault(a =>
                 a.Color != null &&
                 a.Color.Trim().Equals(angleIronColor.Trim(), StringComparison.OrdinalIgnoreCase) &&
@@ -440,9 +440,9 @@ namespace KitBox_Project.Views
             }
             else
             {
-                Console.WriteLine($"❌ Aucun angle iron trouvé en couleur '{angleIronColor}', hauteur {SelectedHeight}, stock >= 4");
+                Console.WriteLine($" Aucun angle iron trouvé en couleur '{angleIronColor}', hauteur {SelectedHeight}, stock >= 4");
 
-                // Debug : montrer toutes les correspondances possibles
+                // Debug : show all possible matches
                 var matches = angleIrons.Where(a =>
                     a.Height == SelectedHeight).ToList();
 
@@ -453,12 +453,12 @@ namespace KitBox_Project.Views
                 }
             }
 
-            // ⭐ RÉINITIALISER LA COULEUR TEMPORAIRE APRÈS USAGE
+            // Reset temporary color after use
             Console.WriteLine($"[DEBUG] Réinitialisation de SelectedAngleIronColor (était: '{KitBox_Project.AppState.SelectedAngleIronColor}')");
             KitBox_Project.AppState.SelectedAngleIronColor = null;
             Console.WriteLine("[DEBUG] SelectedAngleIronColor réinitialisé à null");
 
-            // === NAVIGATION VERS PAGE PORTE ===
+            // to the door view
             if (VisualRoot is MainWindow mainWindow)
             {
                 var doorView = new Door

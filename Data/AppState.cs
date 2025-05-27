@@ -28,27 +28,26 @@ namespace KitBox_Project
 
             if (alreadyInCart >= article.NumberOfPiecesAvailable)
             {
-                Console.WriteLine($"🚫 Stock épuisé pour {article.Reference} ({article.Color})");
+                Console.WriteLine($"Stock épuisé pour {article.Reference} ({article.Color})");
                 return;
             }
 
             SelectedArticles.Add(article);
-            Console.WriteLine($"✅ Article ajouté : {article.Reference}, {alreadyInCart+1}/{article.NumberOfPiecesAvailable}");
+            Console.WriteLine($"Article ajouté : {article.Reference}, {alreadyInCart+1}/{article.NumberOfPiecesAvailable}");
         }
 
         public static void ClearCart()
         {
             SelectedArticles.Clear();
-            Console.WriteLine("🧹 Panier vidé.");
+            Console.WriteLine("Panier vidé.");
         }
 
         public static async Task ReloadAllAsync()
         {
-            // Ne pas vider le panier ici
             StaticArticleDatabase.AllArticles.Clear();
             StockService.ResetInitializationFlag();
             await StockService.InitializeStockAsync();
-            Console.WriteLine("🔄 AppState rechargé.");
+            Console.WriteLine("AppState rechargé.");
         }
     }
 }

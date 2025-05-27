@@ -7,15 +7,15 @@
 
     <Grid>
         <StackPanel Margin="20">
-            <TextBlock Text="3. Hauteur du casier"
+            <TextBlock Text="3. Locker height"
                        HorizontalAlignment="Center"
                        FontSize="24"
                        Margin="0,0,0,20"/>
 
-            <TextBlock Text="Hauteur :" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+            <TextBlock Text="Height :" HorizontalAlignment="Center" Margin="0,0,0,5"/>
             <ComboBox Name="Hauteur" Width="200" HorizontalAlignment="Center" />
 
-            <!-- Avertissement stock -->
+            <!-- Warning stock -->
             <TextBlock Name="StockWarning"
                        Text=""
                        Foreground="Red"
@@ -24,14 +24,14 @@
                        HorizontalAlignment="Center"
                        IsVisible="False"/>
 
-            <!-- Choix alternatif de couleur -->
+            <!-- Alternative color selection -->
             <ComboBox Name="AlternateColorComboBox"
                       Width="200"
                       HorizontalAlignment="Center"
                       Margin="0,0,0,10"
                       IsVisible="False"/>
 
-            <!-- Détails des éléments à stock faible -->
+            <!-- Details of low stock items -->
             <Border Name="LowStockPanel"
                     BorderBrush="Red"
                     BorderThickness="2"
@@ -45,7 +45,7 @@
                 </StackPanel>
             </Border>
 
-            <!-- Boutons navigation -->
+            <!-- Navigation buttons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
                 <Button Content="Back" Click="GoToSize" Margin="5,0"/>
                 <Button Content="Next" Click="GoToDoor" Margin="5,0"/>

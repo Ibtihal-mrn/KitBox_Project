@@ -18,7 +18,7 @@ namespace KitBox_Project.Views
         {
             InitializeComponent();
 
-            // ✅ On utilise directement le même ViewModel que pour le panier
+            // We use the same ViewModel as for the basket
             DataContext = new ShoppingCartViewModel();
         }
 
@@ -42,14 +42,14 @@ namespace KitBox_Project.Views
             var mainWindow = VisualRoot as MainWindow;
             if (mainWindow == null) return;
 
-            // 1. Mise à jour du stock
+            // 1.Stock update
             StockService.UpdateStock(AppState.SelectedArticles);
-            Console.WriteLine("✅ Stock mis à jour avec succès.");
+            Console.WriteLine("Stock mis à jour avec succès.");
 
-            // 2. Génération d'un nouvel ID de commande
+            // 2. Generating a new order ID
             string orderId = ConfirmedOrderService.GenerateOrderId();
 
-            // 3. Regroupement des articles DU PANIER + on copie le SellingPrice !
+            // 3. Grouping articles from the basket + copy the SellingPrice !
             var groupedArticles = AppState.SelectedArticles
                 .GroupBy(a => new { a.Reference, a.Color, a.Code, a.Dimensions, a.SellingPrice })
                 .Select(g =>
@@ -64,44 +64,41 @@ namespace KitBox_Project.Views
                         Length         = first.Length,
                         Depth          = first.Depth,
                         Height         = first.Height,
-                        SellingPrice   = first.SellingPrice,    // ← on récupère enfin le vrai prix unitaire
+                        SellingPrice   = first.SellingPrice,    
                         Quantity       = g.Count(),
-                        // si tu veux, ton modèle calcule déjà TotalPrice = SellingPrice * Quantity
                         NumberOfPiecesAvailable = first.NumberOfPiecesAvailable
                     };
                 })
                 .ToList();
 
-            // 4. Création de l'objet ConfirmedOrder avec les articles regroupés
+            // 4. Create ConfirmedOrder with grouped articles
             var confirmedOrder = new ConfirmedOrder(orderId)
             {
                 Articles = groupedArticles
             };
 
-            // 5. Sauvegarde de la commande dans le JSON
+            // 5.Save order in the JSON folder
             ConfirmedOrderService.SaveConfirmedOrder(confirmedOrder);
             Console.WriteLine($"🗂 Commande {orderId} sauvegardée avec {confirmedOrder.Articles.Count} article(s).");
 
-            // 5bis. On vide les ajustements manuels (inventory_current.json)
-            //InventoryModificationService.SnapshotCurrent();
 
-            // 6. Log détaillé
+            // 6. Detailed log
             foreach (var article in confirmedOrder.Articles)
             {
                 var stockArticle = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a => a.Code == article.Code);
-                Console.WriteLine($"🧾 {article.Reference} ({article.Color})");
-                Console.WriteLine($"    ➖ Quantité déduite : {article.Quantity}");
-                Console.WriteLine($"    📦 Stock restant   : {stockArticle?.NumberOfPiecesAvailable}");
-                Console.WriteLine($"    💶 Prix unitaire  : {article.SellingPrice:0.00} €");       // <— vérification avant vidage
-                Console.WriteLine($"    🔢 Sous-total     : {article.TotalPrice:0.00} €");      // <— idem
+                Console.WriteLine($"{article.Reference} ({article.Color})");
+                Console.WriteLine($"Quantité déduite : {article.Quantity}");
+                Console.WriteLine($"Stock restant   : {stockArticle?.NumberOfPiecesAvailable}");
+                Console.WriteLine($"Prix unitaire  : {article.SellingPrice:0.00} €");       
+                Console.WriteLine($"Sous-total     : {article.TotalPrice:0.00} €");     
             }
 
-            // 7. Vidage du panier pour la prochaine commande
+            // 7. Empty basket for next order
             AppState.ClearCart();
-            Console.WriteLine("🧹 Panier vidé pour la prochaine commande.");
+            Console.WriteLine("Panier vidé pour la prochaine commande.");
 
-            // 8. Navigation vers la page de confirmation
+            // 8. Go to confirmation page
             mainWindow.MainContent.Content = new Confirmation();
         }
 

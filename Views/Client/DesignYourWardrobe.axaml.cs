@@ -265,7 +265,7 @@ namespace KitBox_Project.Views
 
             if (horizontalPanel != null)
             {
-                // 1) Ajout du panneau horizontal
+                // 1) Adding horizontal panel
                 AppState.AddToCart(horizontalPanel);
                 Console.WriteLine($"[SUCCESS] Panneau horizontal ajouté: Ref='{horizontalPanel.Reference}', L={horizontalPanel.Length}, P={horizontalPanel.Depth}, C={horizontalPanel.Color}");
 
@@ -277,7 +277,7 @@ namespace KitBox_Project.Views
                     .ForEach(a =>
                         Console.WriteLine($"    Ref='{a.Reference}', L={a.Length}, P={a.Depth}, Stock={a.NumberOfPiecesAvailable}")
                     );
-                // 2) Ajout du crossbar front de même longueur
+                // 2) Adding crossbar front with same color
                 var crossbarFront = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
                         a.Reference != null &&
@@ -293,7 +293,7 @@ namespace KitBox_Project.Views
                 {
                     Console.WriteLine($"[WARN] Aucun crossbar front trouvé pour L={SelectedLength}");
                 }
-                // 3) Ajout du crossbar back de même longueur
+                // 3) Adding crossbar back with same lenght
                 var crossbarBack = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
                         a.Reference != null &&
@@ -309,7 +309,7 @@ namespace KitBox_Project.Views
                 {
                     Console.WriteLine($"[WARN] Aucun crossbar back trouvé pour L={SelectedLength}");
                 }
-                // 4) Ajout de 2 crossbar left or right de même profondeur
+                // 4) Adding 2 crossbar left or right with same depth
                 var sideCrossbar = StaticArticleDatabase.AllArticles
                     .FirstOrDefault(a =>
                         a.Reference != null &&
@@ -329,8 +329,8 @@ namespace KitBox_Project.Views
             }
             else
             {
-                // Si on ne trouve pas avec les dimensions exactes, affichons ce qui est disponible
-                Console.WriteLine($"❌ Erreur: Aucun panneau horizontal disponible pour L={SelectedLength}, P={SelectedDepth}, C={AppState.SelectedColor}");
+                // If we can't find the exact dimensions --> display what's available
+                Console.WriteLine($"Erreur: Aucun panneau horizontal disponible pour L={SelectedLength}, P={SelectedDepth}, C={AppState.SelectedColor}");
 
                 var panelsWithCorrectLength = StaticArticleDatabase.AllArticles
                     .Where(a => a.Reference != null &&

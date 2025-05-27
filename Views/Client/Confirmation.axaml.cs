@@ -11,12 +11,10 @@ namespace KitBox_Project.Views.Client
     {
         public Confirmation()
         {
-            // Charge le XAML généré
+            // Loads the generated XAML
             InitializeComponent();
             LoadConfirmation();
         }
-
-        // Méthode générée manuellement pour Avalonia <= v11
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);

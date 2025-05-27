@@ -14,8 +14,8 @@ namespace KitBox_Project.Data
 {
     public class DataAccess
     {
-        // Fusionne BDD + commandes + UI avant tout accès à AllArticles
-        // On suppose que StaticArticleDatabase.AllArticles est déjà rempli avant tout appel.
+        // Merge Database + orders + UI before any access to AllArticles
+        // We assume that StaticArticleDatabase.AllArticles is already filled in before any call.
         string conn = DatabaseConfig.ConnectionString;
 
         public DataAccess()
@@ -29,8 +29,8 @@ namespace KitBox_Project.Data
 
             try
             {
-                // Connexion à ta vraie base de données
-                using (var connection = new MySqlConnection(conn)) // Utilisation de MySqlConnection
+                // Connection to SQL database
+                using (var connection = new MySqlConnection(conn)) 
                 {
                     connection.Open();
                     var command = new MySqlCommand("SELECT * FROM new_table", connection);
@@ -69,26 +69,26 @@ namespace KitBox_Project.Data
             var all = StaticArticleDatabase.AllArticles;
             Console.WriteLine($"[DEBUG] Total articles en base : {all.Count}");
 
-            // Étape 1 : panel horizontal
+            // Step 1 : panel horizontal
             var step1 = all.Where(p => p.Reference?.IndexOf("panel horizontal", StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             Console.WriteLine($"[DEBUG] panel horizontal trouvés : {step1.Count}");
 
-            // Étape 2 : stock > 0
+            // Step 2 : stock > 0
             var step2 = step1.Where(p => p.NumberOfPiecesAvailable > 0).ToList();
             Console.WriteLine($"[DEBUG] Avec stock > 0 : {step2.Count}");
 
-            // Étape 3 : couleur
+            // Step 3 : couleur
             var step3 = step2.Where(p => p.Color?.Equals(AppState.SelectedColor, StringComparison.OrdinalIgnoreCase) ?? false).ToList();
             Console.WriteLine($"[DEBUG] Avec couleur {AppState.SelectedColor} : {step3.Count}");
 
-            // Étape 4 : crossbar front, même longueur
+            // Step 4 : crossbar front, same lenght
             var step4 = step3.Where(p => all.Any(c =>
                 c.Reference?.IndexOf("crossbar front", StringComparison.OrdinalIgnoreCase) >= 0 &&
                 c.Length == p.Length &&
                 c.NumberOfPiecesAvailable > 0)).ToList();
             Console.WriteLine($"[DEBUG] Avec 'crossbar front' même longueur : {step4.Count}");
 
-            // Étape 5 : crossbar back, même longueur
+            // Step 5 : crossbar back, same lenght
             var step5 = step4.Where(p => all.Any(c =>
                 c.Reference?.IndexOf("crossbar back", StringComparison.OrdinalIgnoreCase) >= 0 &&
                 c.Length == p.Length &&
@@ -150,7 +150,7 @@ namespace KitBox_Project.Data
             var all = StaticArticleDatabase.AllArticles;
             Console.WriteLine($"[DEBUG] Total articles en base : {all.Count}");
 
-            // Vérifions si les panneaux existent
+            // check if the panels exist
             var panelsBack = all.Where(p => p.Reference?.StartsWith("panel back", StringComparison.OrdinalIgnoreCase) ?? false).ToList();
             var panelsSide = all.Where(p => p.Reference?.StartsWith("panel left or right", StringComparison.OrdinalIgnoreCase) ?? false).ToList();
             var battens = all.Where(p => p.Reference?.StartsWith("vertical batten", StringComparison.OrdinalIgnoreCase) ?? false).ToList();
@@ -160,7 +160,7 @@ namespace KitBox_Project.Data
             Console.WriteLine($"[DEBUG] Total TAS battens: {battens.Count}");
             Console.WriteLine($"[DEBUG] Paramètres: length={length}, depth={depth}, color={color}");
             
-            // Afficher quelques exemples d'articles pour vérifier la structure
+            // Display sample articles to check structure
             if (panelsBack.Any())
             {
                 var sample = panelsBack.First();
@@ -177,7 +177,7 @@ namespace KitBox_Project.Data
                 Console.WriteLine($"[DEBUG] Exemple TAS: Ref={sample.Reference}, L={sample.Length}, H={sample.Height}, D={sample.Depth}, C={sample.Color}");
             }
 
-            // Étape 1 : panels (back, left, or right) avec color et dimensions cohérentes
+            // Step 1 : panels (back, left, or right) with color and coherent dimensions
             var backPanels = all
                 .Where(p => 
                     (p.Reference?.StartsWith("panel back", StringComparison.OrdinalIgnoreCase) ?? false) &&
@@ -200,11 +200,11 @@ namespace KitBox_Project.Data
             Console.WriteLine($"[DEBUG] Side panels trouvés: {sidePanels.Count}");
             Console.WriteLine($"[DEBUG] Step1 (panel back/left/right) : {step1.Count}");
 
-            // Afficher les hauteurs disponibles
+            // Show available heights
             var heights = step1.Select(p => p.Height).Distinct().ToList();
             Console.WriteLine($"[DEBUG] Hauteurs disponibles: {string.Join(", ", heights)}");
 
-            // Étape 2 : vertical battens correspondants en hauteur et stock suffisant (≥ 2)
+            // Step 2 : vertical battens matching in height and sufficient stock (≥ 2)
             var step2 = new List<Article>();
             foreach (var panel in step1)
             {
@@ -223,7 +223,7 @@ namespace KitBox_Project.Data
             
             Console.WriteLine($"[DEBUG] Step2 (2+ vertical battens) : {step2.Count}");
 
-            // Résultat final : hauteurs disponibles distinctes
+            // final result : different heights available
             var result = step2
                 .Select(p => new Article { Height = p.Height })
                 .GroupBy(p => p.Height)
@@ -297,7 +297,7 @@ namespace KitBox_Project.Data
 
         public Dictionary<string, int> GetAngleIronStockByHeight(int height)
         {
-            // 1. Récupérer les articles angle iron avec la bonne hauteur
+            // 1. Recover angle iron items at the right heights
             var stockFromDb = StaticArticleDatabase.AllArticles
                 .Where(a => a.Reference != null && a.Reference.ToLower().Contains("angle"))
                 .Where(a => a.Height == height)
@@ -308,7 +308,7 @@ namespace KitBox_Project.Data
                     g => g.Sum(a => a.NumberOfPiecesAvailable)
                 );
 
-            // 2. Lire les commandes confirmées
+            // 2. Read confirmed orders
             var orderedCounts = new Dictionary<string, int>();
             var confirmedOrders = ConfirmedOrderService.LoadAllOrders();
 
@@ -329,7 +329,7 @@ namespace KitBox_Project.Data
                 }
             }
 
-            // 3. Soustraire les quantités commandées
+            // 3. Substract order quantities
             foreach (var kvp in orderedCounts)
             {
                 if (stockFromDb.ContainsKey(kvp.Key))
