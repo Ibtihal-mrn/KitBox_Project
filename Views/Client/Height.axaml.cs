@@ -32,11 +32,7 @@ namespace KitBox_Project.Views
 
         private void OnInitialized(object? sender, EventArgs e)
         {
-            if (isStacking && AppState.SelectedHeight > 0)
-            {
-                LoadFixedHeight();
-            }
-            else if (SelectedLength > 0 && SelectedDepth > 0)
+            if (SelectedLength > 0 && SelectedDepth > 0)
             {
                 LoadHeightData();
             }
@@ -46,29 +42,6 @@ namespace KitBox_Project.Views
             {
                 hauteurComboBox.SelectionChanged += OnHeightSelectionChanged;
             }
-        }
-
-        private void LoadFixedHeight()
-        {
-            var hauteurComboBox = this.FindControl<ComboBox>("Hauteur");
-            var lowStockItemsList = this.FindControl<ListBox>("LowStockItemsList");
-
-            if (hauteurComboBox == null || lowStockItemsList == null) return;
-
-            hauteurComboBox.IsEnabled = false;
-            hauteurComboBox.Items.Clear();
-            hauteurComboBox.Items.Add(AppState.SelectedHeight.ToString());
-            hauteurComboBox.SelectedIndex = 0;
-
-            SelectedHeight = AppState.SelectedHeight;
-            var dataAccess = new DataAccess();
-            var lowStockItems = dataAccess.GetLowStockItems(SelectedLength, SelectedDepth);
-            if (lowStockItems.Count > 0)
-            {
-                AfficherAvertissementStock(lowStockItemsList, lowStockItems);
-            }
-
-            CheckAngleIronsStock();
         }
 
         private void OnHeightSelectionChanged(object? sender, SelectionChangedEventArgs e)
