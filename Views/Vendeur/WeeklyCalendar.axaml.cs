@@ -10,7 +10,7 @@ namespace KitBox_Project.Views
 {
     public partial class WeeklyCalendar : UserControl
     {
-        private readonly List<string> _days = new() { "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi" };
+        private readonly List<string> _days = new() { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" };
         private readonly List<string> _hours = new();
 
         public WeeklyCalendar()
@@ -75,7 +75,7 @@ namespace KitBox_Project.Views
         {
             if (NameBox.Text == "" || PhoneBox.Text == "")
             {
-                ConfirmationText.Text = "Veuillez remplir tous les champs.";
+                ConfirmationText.Text = "Please fill out all fields.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Red;
                 return;
             }
@@ -85,7 +85,7 @@ namespace KitBox_Project.Views
 
             if (DatabaseCalendar.GetAppointment(day, hour) != null)
             {
-                ConfirmationText.Text = "Créneau déjà pris.";
+                ConfirmationText.Text = "Time slot already taken.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Red;
                 return;
             }
@@ -96,7 +96,7 @@ namespace KitBox_Project.Views
             var regexPhone = new Regex(@"^(?:\+\d{2} \d{3} \d{2} \d{2} \d{2}|00\d{3} \d{2} \d{2} \d{2} \d{2})$");
             if (!regexPhone.IsMatch(phone))
             {
-                ConfirmationText.Text = "Format du numéro de téléphone invalide. Ex : +32 546 56 90 98 ou 00485 66 88 67 50";
+                ConfirmationText.Text = "Invalid phone number format. Example: +32 546 56 90 98 or 00485 66 88 67 50";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Red;
                 return;
             }
@@ -104,13 +104,13 @@ namespace KitBox_Project.Views
             try
             {
                 DatabaseCalendar.AddAppointment(day, hour, name, phone);
-                ConfirmationText.Text = "Rendez-vous ajouté.";
+                ConfirmationText.Text = "Appointment added.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Green;
                 LoadAppointments();
             }
             catch (Exception ex)
             {
-                ConfirmationText.Text = "Erreur : créneau déjà pris ou invalide.";
+                ConfirmationText.Text = "Error: slot already taken or invalid.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Red;
                 Console.WriteLine(ex.Message);
             }
@@ -142,7 +142,7 @@ namespace KitBox_Project.Views
                 if (appt != null)
                 {
                     selectedAppointment = appt;
-                    SelectedAppointmentInfo.Text = $"Client: {appt.Name_of_customer}\nTéléphone: {appt.Phone_number}\nCréneau: {appt.Day} à {appt.Hour}";
+                    SelectedAppointmentInfo.Text = $"Client: {appt.Name_of_customer}\nPhone: {appt.Phone_number}\nSlot: {appt.Day} at {appt.Hour}";
                     CommentBox.Text = appt.Comment ?? "";
                     SelectedAppointmentPanel.IsVisible = true;
                 }
@@ -153,21 +153,21 @@ namespace KitBox_Project.Views
         {
             if (selectedAppointment != null)
             {
-                // Supprimer le rendez-vous de la base de données
+                // Delete the appointment from the database
                 DatabaseCalendar.DeleteAppointment(selectedAppointment.Day, selectedAppointment.Hour, selectedAppointment.Name_of_customer);
-                Console.WriteLine($"Rendez-vous supprimé : {selectedAppointment.Day}, {selectedAppointment.Hour}, {selectedAppointment.Name_of_customer}");
+                Console.WriteLine($"Appointment deleted: {selectedAppointment.Day}, {selectedAppointment.Hour}, {selectedAppointment.Name_of_customer}");
 
-                // Mettre à jour le texte de confirmation
-                ConfirmationText.Text = "Rendez-vous annulé.";
+                // Update confirmation text
+                ConfirmationText.Text = "Appointment canceled.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Gray;
 
-                // Masquer le panneau de rendez-vous sélectionné
+                // Hide selected appointment panel
                 SelectedAppointmentPanel.IsVisible = false;
 
-                // Recharger les rendez-vous pour mettre à jour la grille
+                // Reload appointments to refresh grid
                 LoadAppointments();
 
-                // Réinitialiser l'objet sélectionné
+                // Reset selected object
                 selectedAppointment = null;
             }
         }
@@ -177,13 +177,10 @@ namespace KitBox_Project.Views
             if (selectedAppointment != null)
             {
                 DatabaseCalendar.UpdateComment(selectedAppointment.Day, selectedAppointment.Hour, CommentBox.Text ??"");
-                ConfirmationText.Text = "Commentaire enregistré.";
+                ConfirmationText.Text = "Comment saved.";
                 ConfirmationText.Foreground = Avalonia.Media.Brushes.Green;
             }
         }
-
-
-
     }
 
     public static class GridHelper

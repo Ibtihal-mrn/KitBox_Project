@@ -7,29 +7,29 @@
     <!-- Confirmation -->
     <TextBlock x:Name="ConfirmationText" Foreground="Green" FontWeight="Bold" Margin="0,0,0,10"/>
 
-    <!-- Calendrier -->
+    <!-- Calendar -->
     <ScrollViewer HorizontalScrollBarVisibility="Auto">
       <Grid x:Name="CalendarGrid">
-        <!-- Généré dynamiquement dans le .cs -->
+        <!-- Dynamically generated in the .cs -->
       </Grid>
     </ScrollViewer>
 
-    <!-- Formulaire RDV -->
+    <!-- Appointment Form -->
     <StackPanel Orientation="Horizontal" Margin="0,15,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Spacing="10">
-      <TextBox x:Name="NameBox" Width="150" Watermark="Nom client"/>
-      <TextBox x:Name="PhoneBox" Width="130" Watermark="Téléphone"/>
+      <TextBox x:Name="NameBox" Width="150" Watermark="Client name"/>
+      <TextBox x:Name="PhoneBox" Width="130" Watermark="Phone number"/>
       <ComboBox x:Name="DayBox" Width="100"/>
       <ComboBox x:Name="HourBox" Width="100"/>
-      <Button Content="Ajouter RDV" Click="AddAppointment_Click" Background="#2E8B57" Foreground="White"/>
+      <Button Content="Add Appointment" Click="AddAppointment_Click" Background="#2E8B57" Foreground="White"/>
     </StackPanel>
 
-    <!-- Détails RDV sélectionné -->
+    <!-- Selected Appointment Details -->
     <StackPanel x:Name="SelectedAppointmentPanel" Margin="0,20,0,0" IsVisible="False" Spacing="8">
-      <TextBlock Text="Détails du rendez-vous" FontWeight="Bold" FontSize="16"/>
+      <TextBlock Text="Appointment Details" FontWeight="Bold" FontSize="16"/>
       <TextBlock x:Name="SelectedAppointmentInfo"/>
-      <TextBox x:Name="CommentBox" Watermark="Ajouter un commentaire..." AcceptsReturn="True" Height="60"/>
-      <Button Content="Enregistrer commentaire" Click="SaveComment_Click"/>
-      <Button Content="Annuler ce rendez-vous" Click="ConfirmDeleteAppointment_Click" Background="Red" Foreground="White"/>
+      <TextBox x:Name="CommentBox" Watermark="Add a comment..." AcceptsReturn="True" Height="60"/>
+      <Button Content="Save Comment" Click="SaveComment_Click"/>
+      <Button Content="Cancel this Appointment" Click="ConfirmDeleteAppointment_Click" Background="Red" Foreground="White"/>
     </StackPanel>
 
   </StackPanel>
