@@ -62,9 +62,7 @@
                     Margin="5,0"/>
         </StackPanel>
 
-        <Button Content="Abandon Transaction"
-                HorizontalAlignment="Center"
-                Margin="0,260,0,0"
-                Click="GoToFirstPage"/>
+        <!-- <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/> -->
+
     </Grid>
 </UserControl>

@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Interactivity;
 using KitBox_Project.Services;
 using System;
+using KitBox_Project.Views.Vendeur;
 
 
 namespace KitBox_Project.Views

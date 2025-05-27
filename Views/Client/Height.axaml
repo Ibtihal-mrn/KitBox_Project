@@ -51,11 +51,8 @@
                 <Button Content="Next" Click="GoToDoor" Margin="5,0"/>
             </StackPanel>
 
-            <!-- Bouton abandon -->
-            <Button Content="Abandonner la transaction"
-                    HorizontalAlignment="Center"
-                    Margin="0,20,0,0"
-                    Click="GoToFirstPage"/>
+            <!-- <Button Content="Abandonner la transaction" HorizontalAlignment="Center" Click="GoToFirstPage"/> -->
+
         </StackPanel>
     </Grid>
 

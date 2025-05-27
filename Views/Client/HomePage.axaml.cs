@@ -5,7 +5,6 @@ using System;
 using System.Timers;
 using Avalonia.Interactivity;
 using KitBox_Project.Services;
-using KitBox_Project.Data;
 
 namespace KitBox_Project.Views
 {
@@ -13,6 +12,7 @@ namespace KitBox_Project.Views
     {
         private double _position = -300;
         private Timer? _timer;
+
 
         public event EventHandler<RoutedEventArgs>? StartClicked;
         public event EventHandler<RoutedEventArgs>? HelpClicked;
@@ -43,30 +43,17 @@ namespace KitBox_Project.Views
             _timer.Start();
         }
 
-        
-         private async void GoToColor(object sender, RoutedEventArgs e)
+        private async void GoToColor(object sender, RoutedEventArgs e)
         {
             try
             {
-                //StockService.ResetInitializationFlag();
-                // Ne pas vider le panier
-                //StaticArticleDatabase.AllArticles.Clear();
                 await StockService.InitializeStockAsync();
                 StartClicked?.Invoke(this, new RoutedEventArgs());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-        }
-        
-        public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
-
-        public event EventHandler<RoutedEventArgs>? HelpClicked;
-
-        private void GoToColor(object? sender, RoutedEventArgs e)
-        {
-            StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
         }
 
         private void GoToHelpSupport(object? sender, RoutedEventArgs e)

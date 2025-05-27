@@ -1,44 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
 <UserControl
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
     xmlns:vm="clr-namespace:KitBox_Project.ViewModels"
     xmlns:models="clr-namespace:KitBox_Project.Models"
-    x:Class="KitBox_Project.Views.Home_vendeur"
-    x:DataType="vm:SellerViewModel">
+    xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+    mc:Ignorable="d"
+    x:Class="KitBox_Project.Views.Vendeur.Home_vendeur"
+    x:DataType="vm:SellerViewModel"
+    x:Name="ordersView">
 
-    <UserControl.DataContext>
-        <vm:SellerViewModel/>
-    </UserControl.DataContext>
+  <!-- Déclaration du ViewModel en ressource, comme dans ShoppingCart -->
+  <UserControl.Resources>
+    <vm:SellerViewModel x:Key="ViewModel" />
+  </UserControl.Resources>
 
-    <Grid >
-        <TextBlock Text="Client's Orders"
-                   FontSize="60"
-                   FontFamily="avares://KitBox_Project/Fonts#Anton"
-                   HorizontalAlignment="Center"/>
+  <!-- Binding DataContext sur la ressource -->
+  <UserControl.DataContext>
+    <StaticResource ResourceKey="ViewModel"/>
+  </UserControl.DataContext>
 
+  <Grid Margin="20">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
 
-                                <!-- Liste des articles de la commande -->
-                                <ItemsControl ItemsSource="{Binding Articles}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="models:Article">
-                                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                                <!-- Afficher chaque article une seule fois, avec la quantité totale -->
-                                                <TextBlock Text="{Binding Reference}" Width="200"/>
-                                                <TextBlock Text="{Binding Color}" Width="100"/>
-                                                <TextBlock Text="{Binding Quantity, StringFormat='Qty: {0}'}" Width="60"/>
-                                                <TextBlock Text="{Binding Code}" Width="100"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Border>
+    <!-- Titre -->
+    <TextBlock
+      Grid.Row="0"
+      Text="Client's Orders"
+      FontSize="48"
+      FontFamily="avares://KitBox_Project/Fonts#Anton"
+      HorizontalAlignment="Center"
+      Margin="0,0,0,24"/>
+
+    <!-- Liste des commandes avec Expander -->
+    <ScrollViewer
+      Grid.Row="1"
+      VerticalScrollBarVisibility="Auto">
+      <ItemsControl ItemsSource="{Binding Orders, Source={StaticResource ViewModel}}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="models:ConfirmedOrder">
+            <Expander Margin="0,0,0,16" Padding="12" Background="#F5F5F5" BorderThickness="0">
+              <Expander.Header>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <TextBlock Text="{Binding OrderId, StringFormat='Order ID: {0}'}" FontWeight="SemiBold" FontSize="18"/>
+                  <TextBlock Text="—" FontSize="18" VerticalAlignment="Center"/>
+                  <TextBlock Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}" FontSize="18"/>
+                </StackPanel>
+              </Expander.Header>
+
+              <StackPanel Spacing="8">
+                <ItemsControl ItemsSource="{Binding Articles}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:Article">
+                      <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,4,0,4">
+                        <TextBlock Text="{Binding Reference}" Width="160"/>
+                        <TextBlock Text="{Binding Color}" Width="100"/>
+                        <TextBlock Text="{Binding Quantity, StringFormat='Qty: {0}'}" Width="70"/>
+                        <TextBlock Text="{Binding Code}" Width="100"/>
+                        <TextBlock Text="{Binding TotalPrice, StringFormat='Price: {0:C}'}" Width="100"/>
+                      </StackPanel>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-    </Grid>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </Expander>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
 </UserControl>

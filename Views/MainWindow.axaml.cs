@@ -3,6 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using KitBox_Project.Services ;
 using KitBox_Project.Views.Client;
+using KitBox_Project.Views.Vendeur;
+
 
 namespace KitBox_Project.Views
 {

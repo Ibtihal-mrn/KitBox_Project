@@ -5,6 +5,8 @@ using Avalonia.Interactivity;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using KitBox_Project.Views.Vendeur;
+
 
 namespace KitBox_Project.Views
 {

@@ -1,15 +1,16 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace KitBox_Project.Models
 {
     public class Article : INotifyPropertyChanged
     {
-        public string? Code { get; set; } // Clé primaire (PK)
+        public string? Code { get; set; }
         public string? Reference { get; set; }
         public string? Color { get; set; }
-        public string? Dimensions { get; set; } // Stocke les dimensions sous forme de chaîne (ex: "100x50x30")
+        public string? Dimensions { get; set; }
         public int Length { get; set; }
         public int Height { get; set; }
         public int Depth { get; set; }
@@ -35,11 +36,11 @@ namespace KitBox_Project.Models
             }
         }
 
+        [JsonIgnore]
         public decimal TotalPrice => SellingPrice * Quantity;
 
         private void DecreaseQuantity()
         {
-            // On diminue la quantité si elle est supérieure à 1
             if (Quantity > 1)
             {
                 Quantity--;

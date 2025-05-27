@@ -62,8 +62,14 @@ namespace KitBox_Project.Services
             ";
             cmd.Parameters.AddWithValue("$day", day);
             cmd.Parameters.AddWithValue("$hour", hour);
-            return (long)cmd.ExecuteScalar() > 0;
+
+            var result = cmd.ExecuteScalar();
+            if (result == null)
+                return false;
+
+            return (long)result > 0;
         }
+
 
         public static List<Appointment> GetAllUsers()
         {

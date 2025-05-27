@@ -1,7 +1,8 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using KitBox_Project.Services;
 
-namespace KitBox_Project.Views
+namespace KitBox_Project.Views.Vendeur
 {
     public partial class Home_vendeur : UserControl
     {
@@ -10,7 +11,7 @@ namespace KitBox_Project.Views
             InitializeComponent();
         }
 
-        private void GoToChooseUserTypePage(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private void GoToChooseUserTypePage(object sender, RoutedEventArgs e)
         {
             if (VisualRoot is MainWindow mw)
             {
