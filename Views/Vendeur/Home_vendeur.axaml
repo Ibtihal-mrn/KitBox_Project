@@ -1,77 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
-<UserControl
+<UserControl 
+    x:Class="KitBox_Project.Views.Vendeur.Home_vendeur"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:KitBox_Project.ViewModels"
     xmlns:models="clr-namespace:KitBox_Project.Models"
-    xmlns:controls="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+    xmlns:local="clr-namespace:KitBox_Project.Converters"
     mc:Ignorable="d"
-    x:Class="KitBox_Project.Views.Vendeur.Home_vendeur"
-    x:DataType="vm:SellerViewModel"
-    x:Name="ordersView">
+    x:Name="ordersView"
+    DataContext="{StaticResource ViewModel}"
+    x:DataType="vm:SellerViewModel">
 
-  <!-- Déclaration du ViewModel en ressource, comme dans ShoppingCart -->
-  <UserControl.Resources>
-    <vm:SellerViewModel x:Key="ViewModel" />
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <vm:SellerViewModel x:Key="ViewModel" />
+        <local:PaidButtonContentConverter x:Key="PaidButtonContentConverter"/>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </UserControl.Resources>
 
-  <!-- Binding DataContext sur la ressource -->
-  <UserControl.DataContext>
-    <StaticResource ResourceKey="ViewModel"/>
-  </UserControl.DataContext>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-  <Grid Margin="20">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+        <!-- Header -->
+        <TextBlock
+            Grid.Row="0"
+            Text="Customer Orders"
+            FontSize="48"
+            FontFamily="avares://KitBox_Project/Fonts#Anton"
+            HorizontalAlignment="Center"
+            Margin="0,0,0,24"/>
 
-    <!-- Titre -->
-    <TextBlock
-      Grid.Row="0"
-      Text="Client's Orders"
-      FontSize="48"
-      FontFamily="avares://KitBox_Project/Fonts#Anton"
-      HorizontalAlignment="Center"
-      Margin="0,0,0,24"/>
+        <!-- Search by Order ID -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,16">
+            <TextBox Width="300"
+                     Watermark="Search by Order ID..."
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="X"
+                    Command="{Binding ClearSearchCommand}"
+                    Margin="8,0,0,0"
+                    ToolTip.Tip="Clear search"/>
+        </StackPanel>
 
-    <!-- Liste des commandes avec Expander -->
-    <ScrollViewer
-      Grid.Row="1"
-      VerticalScrollBarVisibility="Auto">
-      <ItemsControl ItemsSource="{Binding Orders, Source={StaticResource ViewModel}}">
-        <ItemsControl.ItemTemplate>
-          <DataTemplate x:DataType="models:ConfirmedOrder">
-            <Expander Margin="0,0,0,16" Padding="12" Background="#F5F5F5" BorderThickness="0">
-              <Expander.Header>
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                  <TextBlock Text="{Binding OrderId, StringFormat='Order ID: {0}'}" FontWeight="SemiBold" FontSize="18"/>
-                  <TextBlock Text="—" FontSize="18" VerticalAlignment="Center"/>
-                  <TextBlock Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}" FontSize="18"/>
-                </StackPanel>
-              </Expander.Header>
+        <!-- Orders list -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding FilteredOrders}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:ConfirmedOrder">
+                        <Expander Margin="0,0,0,16" Padding="12" Background="#F5F5F5" BorderThickness="0">
+                            <Expander.Header>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{Binding OrderId, StringFormat='Order ID: {0}'}" FontWeight="SemiBold" FontSize="18"/>
+                                    <TextBlock Text="—" FontSize="18" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total: {0:C}'}" FontSize="18"/>
+                                </StackPanel>
+                            </Expander.Header>
 
-              <StackPanel Spacing="8">
-                <ItemsControl ItemsSource="{Binding Articles}">
-                  <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models:Article">
-                      <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,4,0,4">
-                        <TextBlock Text="{Binding Reference}" Width="160"/>
-                        <TextBlock Text="{Binding Color}" Width="100"/>
-                        <TextBlock Text="{Binding Quantity, StringFormat='Qty: {0}'}" Width="70"/>
-                        <TextBlock Text="{Binding Code}" Width="100"/>
-                        <TextBlock Text="{Binding TotalPrice, StringFormat='Price: {0:C}'}" Width="100"/>
-                      </StackPanel>
+                            <StackPanel Spacing="8">
+                                <ItemsControl ItemsSource="{Binding Articles}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Article">
+                                            <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,4,0,4">
+                                                <TextBlock Text="{Binding Reference}" Width="160"/>
+                                                <TextBlock Text="{Binding Color}" Width="100"/>
+                                                <TextBlock Text="{Binding Quantity, StringFormat='Qty: {0}'}" Width="70"/>
+                                                <TextBlock Text="{Binding Code}" Width="100"/>
+                                                <TextBlock Text="{Binding TotalPrice, StringFormat='Price: {0:C}'}" Width="100"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <Button
+                                    Content="{Binding IsPaid, Converter={StaticResource PaidButtonContentConverter}}"
+                                    IsEnabled="{Binding IsPaid, Converter={StaticResource InverseBooleanConverter}}"
+                                    Click="PayButton_Click"
+                                    Tag="{Binding}" />
+
+                            </StackPanel>
+                        </Expander>
                     </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-                </ItemsControl>
-              </StackPanel>
-            </Expander>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>
-  </Grid>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

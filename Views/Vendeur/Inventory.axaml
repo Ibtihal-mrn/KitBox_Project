@@ -8,7 +8,7 @@
   <Grid Margin="20" RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,Auto">
 
     <!-- Bouton Sauvegarder en haut à droite -->
-    <Button Content="Sauvegarder les modifications"
+    <Button Content="Save modifications"
             Width="250"
             Height="40"
             Command="{Binding SaveArticlesCommand}"
@@ -28,13 +28,13 @@
     <!-- Contenu principal -->
     <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Spacing="10" IsVisible="{Binding ArticlesGridVisible}">
 
-      <TextBlock Text="Inventaire"
+      <TextBlock Text="Inventory"
                  FontSize="36"
                  FontWeight="Bold"
                  HorizontalAlignment="Center"
                  Margin="0,0,0,10"/>
 
-      <TextBlock Text="Aucun article trouvé."
+      <TextBlock Text="No article found."
                  IsVisible="{Binding NoArticlesVisible}"
                  FontSize="16"
                  HorizontalAlignment="Center"
@@ -52,12 +52,12 @@
             <ColumnDefinition Width="150"/>
           </Grid.ColumnDefinitions>
 
-          <TextBlock Text="Référence" Grid.Column="0" FontWeight="Bold"/>
-          <TextBlock Text="Couleur" Grid.Column="1" FontWeight="Bold"/>
-          <TextBlock Text="Dimensions" Grid.Column="2" FontWeight="Bold"/>
-          <TextBlock Text="Prix" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Right"/>
-          <TextBlock Text="Code" Grid.Column="4" FontWeight="Bold" HorizontalAlignment="Right"/>
-          <TextBlock Text="Nombre de pièces" Grid.Column="5" FontWeight="Bold" HorizontalAlignment="Center"/>
+          <TextBlock Text="Reference" Grid.Column="0" FontWeight="Bold" HorizontalAlignment="Left"/>
+          <TextBlock Text="Color" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Left"/>
+          <TextBlock Text="Dimensions" Grid.Column="2" FontWeight="Bold" HorizontalAlignment="Left"/>
+          <TextBlock Text="Price" Grid.Column="3" FontWeight="Bold" HorizontalAlignment="Left"/>
+          <TextBlock Text="Code" Grid.Column="4" FontWeight="Bold" HorizontalAlignment="Left"/>
+          <TextBlock Text="Number of pieces" Grid.Column="5" FontWeight="Bold" HorizontalAlignment="Center"/>
         </Grid>
       </Border>
 

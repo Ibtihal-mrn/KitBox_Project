@@ -12,7 +12,7 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <StackPanel Margin="20" Spacing="20">
-            <TextBlock Text="Mon Panier" FontSize="24" FontWeight="Bold" />
+            <TextBlock Text="My Cart" FontSize="24" FontWeight="Bold" />
 
             <ItemsControl x:Name="itemsCtrl" ItemsSource="{Binding CartItems}">
                 <ItemsControl.ItemTemplate>
@@ -22,10 +22,10 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding Reference}" FontWeight="Bold"/>
                                     <TextBlock Text="{Binding Dimensions}"/>
-                                    <TextBlock Text="{Binding Color, StringFormat='Couleur : {0}'}"/>
-                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantité : {0}'}"/>
-                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Prix unitaire : {0:0.00} €'}"/>
-                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total : {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding Color, StringFormat='Color: {0}'}"/>
+                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
+                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Unit Price: {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total: {0:0.00} €'}"/>
                                     <StackPanel Orientation="Horizontal" Spacing="5">
                                         <Button Content="−"
                                                 Width="30" Height="30"
@@ -40,10 +40,7 @@
                                                 Width="40" Height="40"
                                                 Command="{Binding Source={StaticResource ViewModel}, Path=RemoveItemCommand}"
                                                 CommandParameter="{Binding}" />
-
-
                                     </StackPanel>
-
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -51,21 +48,20 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <TextBlock Text="Nombre d'articles :"/>
+                <TextBlock Text="Items:"/>
                 <TextBlock Text="{Binding TotalItemCount}" FontWeight="Bold"/>
-                <TextBlock Text=" | Total :"/>
+                <TextBlock Text=" | Total:"/>
                 <TextBlock Text="{Binding TotalPrice, StringFormat=' {0:0.00} €'}" FontWeight="Bold"/>
             </StackPanel>
 
-            <Button Content="Vider le panier"
+            <Button Content="Clear Cart"
                     Command="{Binding ClearCartCommand}"
                     IsEnabled="{Binding !IsCartEmpty}"/>
 
-            <Button Content="Retour à l'accueil"
+            <Button Content="Back to Home"
                     Click="OnHomeButtonClick"/>
-            <Button Content="Confirmer la commande" Click="GoToConfirmation" Margin="5,0"/>
+            <Button Content="Confirm Order" Click="GoToConfirmation" Margin="5,0"/>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

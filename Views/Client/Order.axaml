@@ -13,12 +13,12 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="20" Spacing="20">
 
-                <TextBlock Text="6. Récapitulatif de votre commande"
+                <TextBlock Text="6. Order Summary"
                            HorizontalAlignment="Center"
                            FontSize="24"
                            FontWeight="Bold" />
 
-                <!-- Liste des articles du panier -->
+                <!-- Cart items list -->
                 <ItemsControl ItemsSource="{Binding CartItems}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -26,29 +26,29 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding Reference}" FontWeight="Bold"/>
                                     <TextBlock Text="{Binding Dimensions}"/>
-                                    <TextBlock Text="{Binding Color, StringFormat='Couleur : {0}'}"/>
-                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantité : {0}'}"/>
-                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Prix unitaire : {0:0.00} €'}"/>
-                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total : {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding Color, StringFormat='Color: {0}'}"/>
+                                    <TextBlock Text="{Binding Quantity, StringFormat='Quantity: {0}'}"/>
+                                    <TextBlock Text="{Binding SellingPrice, StringFormat='Unit Price: {0:0.00} €'}"/>
+                                    <TextBlock Text="{Binding TotalPrice, StringFormat='Total: {0:0.00} €'}"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <!-- Totaux -->
+                <!-- Totals -->
                 <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
-                    <TextBlock Text="Total articles :" />
+                    <TextBlock Text="Items total:" />
                     <TextBlock Text="{Binding TotalItemCount}" FontWeight="Bold"/>
-                    <TextBlock Text=" | Total :"/>
+                    <TextBlock Text=" | Total:"/>
                     <TextBlock Text="{Binding TotalPrice, StringFormat=' {0:0.00} €'}" FontWeight="Bold"/>
                 </StackPanel>
 
-                <!-- Boutons -->
+                <!-- Buttons -->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,50,0,0">
                     <Button Content="Back" Click="GoToChoice" Margin="5,0"/>
-                    <Button Content="Confirmer la commande" Click="GoToConfirmation" Margin="5,0"/>
-                    <Button Content="Abandonner la transaction" Click="GoToFirstPage" Margin="5,0"/>
+                    <Button Content="Confirm Order" Click="GoToConfirmation" Margin="5,0"/>
+                    <Button Content="Cancel Transaction" Click="GoToFirstPage" Margin="5,0"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

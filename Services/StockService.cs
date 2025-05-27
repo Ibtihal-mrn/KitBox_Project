@@ -19,9 +19,6 @@ namespace KitBox_Project.Services
 
         public static void ResetInitializationFlag() => _stockInitialized = false;
 
-        /// <summary>
-        /// UNIQUEMENT pour le démarrage de l'application ou cas exceptionnels
-        /// </summary>
         public static async Task ForceReloadStockAsync()
         {
             Console.WriteLine("🔄 Rechargement complet du stock...");

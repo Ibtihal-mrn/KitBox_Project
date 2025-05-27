@@ -68,7 +68,7 @@ namespace KitBox_Project.Services
         public static string GenerateOrderId()
         {
             _orderCount++;
-            return $"Commande {_orderCount:D3}";
+            return $"Order {_orderCount:D3}";
         }
 
         public static void SaveConfirmedOrder(ConfirmedOrder order)
@@ -88,9 +88,6 @@ namespace KitBox_Project.Services
             Console.WriteLine($"[Stock] {all.Count} commandes appliquées (async)");
         }
 
-        /// <summary>
-        /// Alias synchrone pour l'appel aux commandes
-        /// </summary>
         public static void ApplyAllOrdersToStock()
         {
             ApplyOrdersOnly();
