@@ -1,1 +1,0 @@
-//Gère l'affichage 3D ou 2D. Il gère les données nécessaire à la vue 3D/2D et communique avec le vizualisationservice

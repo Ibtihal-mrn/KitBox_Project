@@ -59,6 +59,16 @@ namespace KitBox_Project.Views
                 Console.WriteLine(ex.Message);
             }
         }
+        
+        public event EventHandler<RoutedEventArgs>? StartClicked; // Déclare un événement
+
+        public event EventHandler<RoutedEventArgs>? HelpClicked;
+
+        private void GoToColor(object? sender, RoutedEventArgs e)
+        {
+            StartClicked?.Invoke(this, new RoutedEventArgs()); // Déclenche l'événement
+        }
+
         private void GoToHelpSupport(object? sender, RoutedEventArgs e)
             => HelpClicked?.Invoke(this, new RoutedEventArgs());
 

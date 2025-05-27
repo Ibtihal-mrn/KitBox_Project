@@ -19,15 +19,6 @@
                    FontFamily="avares://KitBox_Project/Fonts#Anton"
                    HorizontalAlignment="Center"/>
 
-        <!-- Affichage des commandes -->
-        <ScrollViewer Margin="50,100,50,50" VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Orders}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models:ConfirmedOrder">
-                        <Border BorderBrush="Gray" BorderThickness="1" Padding="10" Margin="5">
-                            <StackPanel>
-                                <!-- Binding sur OrderId -->
-                                <TextBlock Text="{Binding OrderId}" FontSize="20" FontWeight="Bold" Margin="0,0,0,5"/>
 
                                 <!-- Liste des articles de la commande -->
                                 <ItemsControl ItemsSource="{Binding Articles}">

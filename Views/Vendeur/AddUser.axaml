@@ -5,39 +5,82 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="KitBox_Project.Views.AddUser">
 
-    <Grid RowDefinitions="Auto,*,Auto">
+    <Grid RowDefinitions="Auto,*" ColumnDefinitions="1*,1*">
 
-        <!-- TITRE -->
-        <TextBlock Text="Ajouter un nouveau vendeur"
-                FontSize="60"
-                FontFamily="avares://KitBox_Project/Fonts#Anton"
-                HorizontalAlignment="Center"
-                Grid.Row="0" />
+        <!-- TITRE (sur 2 colonnes) -->
+        <TextBlock Grid.ColumnSpan="2"
+                   Text="USERS"
+                   FontSize="40"
+                   FontFamily="avares://KitBox_Project/Fonts#Anton"
+                   HorizontalAlignment="Center"
+                   Margin="0,20,0,20" />
 
-        <!-- FORMULAIRE -->
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
-            <TextBox x:Name="MatriculeBox" Width="200" Watermark="Matricule"/>
-            <TextBox x:Name="PasswordBox" Width="200" Margin="10" Watermark="Mot de passe"/>
-            <ComboBox x:Name="Rôle" Width="200" Margin="10">
-                <ComboBoxItem Content="Superviseur"/>
-                <ComboBoxItem Content="Vendeur"/>
-            </ComboBox>
-            <Button Content="Ajouter" Width="200" Click="AjouterUtilisateur"/>
-            <Button Content="Retour" Width="200" Click="GoToHomeVendeur"/>
-        </StackPanel>
+        <!-- LISTE UTILISATEURS à gauche -->
+        <Border Grid.Row="1" Grid.Column="0" Margin="20" Background="#F0F0F0" CornerRadius="10" Padding="10" MaxWidth="350">
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock Text="List of store associates" FontSize="20" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center"/>
+                    <ListBox x:Name="ListeUtilisateurs" Width="300" HorizontalAlignment="Center">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="* Auto" Margin="5">
+                                    <TextBlock Text="{Binding}" Grid.Column="0" TextWrapping="Wrap"/>
+                                    <Button Content="Delete user" Grid.Column="1" Click="SupprimerUtilisateur" Margin="5,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
 
-        <!-- LISTE DES UTILISATEURS -->
-        <ListBox x:Name="ListeUtilisateurs" Grid.Row="2" Width="400" Height="200" HorizontalAlignment="Center">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
-                        <TextBlock Text="{Binding}" Width="250"/>
-                        <Button Content="Supprimer" Click="SupprimerUtilisateur"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <!-- FORMULAIRE à droite -->
+        <Border Grid.Row="1" Grid.Column="1" Margin="20" Background="#F8F8F8" CornerRadius="10" Padding="20" MaxWidth="350">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="10">
+                <TextBlock Text="Add a new store associate" FontSize="20" FontWeight="Bold" Margin="0 0 0 10" HorizontalAlignment="Center"/>
+                <TextBox x:Name="MatriculeBox" Width="250" Watermark="Employee ID"/>
+                <TextBox x:Name="PasswordBox" Width="250" Watermark="Password" PasswordChar="●"/>
+                <TextBox x:Name="ConfirmPasswordBox" Width="250" Watermark="Confirm Password" PasswordChar="●"/>
+                <ComboBox x:Name="Rôle" Width="250">
+                    <ComboBoxItem Content="Supervisor"/>
+                    <ComboBoxItem Content="Seller"/>
+                </ComboBox>
+                <Button Content="Add User" Width="250" Click="AjouterUtilisateur"/>
+
+                <TextBlock x:Name="WrongPassword"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="Passwords do not match."
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="WrongID"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="ID must be exactly 5 digits."
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="DoubleID"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="ID already taken."
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+                <TextBlock x:Name="EmptyInformations"
+                Foreground="Red"
+                FontWeight="Bold"
+                Margin="10"
+                Text="Missing information(s)."
+                IsVisible="False"
+                HorizontalAlignment="Center"/>
+
+            </StackPanel>
+        </Border>
 
     </Grid>
-
 </UserControl>
