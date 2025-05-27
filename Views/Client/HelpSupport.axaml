@@ -97,7 +97,7 @@
                                Width="28" Height="28" Stretch="Uniform"/>
                     </Border>
                     <Button x:Name="FindMyInvoiceButton"
-                            Content="Find my invoice"
+                            Content="Print order recap"
                             FontSize="14"
                             Background="Transparent"
                             Margin="10,0,0,0"
