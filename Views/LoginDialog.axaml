@@ -6,6 +6,6 @@
         <TextBox x:Name="UsernameBox" Watermark="Utilisateur" Width="200"/>
         <TextBox x:Name="PasswordBox" Watermark="Mot de passe" Width="200" PasswordChar="●"/>
         <Button Content="Se connecter" Width="200" Click="OnLoginClicked"/>
-        <TextBlock x:Name="ErrorText" Foreground="Red" IsVisible="False" Text="Erreur d'identifiants."/>
+        <TextBlock x:Name="ErrorText" Foreground="Red" IsVisible="False" Text="Incorrect username or password."/>
     </StackPanel>
 </Window>
