@@ -10,17 +10,10 @@
 |---------------------|---------------|-----------------------------------------------------------------------------|
 | `fusion`            | Ibtihal       | Initial frontend design (customer) and full interface for store associate   |
 | `base_frontend`     | Imane         | Full customer interface: navigation menu, shopping cart, UI polishing       |
-| `BackendLabo2Test`  | Chaïmae B. - Chaïmae A. - Salwa   | Database connection, query implementation, stock management, synchronization of orders and updates.                                           |
+| `BackendLabo2Test`  | Chaïmae B.  Chaïmae A.  Salwa   | Database connection, query implementation, stock management, synchronization of orders and updates.                                           |
 | `fusion`            | Pierrot       | UI styling and UML diagram contributions                                    |
 
-| Branch name         | Contributors                  | Description                                                                 |
-|---------------------|-------------------------------|-----------------------------------------------------------------------------|
-| `fusion`            | Ibtihal                       | Initial frontend design (customer) and full interface for store associate   |
-| `base_frontend`     | Imane                         | Full customer interface: navigation menu, shopping cart, UI polishing       |
-| `BackendLabo2Test`  | Chaïmae B., Chaïmae A., Salwa | Database connection, query implementation, stock management, synchronization of orders and updates. |
-| `fusion`            | Pierrot                       | UI styling and UML diagram contributions                                    |
-
-
+                            
 > 📝 Branches have been kept (or restored) when possible to preserve the development history.
 
 # Kitbox Project
