@@ -8,12 +8,17 @@
 
 | Branch name         | Contributor   | Description                                                                 |
 |---------------------|---------------|-----------------------------------------------------------------------------|
-| `fusion`            | Ibtihal       | Initial frontend design (client) and full interface for store associate     |
-| `client-ui`         | Imane         | Full customer interface: navigation menu, shopping cart, UI polishing       |
-| `frontend-chaimaeB` | Chaïmae B.    | [To be filled: awaiting details]                                            |
-| `frontend-chaimaeA` | Chaïmae A.    | [To be filled: awaiting details]                                            |
-| `seller-tools`      | Salwa         | [To be filled: awaiting details]                                            |
-| `ui-enhancement`    | Pierrot       | UI styling and UML diagram contributions                                    |
+| `fusion`            | Ibtihal       | Initial frontend design (customer) and full interface for store associate   |
+| `base_frontend`     | Imane         | Full customer interface: navigation menu, shopping cart, UI polishing       |
+| `BackendLabo2Test`  | Chaïmae B. - Chaïmae A. - Salwa   | Database connection, query implementation, stock management, synchronization of orders and updates.                                           |
+| `fusion`            | Pierrot       | UI styling and UML diagram contributions                                    |
+
+| Branch name         | Contributors                  | Description                                                                 |
+|---------------------|-------------------------------|-----------------------------------------------------------------------------|
+| `fusion`            | Ibtihal                       | Initial frontend design (customer) and full interface for store associate   |
+| `base_frontend`     | Imane                         | Full customer interface: navigation menu, shopping cart, UI polishing       |
+| `BackendLabo2Test`  | Chaïmae B., Chaïmae A., Salwa | Database connection, query implementation, stock management, synchronization of orders and updates. |
+| `fusion`            | Pierrot                       | UI styling and UML diagram contributions                                    |
 
 
 > 📝 Branches have been kept (or restored) when possible to preserve the development history.
