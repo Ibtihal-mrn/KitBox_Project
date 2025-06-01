@@ -6,8 +6,6 @@
 
 ### 📂 Branch overview and contributors:
 
-### 📂 Branch overview and contributors:
-
 | Branch name         | Contributor   | Description                                                                 |
 |---------------------|---------------|-----------------------------------------------------------------------------|
 | `fusion`            | Ibtihal       | Initial frontend design (client) and full interface for store associate     |
